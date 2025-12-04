@@ -380,3 +380,102 @@ String s2 = (String) list2.get(0);  // 需要强制转换，容易出错
 最后是消除强制类型转换。使用泛型后，编译器知道集合里存的是什么类型，取出来时不需要强制转换，代码更简洁。
 
 需要注意的是，泛型是编译期的概念。编译时会进行类型检查，然后进行类型擦除，把泛型类型替换为 Object 或其边界类型。所以运行时 JVM 其实不知道泛型的具体类型信息。
+
+
+## **什么是类型擦除？**
+
+类型擦除是指Java泛型在编译时被编译器将泛型参数转换成具体类型的过程。
+
+---
+
+## 什么是类型擦除？
+
+类型擦除是 Java 泛型在编译时把泛型类型参数替换成具体类型的过程。
+
+具体来说，编译器会做这样的转换：
+
+如果泛型类型没有指定上界，就会被替换成 Object 类型：
+
+```java
+// 源代码
+List<String> list = new ArrayList<>();
+
+// 编译后实际变成
+List list = new ArrayList();  // String 被擦除成 Object
+```
+
+如果泛型类型指定了上界，就会被替换成上界类型：
+
+```java
+// 源代码
+class Box<T extends Number> {
+    private T value;
+}
+
+// 编译后 T 被替换成 Number
+class Box {
+    private Number value;
+}
+```
+
+为什么要进行类型擦除？主要是为了保持向后兼容。Java 在 JDK 5 才引入泛型，为了让新代码能在旧的 JVM 上运行，同时让泛型代码和非泛型代码能够互相调用，就采用了类型擦除的方式。
+
+类型擦除带来的影响：
+
+运行时无法获取泛型的具体类型信息，比如无法通过 `instanceof` 判断泛型类型，也无法创建泛型数组。
+
+
+## **泛型中K T V E ？ Object等分别代表什么含义。**
+K 表示 key ；T 表示 Type ；V 表示Value；E 表示 Element ，一般在集合中使用；Object表示对象；
+
+---
+
+## 泛型中 K T V E ? Object 等分别代表什么含义？
+
+这些都是泛型中常用的类型参数符号，它们本质上都是占位符，只是按照约定俗成的规范来命名，让代码更易读：
+
+**T (Type)**：表示任意类型，最常用的泛型参数。通常用在类、接口和方法中表示一个通用类型：
+
+```java
+class Box<T> {
+    private T value;
+}
+```
+
+**K (Key)** 和 **V (Value)**：表示键值对，通常在 Map 中使用：
+
+```java
+Map<K, V> map = new HashMap<>();
+Map<String, Integer> map = new HashMap<>();  // K=String, V=Integer
+```
+
+**E (Element)**：表示元素，通常在集合类中使用：
+
+```java
+List<E> list = new ArrayList<>();
+Set<E> set = new HashSet<>();
+```
+
+**? (通配符)**：表示不确定的类型，用于泛型的上下界限定：
+
+```java
+List<?> list;  // 可以接收任意类型的 List
+List<? extends Number> list;  // 只能接收 Number 及其子类
+List<? super Integer> list;  // 只能接收 Integer 及其父类
+```
+
+**Object**：这不是泛型参数，而是 Java 中所有类的父类。在泛型出现之前，我们用 Object 来实现通用性，但需要手动类型转换：
+
+```java
+// 使用 Object，需要强制转换
+List list = new ArrayList();
+list.add("hello");
+String s = (String) list.get(0);
+
+// 使用泛型，不需要转换
+List<String> list = new ArrayList<>();
+list.add("hello");
+String s = list.get(0);
+```
+
+需要注意的是，这些字母只是约定俗成的命名规范，你完全可以用其他字母，比如用 A、B、C，但为了代码可读性，建议遵循这些约定。
