@@ -478,4 +478,58 @@ list.add("hello");
 String s = list.get(0);
 ```
 
-需要注意的是，这些字母只是约定俗成的命名规范，你完全可以用其他字母，比如用 A、B、C，但为了代码可读性，建议遵循这些约定。
+## **泛型中上下界限定符extends 和 super有什么区别？**
+
+？ extends T 表示泛型的上界，？ 类型需要是T类型的子类
+？ super     T 表示泛型的下界，？ 类型需要是T类型的父类
+
+---
+
+## 泛型中上下界限定符 extends 和 super 有什么区别？
+
+extends 和 super 是泛型中用来限定类型范围的关键字，它们的区别主要体现在限定的方向和使用场景上。
+
+**? extends T（上界通配符）**
+
+表示泛型类型的上界，? 必须是 T 类型或 T 的子类。这种方式适合读取数据的场景：
+
+```java
+List<? extends Number> list = new ArrayList<Integer>();  // Integer 是 Number 的子类
+Number num = list.get(0);  // 可以读取，因为肯定是 Number 或其子类
+// list.add(new Integer(1));  // 编译错误！不能写入
+```
+
+为什么不能写入？因为编译器不知道 list 里具体是什么类型，可能是 `List<Integer>`，也可能是 `List<Double>`，为了类型安全，干脆禁止写入。
+
+**? super T（下界通配符）**
+
+表示泛型类型的下界，? 必须是 T 类型或 T 的父类。这种方式适合写入数据的场景：
+
+```java
+List<? super Integer> list = new ArrayList<Number>();  // Number 是 Integer 的父类
+list.add(new Integer(1));  // 可以写入 Integer 或其子类
+// Integer num = list.get(0);  // 编译错误！只能用 Object 接收
+Object obj = list.get(0);  // 只能用 Object 接收
+```
+
+为什么读取时只能用 Object？因为编译器不知道 list 里具体是什么类型，可能是 `List<Integer>`，也可能是 `List<Number>`，甚至是 `List<Object>`，所以只能用它们的共同父类 Object 来接收。
+
+**使用场景总结**
+
+记住一个口诀：**PECS 原则**（Producer Extends, Consumer Super）
+
+- 如果你需要从集合中读取数据（生产者），用 `? extends T`
+- 如果你需要往集合中写入数据（消费者），用 `? super T`
+
+举个实际例子：
+
+```java
+// 从 src 读取数据，复制到 dest
+public static <T> void copy(List<? super T> dest, List<? extends T> src) {
+    for (T item : src) {
+        dest.add(item);  // src 用 extends 读取，dest 用 super 写入
+    }
+}
+```
+
+这样设计既保证了类型安全，又提供了足够的灵活性。
