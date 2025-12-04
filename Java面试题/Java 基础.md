@@ -373,7 +373,7 @@ private static void lambda$main$0(String s) {
 
 **为什么不用匿名内部类？**
   
-种方式有明显的缺点：
+这种方式有明显的缺点：
 
 - 每个Lambda都会生成一个class文件，增加类加载开销
 - 性能较差，启动速度慢
