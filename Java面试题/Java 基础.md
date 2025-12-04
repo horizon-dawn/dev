@@ -533,3 +533,85 @@ public static <T> void copy(List<? super T> dest, List<? extends T> src) {
 ```
 
 这样设计既保证了类型安全，又提供了足够的灵活性。
+
+## **什么是SPI，和API有啥区别**
+
+---
+
+## 什么是 SPI，和 API 有什么区别？
+
+SPI（Service Provider Interface）是服务提供者接口，API（Application Programming Interface）是应用程序编程接口。它们最大的区别在于调用方向和使用场景不同。
+
+**API 的特点**
+
+API 是实现方提供接口并完成实现，调用方直接使用。调用流程是：调用方 → API 接口 → API 实现。
+
+举个例子，我们使用 JDBC 连接数据库：
+
+```java
+// 我们调用 API
+Connection conn = DriverManager.getConnection(url);
+Statement stmt = conn.createStatement();
+```
+
+这里我们是调用方，直接使用 JDBC 提供的 API。
+
+**SPI 的特点**
+
+SPI 是接口提供方定义接口规范，由第三方来实现，然后接口提供方通过某种机制来发现和加载这些实现。调用流程是：接口定义方 → SPI 接口 ← 第三方实现。
+
+还是 JDBC 的例子，但从另一个角度看：
+
+```java
+// Java 定义了 Driver 接口（SPI）
+public interface Driver {
+    Connection connect(String url, Properties info);
+}
+
+// MySQL 实现这个接口
+public class MySQLDriver implements Driver {
+    // 具体实现
+}
+
+// Oracle 实现这个接口
+public class OracleDriver implements Driver {
+    // 具体实现
+}
+```
+
+Java 只定义了 Driver 接口规范，具体实现由各个数据库厂商提供。Java 通过 SPI 机制自动发现和加载这些实现。
+
+**核心区别**
+
+调用方向不同：
+- API：我们调用别人提供的功能
+- SPI：别人实现我们定义的规范
+
+使用场景不同：
+- API：提供具体功能给别人用
+- SPI：定义扩展点，让别人来扩展
+
+**SPI 的实现机制**
+
+Java 的 SPI 机制通过 `ServiceLoader` 来实现。具体步骤：
+
+1. 在 `META-INF/services/` 目录下创建以接口全限定名命名的文件
+2. 文件内容是实现类的全限定名
+3. 使用 `ServiceLoader` 加载实现类
+
+```java
+// 加载所有 Driver 的实现
+ServiceLoader<Driver> loader = ServiceLoader.load(Driver.class);
+for (Driver driver : loader) {
+    // 使用具体的实现
+}
+```
+
+**常见的 SPI 应用**
+
+- JDBC 驱动加载
+- Spring Boot 的自动配置
+- Dubbo 的扩展机制
+- SLF4J 日志框架
+
+总结：API 是给别人用的，SPI 是让别人扩展的。API 关注功能实现，SPI 关注扩展性和插件化。
