@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Java 基础.md",
+                "file": "Java面试题/Java 基础.md",
                 "mode": "source",
                 "source": false
               },
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "477b2ab612aa52ac",
@@ -181,9 +181,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "cc1ff70e0676ebec",
+  "active": "4fd53e7e5022ce41",
   "lastOpenFiles": [
+    "Java面试题",
     "README.md",
-    "Java 基础.md"
+    "Java面试题/Java 基础.md"
   ]
 }
