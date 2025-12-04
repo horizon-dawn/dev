@@ -306,25 +306,80 @@ GBK编码 专门为中文设计的编码，使用2个字节编码一个汉字。
 
 ## **说几个常见的语法糖？**
 
-try with resources 使用try(资源){}资源只要实现了closeable接口，代码执行try完毕会自动调用close释放资源，而不需要收到调用close()进行资源的关闭。
-
-基本数据类型的自动装箱和自动拆箱。
-
-lambda表达式
-
-for-each
-
-...
-
-
+1. 自动装箱和拆箱（Autoboxing/Unboxing） 基本类型和包装类之间可以自动转换，编译器会自动调用valueOf()和xxxValue()方法：
+```java
+Integer i = 10;        // 自动装箱，等价于 Integer.valueOf(10)
+int j = i;             // 自动拆箱，等价于 i.intValue()
+```
+2. try-with-resources 自动资源管理，只要资源实现了AutoCloseable或Closeable接口，try执行完毕后会自动调用close()方法释放资源，不需要手动关闭：
+	```java
+	try (FileInputStream fis = new FileInputStream("file.txt")) {
+    // 使用资源
+	} // 自动调用fis.close()
+	```
+3. 增强for循环（for-each） 简化了集合和数组的遍历，编译器会将其转换为迭代器或普通for循环：
+```java
+for (String item : list) {
+    System.out.println(item);
+}
+```
+4. 泛型 编译时提供类型检查，运行时会进行类型擦除：
+```java
+List<String> list = new ArrayList<>();  // 编译后泛型信息会被擦除
+```
+5. 可变参数（Varargs） 方法可以接收不定数量的参数，编译器会将其转换为数组：
+```java
+public void method(String... args) {}  // 实际是 String[] args
+```
+6. Lambda表达式 简化了匿名内部类的写法，编译器会将其转换为函数式接口的实现：
+```java
+list.forEach(item -> System.out.println(item));
+```
+7. switch支持String和枚举 早期switch只支持整型，现在支持String和枚举，编译器会转换为if-else或整型switch。
+8. 枚举类型 看起来是特殊的类型，实际上编译后会生成继承自Enum的类。
 
 ## **Lambda表达式是如何实现的？**
 
 Lambda表达式是通过编译时将lambda转换成api调用实现的，底层为这个转换提供了api支持
 
+---
+Lambda表达式的实现比较复杂，它并不是简单的语法糖，而是通过invokedynamic指令和方法句柄来实现的。
 
+**实现机制**：
 
+**第一步：编译时转换**
 
+编译器在编译Lambda表达式时，会做两件事：
 
-## **什么是泛型？有什么好处？**
+1. 将Lambda表达式的代码体生成为一个私有静态方法（或实例方法）
+2. 在Lambda表达式的位置生成一个invokedynamic指令
 
+举个例子：
+```java
+List<String> list = Arrays.asList("a", "b", "c");
+list.forEach(s -> System.out.println(s));
+```
+
+编译后，Lambda体会被转换成类似这样的私有方法：
+
+```java
+private static void lambda$main$0(String s) {
+	System.out.println(s);
+}
+```
+**第二步：运行时动态链接**
+
+当程序第一次执行到Lambda表达式时，invokedynamic指令会调用Java提供的LambdaMetafactory工厂类，动态生成一个实现了函数式接口的内部类，这个内部类会调用前面生成的私有方法。
+
+**为什么不用匿名内部类？**
+  
+种方式有明显的缺点：
+
+- 每个Lambda都会生成一个class文件，增加类加载开销
+- 性能较差，启动速度慢
+
+使用invokedynamic的优势：
+
+- 延迟绑定，只在第一次使用时才生成实现类
+- 可以进行更多的运行时优化
+- 减少了class文件的数量
