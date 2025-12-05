@@ -354,8 +354,6 @@ private static void lambda$main$0(String s) {
 
 ---
 
-## 什么是泛型？有什么好处？
-
 泛型是 JDK 5 引入的类型参数化类型，允许在定义类、接口和方法时使用类型参数，使用时再指定具体类型。
 
 泛型主要有三个好处：
@@ -391,8 +389,6 @@ String s2 = (String) list2.get(0);  // 需要强制转换，容易出错
 类型擦除是指Java泛型在编译时被编译器将泛型参数转换成具体类型的过程。
 
 ---
-
-## 什么是类型擦除？
 
 类型擦除是 Java 泛型在编译时把泛型类型参数替换成具体类型的过程。
 
@@ -433,8 +429,6 @@ class Box {
 K 表示 key ；T 表示 Type ；V 表示Value；E 表示 Element ，一般在集合中使用；Object表示对象；
 
 ---
-
-## 泛型中 K T V E ? Object 等分别代表什么含义？
 
 这些都是泛型中常用的类型参数符号，它们本质上都是占位符，只是按照约定俗成的规范来命名，让代码更易读：
 
@@ -489,8 +483,6 @@ String s = list.get(0);
 
 ---
 
-## 泛型中上下界限定符 extends 和 super 有什么区别？
-
 extends 和 super 是泛型中用来限定类型范围的关键字，它们的区别主要体现在限定的方向和使用场景上。
 
 **? extends T（上界通配符）**
@@ -538,11 +530,9 @@ public static <T> void copy(List<? super T> dest, List<? extends T> src) {
 
 这样设计既保证了类型安全，又提供了足够的灵活性。
 
-## **什么是SPI，和API有啥区别**
+## ## 什么是 SPI，和 API 有什么区别？
 
 ---
-
-## 什么是 SPI，和 API 有什么区别？
 
 SPI（Service Provider Interface）是服务提供者接口，API（Application Programming Interface）是应用程序编程接口。它们最大的区别在于调用方向和使用场景不同。
 
