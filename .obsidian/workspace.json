@@ -14,11 +14,21 @@
               "type": "markdown",
               "state": {
                 "file": "Java面试题/Java 基础.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "Java 基础"
+            }
+          },
+          {
+            "id": "cd5957913ba5ae03",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
             }
           }
         ]
@@ -185,8 +195,8 @@
   },
   "active": "cc1ff70e0676ebec",
   "lastOpenFiles": [
-    "README.md",
     "Java面试题/Java 基础.md",
+    "README.md",
     "未命名.md",
     "未命名",
     "Java面试题"
