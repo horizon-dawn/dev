@@ -740,6 +740,66 @@ SimpleDateFormat 不是线程安全的。这是因为它内部使用了 Calendar
 
 第二，使用替代方案。推荐使用 Java 8 引入的 DateTimeFormatter，它是线程安全的，性能也更好：
 
+## char能存储中文吗？
+
+char能存储中文，java使用两个字节来存储一个字符，可以存储unicode中的字符，当然也包括大部分中文字符。
+
+---
+char 可以存储中文，但只能存储大部分常用中文字符。
+
+Java 中的 char 类型使用 2 个字节（16 位）来存储一个字符，采用 UTF-16 编码。
+
+## **while(true)和for(;;)哪个性能好？**
+
+emm 他们的性能一样好，因为底层是相通的都是使用 goto 实现的，反编译的字节码完全相同。
+
+## **ClassNotFoundException和NoClassDefFoundError的区别是什么？**
+
+他们有本质区别，一个是ClassNotFoundException异常，可以进行捕获和抛出，显式进行处理，而
+
+NoClassDefFoundError是一个错误，表示系统本身出现了严重错误。ClassNotFoundException 一般是写类的全类名时写错了导致的，比如加载JDBC驱动时 使用Class.forName("class name");
+
+ClassNotFoundException一般是缺少依赖或者类文件被破坏导致的。
+
+---
+
+这两者有本质区别，一个是异常（Exception），一个是错误（Error）。
+
+**ClassNotFoundException**
+
+这是一个受检异常，继承自 Exception。它发生在程序运行时尝试通过反射动态加载类，但找不到对应的类文件时。
+
+**NoClassDefFoundError**
+
+这是一个错误，继承自 Error。它发生在编译时类存在，但运行时 JVM 在类路径中找不到类定义时。常见原因包括：
+
+- 缺少依赖
+- 类文件缺失或者被破坏
+
+## **为什么JDK 9中把String的char\[]改成了byte\[]？**
+
+主要是为了节省内存空间。JDK 9 引入了紧凑字符串的概念，在String类中新增了coder字段，这个字段为true表示该字符串中的所有字符都可以使用一个字节表示，这时字节数组中每个字节表示一个字符。如果coder为false，那么就是每两个字节表示一个字符。
+
+---
+主要是为了节省内存空间，提升性能。
+
+在 JDK 9 之前，String 内部使用 char\[] 数组存储字符，每个 char 占用 2 个字节。但实际应用中，大部分字符串都是 Latin-1 字符（如英文、数字、常见符号），这些字符用 1 个字节就能表示。
+
+JDK 9 引入了紧凑字符串（Compact Strings）的概念，将 String 的内部存储从 char\[] 改为 byte\[]，并新增了一个 coder 字段来标识，是否所有字符都能使用一个字节表示，这个字段为true表示该字符串中的所有字符都可以使用一个字节表示，这时字节数组中每个字节表示一个字符。如果coder为false，那么就是每两个字节表示一个字符。‘
+
+## **String是如何实现不可变的？**
+
+final 修饰字符数组，防止数组引用指向发生改变，没有提供setter系列方法，防止数组内容发生改变，String类被final修饰，防止String类的方法被重写
+
+---
+**第一，类被 final 修饰**。String 类被声明为 final，这意味着它不能被继承，防止子类重写方法来破坏不可变性。
+
+**第二，内部数组被  final 修饰**。在 JDK 9 之前，String 内部使用 `private final char[] value` 存储字符；JDK 9 之后改为 `private final byte[] value`。final 关键字保证了数组引用不能被修改，即不能指向其他数组。
+
+**第三，没有提供修改方法**。String 类没有提供任何可以修改内部数组内容的 public 方法，所有看起来"修改"字符串的方法（如 substring、concat、replace）实际上都是创建并返回新的 String 对象，原字符串保持不变。
+
+**第四，内部数组私有且不暴露**。value 数组被声明为 private，外部无法直接访问。即使有返回字符数组的方法（如 toCharArray），也是返回数组的副本，而不是原数组的引用。
+
 
 
 ## **Java的动态代理如何实现？**
@@ -767,4 +827,10 @@ SimpleDateFormat 不是线程安全的。这是因为它内部使用了 Calendar
 
 
 ---
+
+## **什么是UUID，能保证唯一吗？**
+
+---
+
+
 
