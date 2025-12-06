@@ -1,10 +1,11 @@
-# Java 基础面试题（按知识点分类）
+# Java 基础面试题
 
 ---
-
 ## 一、Java 语言特性
 
+
 ### 1.1 Java 和 C++ 主要有哪些区别？分别有什么优缺点？
+
 
 Java 是平台无关的语言，通过 JVM 实现"一次编写，到处运行"；而 C++ 是平台相关的，需要针对不同平台编译。
 
@@ -61,12 +62,10 @@ System.out.println(sb);  // 输出 "helloworld"，不是 "new"
 
 这个例子说明：传递的是引用的副本，而不是引用本身。如果是真正的引用传递，重新赋值应该会影响外部变量。
 
-总结：Java 永远是值传递，只不过传递的"值"可能是基本类型的数值，也可能是引用类型的地址值。
-
 ---
 
-
 ## 二、面向对象
+
 
 ### 2.1 为什么 Java 不支持多继承？
 
@@ -117,7 +116,7 @@ list.add(1);
 
 ---
 
-#### **1. 子类构造器的默认行为**
+**1. 子类构造器的默认行为**
 
 子类的构造器会默认调用父类的无参构造函数。如果父类没有无参构造函数，子类必须显式调用父类的有参构造函数，否则编译报错。
 
@@ -176,7 +175,7 @@ public class Child extends Parent {
 
 ---
 
-#### **2. 序列化和反序列化的要求**
+**2. 序列化和反序列化的要求**
 
 很多序列化框架（如 Jackson、Gson、Hibernate）在反序列化时，会先通过反射调用无参构造函数创建对象，然后再通过反射设置字段值。
 
@@ -226,7 +225,7 @@ public class User {
 
 ---
 
-#### **3. JavaBean 规范要求**
+ **3. JavaBean 规范要求**
 
 JavaBean 规范明确要求：
 
@@ -273,7 +272,7 @@ public class Person implements Serializable {
 
 ---
 
-#### **4. 框架和工具的兼容性**
+ **4. 框架和工具的兼容性**
 
 许多 Java 框架和工具都依赖无参构造函数：
 
@@ -306,7 +305,7 @@ public class User {
 
 ---
 
-#### **5. 反射操作的便利性**
+ **5. 反射操作的便利性**
 
 使用反射创建对象时，如果有无参构造函数会更加方便：
 
@@ -322,7 +321,7 @@ User user = (User) constructor.newInstance("张三", 25);
 
 ---
 
-#### **重要提醒**
+ **重要提醒**
 
 **Java 的默认行为：**
 
@@ -355,7 +354,7 @@ B b = new B();  // 编译错误！没有无参构造函数
 
 ---
 
-#### **最佳实践**
+**最佳实践**
 
 1. **总是显式定义无参构造函数**：即使编译器会自动生成，也建议显式定义，提高代码可读性
 
@@ -392,7 +391,7 @@ public class User {
 
 ---
 
-#### **总结**
+ **总结**
 
 建议自定义无参构造函数的原因：
 
@@ -409,8 +408,6 @@ public class User {
 ### 2.5 为什么 Java 中的 main 方法必须是 public static void 的？
 
 Java 的 main 方法必须遵循固定的签名格式：`public static void main(String[] args)`，这是为了满足 JVM 的调用需要。
-
----
 
 ---
 
@@ -552,7 +549,7 @@ java CommandLineDemo hello world 123
 ---
 
 
-#### **可以重载 main 方法吗？**
+**可以重载 main 方法吗？**
 
 **可以，但只有标准签名的 main 方法会被 JVM 调用**
 
@@ -582,7 +579,7 @@ public class MainOverload {
 
 ---
 
-#### **Java 21+ 的简化（预览特性）**
+ **Java 21+ 的简化（预览特性）**
 
 Java 21 引入了简化的 main 方法（预览特性），用于简单的程序：
 
@@ -597,7 +594,198 @@ void main() {
 
 ---
 
+### 2.6 有了 equals 为什么还需要 hashCode 方法？
+
+这是一个非常重要的面试题，涉及到 Java 对象相等性判断和哈希表的工作原理。
+
+**核心原因：为了保证哈希表（HashMap、HashSet 等）的正确性和性能。**
+
+### 2.7 反射与封装是否矛盾？如何解决反射破坏封装的问题？
+
+反射虽然会打破封装，但并不矛盾，两者是为了不同的目的而设计的。
+
+封装是面向对象的三大特征之一，目的是对内隐藏实现细节、对外暴露安全接口，保护类的内部状态不被随意访问和修改。而反射是 Java 提供的在运行时动态获取类信息、操作类成员的机制，它的设计初衷是为了提供灵活性和扩展性。
+
+虽然反射会导致性能下降，但在某些特定场景下是必需的，比如框架设计（Spring、MyBatis）、序列化和反序列化、JDK 动态代理、注解处理等。这些场景需要在运行时动态操作对象，如果没有反射，很多强大的功能都无法实现。
+
+**如何解决反射带来的安全问题？**
+
+第一，遵循最小化反射原则。只在必须使用反射的地方才使用，能用普通方法调用就不用反射。核心业务逻辑尽量避免使用反射，将反射操作限制在框架层或工具类中。
+
+第二，建立反射白名单机制。明确哪些类、哪些方法允许被反射访问，限定反射的范围。可以通过配置文件或注解来标记允许反射的类和方法，在运行时进行检查。
+
+第三，严格的代码审查。在 Code Review 时对反射代码进行严格审查，确保反射的使用是合理且必要的。检查是否有更好的替代方案，评估反射带来的性能影响和安全风险。
+
+第四，使用安全管理器。在需要高安全性的环境中，可以通过 Java 安全管理器（SecurityManager）限制反射操作，禁止对敏感类和方法的反射访问。
+
+第五，日志和监控。对反射操作进行日志记录，监控反射的使用情况，及时发现异常的反射行为。
+
+总的来说，反射和封装并不矛盾，而是在不同层面服务于不同的目的。合理使用反射，配合必要的安全措施，可以在保证灵活性的同时，最大程度地维护封装性和安全性。
+
+---
+
+
+---
+
+**Java 的约定（equals 和 hashCode 契约）**
+
+Java 规定了 equals 和 hashCode 之间必须遵守的契约：
+
+1. **如果两个对象 equals 相等，那么它们的 hashCode 必须相同**
+2. **如果两个对象 hashCode 相同，它们不一定 equals 相等**（哈希冲突）
+3. **如果重写了 equals 方法，就必须重写 hashCode 方法**
+
+**用一句话总结：**
+- equals 相等 → hashCode 必须相同
+- hashCode 相同 → equals 不一定相等
+
+---
+
+ **为什么需要 hashCode？**
+
+**1. 提高性能**
+
+hashCode 提供了一种快速定位对象的方式。HashMap、HashSet 等集合使用哈希表存储数据，查找过程分两步：
+
+```
+第一步：通过 hashCode() 快速定位到桶（bucket）- O(1)
+第二步：在桶内通过 equals() 精确比较 - O(k)，k 是桶内元素数量
+```
+
+如果没有 hashCode，就需要遍历所有元素用 equals 逐个比较，时间复杂度是 O(n)。
+
+**2. 保证数据准确性**
+
+equals 相等的对象必须有相同的 hashCode，这样才能保证在哈希表中能正确找到对象。
+
+---
+
+ **如果只重写 equals 不重写 hashCode 会怎样？**
+
+**问题示例：**
+
+```java
+public class Person {
+    private String name;
+    private int age;
+    
+    // 只重写了 equals
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Person person = (Person) obj;
+        return age == person.age && Objects.equals(name, person.name);
+    }
+    
+    // 没有重写 hashCode，使用 Object 的默认实现（基于内存地址）
+}
+
+// 使用
+Person p1 = new Person("张三", 25);
+Person p2 = new Person("张三", 25);
+
+System.out.println(p1.equals(p2));  // true，equals 判断相等
+
+// 放入 HashMap
+HashMap<Person, String> map = new HashMap<>();
+map.put(p1, "工程师");
+System.out.println(map.get(p2));  // null！无法获取到值
+```
+
+**为什么 get 返回 null？**
+
+1. p1 和 p2 虽然 equals 相等，但 hashCode 不同（基于不同的内存地址）
+2. put(p1) 时，根据 p1.hashCode() 存储在某个桶中
+3. get(p2) 时，根据 p2.hashCode() 去另一个桶中查找
+4. 两个桶不同，所以找不到，返回 null
+
+**这违反了 Java 的契约，导致哈希表无法正常工作！**
+
+---
+
+ **正确的做法：同时重写 equals 和 hashCode**
+
+```java
+public class Person {
+    private String name;
+    private int age;
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Person person = (Person) obj;
+        return age == person.age && Objects.equals(name, person.name);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);  // 使用相同的字段计算 hashCode
+    }
+}
+
+// 使用
+Person p1 = new Person("张三", 25);
+Person p2 = new Person("张三", 25);
+
+System.out.println(p1.equals(p2));  // true
+System.out.println(p1.hashCode() == p2.hashCode());  // true
+
+HashMap<Person, String> map = new HashMap<>();
+map.put(p1, "工程师");
+System.out.println(map.get(p2));  // "工程师"，正常工作！
+```
+
+---
+
+ **hashCode 的设计原则**
+
+1. **一致性**：同一个对象多次调用 hashCode() 必须返回相同的值
+2. **相等性**：equals 相等的对象，hashCode 必须相同
+3. **高效性**：hashCode 的计算应该快速
+4. **分散性**：不同对象的 hashCode 应该尽量分散，减少哈希冲突
+
+**推荐的 hashCode 实现：**
+
+```java
+@Override
+public int hashCode() {
+    // 推荐：使用 Objects.hash() 工具方法
+    return Objects.hash(name, age, email);
+}
+
+// 或者使用 Lombok
+@Data  // 自动生成 equals、hashCode、getter、setter 等
+public class Person {
+    private String name;
+    private int age;
+}
+```
+
+---
+
+ **总结**
+
+**为什么需要 hashCode？**
+
+1. **性能优化**：提供快速定位能力，O(1) 时间复杂度
+2. **契约要求**：equals 相等的对象必须有相同的 hashCode
+3. **哈希表正确性**：保证 HashMap、HashSet 等集合正常工作
+4. **数据准确性**：确保逻辑上相等的对象在哈希表中能被正确找到
+
+**记住三个原则：**
+1. equals 相等 → hashCode 必须相同
+2. hashCode 相同 → equals 不一定相等
+3. 重写 equals 必须重写 hashCode
+
+**最佳实践：**
+- 使用 IDE 或 Lombok 自动生成
+- 使用 `Objects.hash()` 工具方法
+- equals 和 hashCode 使用相同的字段
+
 ## 三、基本类型与包装类
+
 
 ### 3.1 Java 中有了基本类型为什么还需要包装类？
 
@@ -692,6 +880,92 @@ System.out.println(c1 + " " + c2);  // 输出：中 文
 
 ---
 
+### 3.8  Integer a = 1000, Integer b = 1000, a == b 是什么结果？如果是 100 呢？
+
+当 a、b 的值都是 1000 时，`a == b` 返回 **false**；当 a、b 的值都是 100 时，`a == b` 返回 **true**。
+
+这是因为 Integer 类内部有一个静态内部类 IntegerCache，它会缓存 -128 到 127 之间的 Integer 对象。当我们使用自动装箱创建 Integer 对象时，如果值在这个范围内，会直接返回缓存中的对象；如果超出这个范围，则会创建新的对象。
+
+由于 `==` 比较的是对象的引用地址，而不是对象的值，所以：
+
+- 当值为 100 时，a 和 b 都指向缓存中的同一个对象，`a == b` 返回 true
+- 当值为 1000 时，a 和 b 是两个不同的对象，`a == b` 返回 false
+
+**代码示例：**
+
+```java
+// 值在缓存范围内（-128 到 127）
+Integer a = 100;
+Integer b = 100;
+System.out.println(a == b);  // true，指向同一个缓存对象
+
+// 值超出缓存范围
+Integer c = 1000;
+Integer d = 1000;
+System.out.println(c == d);  // false，创建了两个不同的对象
+
+// 使用 equals 比较值
+System.out.println(c.equals(d));  // true，比较的是值
+```
+
+**IntegerCache 的实现：**
+
+```java
+private static class IntegerCache {
+    static final int low = -128;
+    static final int high = 127;
+    static final Integer cache[];
+
+    static {
+        // 创建缓存数组
+        cache = new Integer[(high - low) + 1];
+        int j = low;
+        for(int k = 0; k < cache.length; k++)
+            cache[k] = new Integer(j++);
+    }
+}
+
+public static Integer valueOf(int i) {
+    // 如果在缓存范围内，返回缓存对象
+    if (i >= IntegerCache.low && i <= IntegerCache.high)
+        return IntegerCache.cache[i + (-IntegerCache.low)];
+    // 否则创建新对象
+    return new Integer(i);
+}
+```
+
+**重要提醒：**
+
+1. **比较 Integer 的值应该用 equals**，而不是 `==`，因为 `==` 比较的是引用地址
+2. **其他包装类也有类似的缓存机制**：
+   - Byte、Short、Integer、Long：缓存 -128 到 127
+   - Character：缓存 0 到 127
+   - Boolean：缓存 true 和 false
+3. **自动装箱会调用 valueOf 方法**，所以会使用缓存
+4. **使用 new Integer() 不会使用缓存**，总是创建新对象（但这种方式已被废弃）
+
+**最佳实践：**
+
+```java
+// 推荐：使用 equals 比较值
+Integer a = 1000;
+Integer b = 1000;
+if (a.equals(b)) {  // 正确
+    System.out.println("值相等");
+}
+
+// 不推荐：使用 == 比较包装类
+if (a == b) {  // 错误！可能得到意外结果
+    System.out.println("引用相等");
+}
+
+// 如果需要比较引用，应该明确说明
+if (a == b) {
+    System.out.println("指向同一个对象");
+}
+```
+
+---
 
 ## 四、String 类
 
@@ -874,7 +1148,7 @@ System.out.println(s2);  // 输出 "hello world"
 
 
 
-## 4.9 **怎么修改一个类中的private修饰的String参数的值**
+### 4.9 **怎么修改一个类中的private修饰的String参数的值**
 
 String 类是不可变的，一旦创建字符串就不会改变了，如果改变引用的指向也算修改的话，可以提供setter方法暴露接口来修改，也可以使用反射打破封装来修改。
 
@@ -908,6 +1182,119 @@ String 类是不可变的，一旦创建字符串就不会改变了，如果改�
 
 ---
 
+### 14.10 JDK 9 中对字符串拼接做了什么优化？
+
+JDK 9 引入了一个重要的字符串拼接优化，将拼接策略从编译期固定改为运行期动态选择，这个优化被称为 **Indify String Concatenation**（动态字符串拼接）。
+
+---
+
+ **JDK 8 及之前的做法**
+
+在 JDK 8 及之前，编译器会在编译期将字符串拼接操作直接转换为 StringBuilder 的调用。
+
+**JDK 8 的问题：**
+
+1. **策略固定**：编译器在编译期就决定了使用 StringBuilder，无法根据运行时的实际情况优化
+2. **无法适应变化**：如果未来有更好的拼接实现（如 Java 9 的紧凑字符串），需要重新编译代码才能使用
+3. **优化空间有限**：编译器无法根据字符串的特点（长度、类型等）选择最优策略
+
+---
+
+ **JDK 9 的优化**
+
+JDK 9 使用 **invokedynamic** 指令和 **StringConcatFactory** 将拼接策略推迟到运行期决定。编译后生成 invokedynamic 指令，运行时由 StringConcatFactory 动态选择拼接策略。
+
+
+**运行时的策略选择：**
+
+JDK 9 的 `StringConcatFactory` 可以根据字符串的特点动态选择最优的拼接方式：
+
+1. **简单拼接**：直接使用字节数组拷贝，避免创建 StringBuilder 对象
+2. **复杂拼接**：使用 StringBuilder 或其他高效方式
+3. **常量折叠**：对于编译期可确定的常量，直接合并
+4. **紧凑字符串优化**：利用 JDK 9 的紧凑字符串特性（Latin-1 编码）
+
+---
+
+ **优化带来的好处**
+
+**1. 性能提升**
+
+根据字符串特点选择最优策略，避免不必要的对象创建：
+
+```java
+// 简单拼接：JDK 9 可以直接使用字节数组拷贝
+String s = "Hello" + "World";  // 更快
+
+// 复杂拼接：JDK 9 会选择合适的策略
+String s = str1 + str2 + str3 + str4;  // 根据情况优化
+```
+
+**2. 更好的适应性**
+
+运行时决策意味着可以利用最新的 JVM 优化，无需重新编译代码：
+
+- 自动利用紧凑字符串（Compact Strings）特性
+- 未来的 JVM 优化可以直接生效
+- 可以根据硬件特性（CPU、内存）动态调整
+
+**3. 代码更简洁**
+
+字节码更简洁，减少了 class 文件大小：
+
+```java
+// JDK 8：生成大量 StringBuilder 相关的字节码
+// JDK 9：只生成一个 invokedynamic 指令
+```
+
+---
+
+ **技术细节**
+
+**invokedynamic 指令**
+
+JDK 9 使用 invokedynamic 指令实现动态方法调用：
+
+```java
+// 源代码
+String s = a + b + c;
+
+// JDK 8 字节码（简化）
+new StringBuilder
+dup
+invokespecial StringBuilder.<init>
+aload a
+invokevirtual StringBuilder.append
+aload b
+invokevirtual StringBuilder.append
+aload c
+invokevirtual StringBuilder.append
+invokevirtual StringBuilder.toString
+
+// JDK 9 字节码（简化）
+aload a
+aload b
+aload c
+invokedynamic makeConcatWithConstants  // 动态调用
+```
+
+**StringConcatFactory**
+
+运行时由 `StringConcatFactory` 类负责选择拼接策略：
+
+```java
+public final class StringConcatFactory {
+    // 根据参数类型和数量选择最优策略
+    public static CallSite makeConcatWithConstants(...) {
+        // 策略1：简单拼接，直接字节数组操作
+        // 策略2：使用 StringBuilder
+        // 策略3：使用 MethodHandle
+        // ...
+    }
+}
+```
+
+---
 ## 五、泛型
 
 ### 5.1 什么是泛型？有什么好处？
@@ -2161,76 +2548,8 @@ Timer 通过优先级队列（最小堆）+ 单后台线程实现定时调度，
 
 ---
 
-## 十三、待补充问题
 
-以下问题待补充详细答案：
-
-### 13.1 Java 的动态代理如何实现？
-
-（待补充）
-
----
-
-### 13.2 Java 序列化的原理是什么？
-
-（待补充）
-
----
-
-### 13.3 serialVersionUID 有何用途？如果没定义会有什么问题？
-
-（待补充）
-
----
-
-### 13.4 你知道 fastjson 的反序列化漏洞吗？
-
-（待补充）
-
----
-
-### 13.5 什么是 AIO、BIO 和 NIO？
-
-（待补充）
-
----
-
-### 13.6 什么是深拷贝和浅拷贝？
-
-（待补充）
-
----
-
-### 13.7 什么是 UUID，能保证唯一吗？
-
-（待补充）
-
----
-
-## **13.8 String中intern的原理是什么？**
-
-（待补充）
-
----
-
-## 13.9 什么是序列化与反序列化
-
-（待补充）
-
----
-
-## 14.0 **为什么建议多用组合少用继承？**
-待补充）
-
----
-
-## **BigDecimal和Long表示金额哪个更合适，怎么选择？**
-
-（待补充）
-
----
-
-### 13.10 Stream 的并行流一定比串行流更快吗？
+### 12.5 Stream 的并行流一定比串行流更快吗？
 
 不一定，并行流并不总是比串行流快，在某些场景下甚至会更慢。
 
@@ -2336,491 +2655,72 @@ List<Integer> result = list.parallelStream()
 
 ---
 
-## 补充：equals 和 hashCode
 
-### 有了 equals 为什么还需要 hashCode 方法？
+## 十三、待补充问题
 
-这是一个非常重要的面试题，涉及到 Java 对象相等性判断和哈希表的工作原理。
+以下问题待补充详细答案：
 
-**核心原因：为了保证哈希表（HashMap、HashSet 等）的正确性和性能。**
+### 13.1 Java 的动态代理如何实现？
 
----
-
-#### **Java 的约定（equals 和 hashCode 契约）**
-
-Java 规定了 equals 和 hashCode 之间必须遵守的契约：
-
-1. **如果两个对象 equals 相等，那么它们的 hashCode 必须相同**
-2. **如果两个对象 hashCode 相同，它们不一定 equals 相等**（哈希冲突）
-3. **如果重写了 equals 方法，就必须重写 hashCode 方法**
-
-**用一句话总结：**
-- equals 相等 → hashCode 必须相同
-- hashCode 相同 → equals 不一定相等
+（待补充）
 
 ---
 
-#### **为什么需要 hashCode？**
+### 13.2 Java 序列化的原理是什么？
 
-**1. 提高性能**
-
-hashCode 提供了一种快速定位对象的方式。HashMap、HashSet 等集合使用哈希表存储数据，查找过程分两步：
-
-```
-第一步：通过 hashCode() 快速定位到桶（bucket）- O(1)
-第二步：在桶内通过 equals() 精确比较 - O(k)，k 是桶内元素数量
-```
-
-如果没有 hashCode，就需要遍历所有元素用 equals 逐个比较，时间复杂度是 O(n)。
-
-**2. 保证数据准确性**
-
-equals 相等的对象必须有相同的 hashCode，这样才能保证在哈希表中能正确找到对象。
+（待补充）
 
 ---
 
-#### **如果只重写 equals 不重写 hashCode 会怎样？**
+### 13.3 serialVersionUID 有何用途？如果没定义会有什么问题？
 
-**问题示例：**
-
-```java
-public class Person {
-    private String name;
-    private int age;
-    
-    // 只重写了 equals
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Person person = (Person) obj;
-        return age == person.age && Objects.equals(name, person.name);
-    }
-    
-    // 没有重写 hashCode，使用 Object 的默认实现（基于内存地址）
-}
-
-// 使用
-Person p1 = new Person("张三", 25);
-Person p2 = new Person("张三", 25);
-
-System.out.println(p1.equals(p2));  // true，equals 判断相等
-
-// 放入 HashMap
-HashMap<Person, String> map = new HashMap<>();
-map.put(p1, "工程师");
-System.out.println(map.get(p2));  // null！无法获取到值
-```
-
-**为什么 get 返回 null？**
-
-1. p1 和 p2 虽然 equals 相等，但 hashCode 不同（基于不同的内存地址）
-2. put(p1) 时，根据 p1.hashCode() 存储在某个桶中
-3. get(p2) 时，根据 p2.hashCode() 去另一个桶中查找
-4. 两个桶不同，所以找不到，返回 null
-
-**这违反了 Java 的契约，导致哈希表无法正常工作！**
+（待补充）
 
 ---
 
-#### **正确的做法：同时重写 equals 和 hashCode**
+### 13.4 你知道 fastjson 的反序列化漏洞吗？
 
-```java
-public class Person {
-    private String name;
-    private int age;
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Person person = (Person) obj;
-        return age == person.age && Objects.equals(name, person.name);
-    }
-    
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, age);  // 使用相同的字段计算 hashCode
-    }
-}
-
-// 使用
-Person p1 = new Person("张三", 25);
-Person p2 = new Person("张三", 25);
-
-System.out.println(p1.equals(p2));  // true
-System.out.println(p1.hashCode() == p2.hashCode());  // true
-
-HashMap<Person, String> map = new HashMap<>();
-map.put(p1, "工程师");
-System.out.println(map.get(p2));  // "工程师"，正常工作！
-```
+（待补充）
 
 ---
 
-#### **hashCode 的设计原则**
+### 13.5 什么是 AIO、BIO 和 NIO？
 
-1. **一致性**：同一个对象多次调用 hashCode() 必须返回相同的值
-2. **相等性**：equals 相等的对象，hashCode 必须相同
-3. **高效性**：hashCode 的计算应该快速
-4. **分散性**：不同对象的 hashCode 应该尽量分散，减少哈希冲突
-
-**推荐的 hashCode 实现：**
-
-```java
-@Override
-public int hashCode() {
-    // 推荐：使用 Objects.hash() 工具方法
-    return Objects.hash(name, age, email);
-}
-
-// 或者使用 Lombok
-@Data  // 自动生成 equals、hashCode、getter、setter 等
-public class Person {
-    private String name;
-    private int age;
-}
-```
+（待补充）
 
 ---
 
-#### **总结**
+### 13.6 什么是深拷贝和浅拷贝？
 
-**为什么需要 hashCode？**
-
-1. **性能优化**：提供快速定位能力，O(1) 时间复杂度
-2. **契约要求**：equals 相等的对象必须有相同的 hashCode
-3. **哈希表正确性**：保证 HashMap、HashSet 等集合正常工作
-4. **数据准确性**：确保逻辑上相等的对象在哈希表中能被正确找到
-
-**记住三个原则：**
-1. equals 相等 → hashCode 必须相同
-2. hashCode 相同 → equals 不一定相等
-3. 重写 equals 必须重写 hashCode
-
-**最佳实践：**
-- 使用 IDE 或 Lombok 自动生成
-- 使用 `Objects.hash()` 工具方法
-- equals 和 hashCode 使用相同的字段
-
-
-### 13.11 JDK 9 中对字符串拼接做了什么优化？
-
-JDK 9 引入了一个重要的字符串拼接优化，将拼接策略从编译期固定改为运行期动态选择，这个优化被称为 **Indify String Concatenation**（动态字符串拼接）。
+（待补充）
 
 ---
 
-#### **JDK 8 及之前的做法**
+### 13.7 什么是 UUID，能保证唯一吗？
 
-在 JDK 8 及之前，编译器会在编译期将字符串拼接操作直接转换为 StringBuilder 的调用。
-
-**示例代码：**
-
-```java
-String result = "Hello" + " " + "World" + "!";
-```
-
-**JDK 8 编译后的字节码等价于：**
-
-```java
-String result = new StringBuilder()
-    .append("Hello")
-    .append(" ")
-    .append("World")
-    .append("!")
-    .toString();
-```
-
-**JDK 8 的问题：**
-
-1. **策略固定**：编译器在编译期就决定了使用 StringBuilder，无法根据运行时的实际情况优化
-2. **无法适应变化**：如果未来有更好的拼接实现（如 Java 9 的紧凑字符串），需要重新编译代码才能使用
-3. **优化空间有限**：编译器无法根据字符串的特点（长度、类型等）选择最优策略
+（待补充）
 
 ---
 
-#### **JDK 9 的优化**
+### **13.8 String中intern的原理是什么？**
 
-JDK 9 使用 **invokedynamic** 指令和 **StringConcatFactory** 将拼接策略推迟到运行期决定。
-
-**JDK 9 编译后的字节码：**
-
-```java
-String result = "Hello" + " " + "World" + "!";
-// 编译后生成 invokedynamic 指令
-// 运行时由 StringConcatFactory 动态选择拼接策略
-```
-
-**运行时的策略选择：**
-
-JDK 9 的 `StringConcatFactory` 可以根据字符串的特点动态选择最优的拼接方式：
-
-1. **简单拼接**：直接使用字节数组拷贝，避免创建 StringBuilder 对象
-2. **复杂拼接**：使用 StringBuilder 或其他高效方式
-3. **常量折叠**：对于编译期可确定的常量，直接合并
-4. **紧凑字符串优化**：利用 JDK 9 的紧凑字符串特性（Latin-1 编码）
+（待补充）
 
 ---
 
-#### **优化带来的好处**
+### 13.9 什么是序列化与反序列化
 
-**1. 性能提升**
-
-根据字符串特点选择最优策略，避免不必要的对象创建：
-
-```java
-// 简单拼接：JDK 9 可以直接使用字节数组拷贝
-String s = "Hello" + "World";  // 更快
-
-// 复杂拼接：JDK 9 会选择合适的策略
-String s = str1 + str2 + str3 + str4;  // 根据情况优化
-```
-
-**2. 更好的适应性**
-
-运行时决策意味着可以利用最新的 JVM 优化，无需重新编译代码：
-
-- 自动利用紧凑字符串（Compact Strings）特性
-- 未来的 JVM 优化可以直接生效
-- 可以根据硬件特性（CPU、内存）动态调整
-
-**3. 代码更简洁**
-
-字节码更简洁，减少了 class 文件大小：
-
-```java
-// JDK 8：生成大量 StringBuilder 相关的字节码
-// JDK 9：只生成一个 invokedynamic 指令
-```
+（待补充）
 
 ---
 
-#### **性能对比**
-
-**测试代码：**
-
-```java
-// 简单拼接测试
-public static void testSimpleConcat() {
-    long start = System.nanoTime();
-    for (int i = 0; i < 1_000_000; i++) {
-        String s = "Hello" + " " + "World";
-    }
-    long end = System.nanoTime();
-    System.out.println("耗时：" + (end - start) / 1_000_000 + "ms");
-}
-
-// 复杂拼接测试
-public static void testComplexConcat(String s1, String s2, String s3) {
-    long start = System.nanoTime();
-    for (int i = 0; i < 1_000_000; i++) {
-        String s = s1 + s2 + s3 + i;
-    }
-    long end = System.nanoTime();
-    System.out.println("耗时：" + (end - start) / 1_000_000 + "ms");
-}
-```
-
-**性能提升：**
-- 简单拼接：JDK 9 比 JDK 8 快约 10-20%
-- 复杂拼接：JDK 9 比 JDK 8 快约 5-15%
-- 内存占用：减少约 10-15%
+### 13.10 **为什么建议多用组合少用继承？**
+待补充）
 
 ---
 
-#### **技术细节**
+## **13.11 BigDecimal和Long表示金额哪个更合适，怎么选择？**
 
-**invokedynamic 指令**
-
-JDK 9 使用 invokedynamic 指令实现动态方法调用：
-
-```java
-// 源代码
-String s = a + b + c;
-
-// JDK 8 字节码（简化）
-new StringBuilder
-dup
-invokespecial StringBuilder.<init>
-aload a
-invokevirtual StringBuilder.append
-aload b
-invokevirtual StringBuilder.append
-aload c
-invokevirtual StringBuilder.append
-invokevirtual StringBuilder.toString
-
-// JDK 9 字节码（简化）
-aload a
-aload b
-aload c
-invokedynamic makeConcatWithConstants  // 动态调用
-```
-
-**StringConcatFactory**
-
-运行时由 `StringConcatFactory` 类负责选择拼接策略：
-
-```java
-public final class StringConcatFactory {
-    // 根据参数类型和数量选择最优策略
-    public static CallSite makeConcatWithConstants(...) {
-        // 策略1：简单拼接，直接字节数组操作
-        // 策略2：使用 StringBuilder
-        // 策略3：使用 MethodHandle
-        // ...
-    }
-}
-```
-
----
-
-#### **使用建议**
-
-1. **升级到 JDK 9+**：自动享受字符串拼接优化，无需修改代码
-2. **避免手动 StringBuilder**：简单拼接直接用 `+` 即可，JDK 9 会自动优化
-3. **循环中仍需注意**：循环内的拼接仍建议手动使用 StringBuilder
-
-**示例：**
-
-```java
-// 推荐：简单拼接直接用 +
-String s = name + ": " + age + " years old";  // JDK 9 会自动优化
-
-// 不推荐：手动 StringBuilder（除非在循环中）
-StringBuilder sb = new StringBuilder();
-sb.append(name).append(": ").append(age).append(" years old");
-String s = sb.toString();
-
-// 循环中仍需手动 StringBuilder
-StringBuilder sb = new StringBuilder();
-for (int i = 0; i < 1000; i++) {
-    sb.append(i).append(",");  // 循环中必须手动
-}
-```
-
----
-
-#### **总结**
-
-JDK 9 的字符串拼接优化将策略选择从编译期推迟到运行期，通过 invokedynamic 和 StringConcatFactory 实现动态策略选择。这带来了以下好处：
-
-1. **性能提升**：根据字符串特点选择最优策略，减少对象创建
-2. **更好的适应性**：自动利用最新的 JVM 优化和硬件特性
-3. **代码更简洁**：字节码更简洁，class 文件更小
-4. **向后兼容**：无需修改代码，升级 JDK 即可享受优化
-
-这是 JDK 9 在性能优化方面的一个重要改进，体现了 Java 在保持向后兼容的同时不断优化性能的设计理念。
-
----
-
-### 13.12 反射与封装是否矛盾？如何解决反射破坏封装的问题？
-
-反射虽然会打破封装，但并不矛盾，两者是为了不同的目的而设计的。
-
-封装是面向对象的三大特征之一，目的是对内隐藏实现细节、对外暴露安全接口，保护类的内部状态不被随意访问和修改。而反射是 Java 提供的在运行时动态获取类信息、操作类成员的机制，它的设计初衷是为了提供灵活性和扩展性。
-
-虽然反射会导致性能下降，但在某些特定场景下是必需的，比如框架设计（Spring、MyBatis）、序列化和反序列化、JDK 动态代理、注解处理等。这些场景需要在运行时动态操作对象，如果没有反射，很多强大的功能都无法实现。
-
-**如何解决反射带来的安全问题？**
-
-第一，遵循最小化反射原则。只在必须使用反射的地方才使用，能用普通方法调用就不用反射。核心业务逻辑尽量避免使用反射，将反射操作限制在框架层或工具类中。
-
-第二，建立反射白名单机制。明确哪些类、哪些方法允许被反射访问，限定反射的范围。可以通过配置文件或注解来标记允许反射的类和方法，在运行时进行检查。
-
-第三，严格的代码审查。在 Code Review 时对反射代码进行严格审查，确保反射的使用是合理且必要的。检查是否有更好的替代方案，评估反射带来的性能影响和安全风险。
-
-第四，使用安全管理器。在需要高安全性的环境中，可以通过 Java 安全管理器（SecurityManager）限制反射操作，禁止对敏感类和方法的反射访问。
-
-第五，日志和监控。对反射操作进行日志记录，监控反射的使用情况，及时发现异常的反射行为。
-
-总的来说，反射和封装并不矛盾，而是在不同层面服务于不同的目的。合理使用反射，配合必要的安全措施，可以在保证灵活性的同时，最大程度地维护封装性和安全性。
-
----
-
-### 13.13 Integer a = 1000, Integer b = 1000, a == b 是什么结果？如果是 100 呢？
-
-当 a、b 的值都是 1000 时，`a == b` 返回 **false**；当 a、b 的值都是 100 时，`a == b` 返回 **true**。
-
-这是因为 Integer 类内部有一个静态内部类 IntegerCache，它会缓存 -128 到 127 之间的 Integer 对象。当我们使用自动装箱创建 Integer 对象时，如果值在这个范围内，会直接返回缓存中的对象；如果超出这个范围，则会创建新的对象。
-
-由于 `==` 比较的是对象的引用地址，而不是对象的值，所以：
-
-- 当值为 100 时，a 和 b 都指向缓存中的同一个对象，`a == b` 返回 true
-- 当值为 1000 时，a 和 b 是两个不同的对象，`a == b` 返回 false
-
-**代码示例：**
-
-```java
-// 值在缓存范围内（-128 到 127）
-Integer a = 100;
-Integer b = 100;
-System.out.println(a == b);  // true，指向同一个缓存对象
-
-// 值超出缓存范围
-Integer c = 1000;
-Integer d = 1000;
-System.out.println(c == d);  // false，创建了两个不同的对象
-
-// 使用 equals 比较值
-System.out.println(c.equals(d));  // true，比较的是值
-```
-
-**IntegerCache 的实现：**
-
-```java
-private static class IntegerCache {
-    static final int low = -128;
-    static final int high = 127;
-    static final Integer cache[];
-
-    static {
-        // 创建缓存数组
-        cache = new Integer[(high - low) + 1];
-        int j = low;
-        for(int k = 0; k < cache.length; k++)
-            cache[k] = new Integer(j++);
-    }
-}
-
-public static Integer valueOf(int i) {
-    // 如果在缓存范围内，返回缓存对象
-    if (i >= IntegerCache.low && i <= IntegerCache.high)
-        return IntegerCache.cache[i + (-IntegerCache.low)];
-    // 否则创建新对象
-    return new Integer(i);
-}
-```
-
-**重要提醒：**
-
-1. **比较 Integer 的值应该用 equals**，而不是 `==`，因为 `==` 比较的是引用地址
-2. **其他包装类也有类似的缓存机制**：
-   - Byte、Short、Integer、Long：缓存 -128 到 127
-   - Character：缓存 0 到 127
-   - Boolean：缓存 true 和 false
-3. **自动装箱会调用 valueOf 方法**，所以会使用缓存
-4. **使用 new Integer() 不会使用缓存**，总是创建新对象（但这种方式已被废弃）
-
-**最佳实践：**
-
-```java
-// 推荐：使用 equals 比较值
-Integer a = 1000;
-Integer b = 1000;
-if (a.equals(b)) {  // 正确
-    System.out.println("值相等");
-}
-
-// 不推荐：使用 == 比较包装类
-if (a == b) {  // 错误！可能得到意外结果
-    System.out.println("引用相等");
-}
-
-// 如果需要比较引用，应该明确说明
-if (a == b) {
-    System.out.println("指向同一个对象");
-}
-```
+（待补充）
 
 ---

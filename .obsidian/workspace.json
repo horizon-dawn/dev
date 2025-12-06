@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "[\"aliases\"]",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "477b2ab612aa52ac",
@@ -169,7 +170,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 406.5
   },
   "left-ribbon": {
     "hiddenItems": {
