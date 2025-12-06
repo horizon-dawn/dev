@@ -2366,3 +2366,226 @@ public class Person {
 ## **怎么修改一个类中的private修饰的String参数的值**
 
 String 类是不可变的，一旦创建字符串就不会改变了，如果改变引用的指向也算修改的话，可以提供setter方法暴露接口来修改，也可以使用反射打破封装来修改。
+
+
+---
+
+## 补充：修改 private 字段
+
+### 怎么修改一个类中 private 修饰的 String 参数的值？
+
+这个问题涉及到 String 的不可变性、封装性和反射机制。
+
+---
+
+#### **重要前提：String 是不可变的**
+
+首先要明确，String 类是不可变的（immutable），一旦创建就不能改变其内容。我们能做的只是改变引用的指向，让它指向一个新的 String 对象。
+
+---
+
+#### **方法一：通过 setter 方法修改（推荐）**
+
+这是最常规、最安全的做法，通过提供公共的 setter 方法来修改私有字段。
+
+```java
+public class User {
+    private String name;
+    
+    public User(String name) {
+        this.name = name;
+    }
+    
+    // 提供 setter 方法
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return name;
+    }
+}
+
+// 使用
+User user = new User("张三");
+System.out.println(user.getName());  // 张三
+
+user.setName("李四");  // 通过 setter 修改
+System.out.println(user.getName());  // 李四
+```
+
+**说明：**
+- 这种方式改变的是引用的指向，而不是 String 对象本身
+- 原来的 "张三" 对象仍然存在（如果没有其他引用，会被 GC 回收）
+- name 字段现在指向新的 "李四" 对象
+
+---
+
+#### **方法二：使用反射打破封装（不推荐）**
+
+如果类没有提供 setter 方法，可以使用反射强制访问和修改私有字段。
+
+```java
+public class User {
+    private String name;
+    
+    public User(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    // 没有 setter 方法
+}
+
+// 使用反射修改
+public class ReflectionDemo {
+    public static void main(String[] args) throws Exception {
+        User user = new User("张三");
+        System.out.println("修改前：" + user.getName());  // 张三
+        
+        // 1. 获取 Class 对象
+        Class<?> clazz = user.getClass();
+        
+        // 2. 获取 name 字段
+        Field nameField = clazz.getDeclaredField("name");
+        
+        // 3. 打破封装，允许访问私有字段
+        nameField.setAccessible(true);
+        
+        // 4. 修改字段值
+        nameField.set(user, "李四");
+        
+        System.out.println("修改后：" + user.getName());  // 李四
+    }
+}
+```
+
+**反射修改的步骤：**
+1. 获取 Class 对象
+2. 通过 `getDeclaredField()` 获取字段对象
+3. 调用 `setAccessible(true)` 打破封装
+4. 使用 `set()` 方法修改字段值
+
+---
+
+#### **方法三：通过构造函数创建新对象（间接修改）**
+
+如果不能直接修改，可以创建一个新对象来替代。
+
+```java
+User user = new User("张三");
+// 创建新对象替代
+user = new User("李四");
+```
+
+这种方式本质上是创建了一个新对象，而不是修改原对象。
+
+---
+
+#### **能否修改 String 对象本身的内容？**
+
+理论上可以通过反射修改 String 内部的 char[] 或 byte[] 数组，但**强烈不推荐**！
+
+```java
+// 危险操作！不要这样做！
+public class StringModifyDemo {
+    public static void main(String[] args) throws Exception {
+        String str = "hello";
+        System.out.println("修改前：" + str);  // hello
+        
+        // 获取 String 内部的 value 字段（JDK 9+ 是 byte[]）
+        Field valueField = String.class.getDeclaredField("value");
+        valueField.setAccessible(true);
+        
+        // 获取内部数组
+        byte[] value = (byte[]) valueField.get(str);
+        
+        // 修改数组内容
+        value[0] = 'H';  // 'h' -> 'H'
+        
+        System.out.println("修改后：" + str);  // Hello
+    }
+}
+```
+
+**为什么不推荐？**
+
+1. **破坏不可变性**：String 的不可变性是 Java 的基础设计，破坏它会导致不可预期的问题
+2. **影响字符串常量池**：如果修改的是常量池中的字符串，会影响所有引用该字符串的地方
+3. **线程安全问题**：String 的不可变性保证了线程安全，修改后会破坏这个保证
+4. **hashCode 不一致**：String 的 hashCode 是缓存的，修改内容后 hashCode 不会更新
+
+**危险示例：**
+
+```java
+String s1 = "hello";
+String s2 = "hello";  // 指向同一个常量池对象
+
+// 通过反射修改 s1
+modifyString(s1);
+
+System.out.println(s1);  // Hello
+System.out.println(s2);  // Hello（也被修改了！）
+```
+
+---
+
+#### **对比总结**
+
+| 方法 | 优点 | 缺点 | 推荐度 |
+|------|------|------|--------|
+| **setter 方法** | 安全、规范、易维护 | 需要类提供 setter | ⭐⭐⭐⭐⭐ |
+| **反射修改字段** | 可以访问私有字段 | 破坏封装、性能差、不安全 | ⭐⭐ |
+| **创建新对象** | 安全、简单 | 不是真正的修改 | ⭐⭐⭐⭐ |
+| **反射修改 String 内容** | 可以修改不可变对象 | 极度危险、破坏设计 | ❌ 禁止 |
+
+---
+
+#### **最佳实践**
+
+1. **优先使用 setter 方法**：这是最规范、最安全的方式
+2. **必要时使用反射**：仅在框架开发、测试等特殊场景使用
+3. **永远不要修改 String 内容**：保持 String 的不可变性
+4. **遵循封装原则**：如果字段是 private，说明类不希望外部直接访问
+
+---
+
+#### **面试加分项**
+
+如果面试官问到这个问题，可以补充说明：
+
+1. **String 的不可变性**：
+   - final 类，不能被继承
+   - 内部数组 final，引用不可变
+   - 没有修改方法，所有"修改"操作都返回新对象
+
+2. **为什么 String 设计成不可变**：
+   - 字符串常量池
+   - 线程安全
+   - hashCode 缓存
+   - 安全性（作为参数传递）
+
+3. **反射的使用场景**：
+   - 框架开发（Spring、Hibernate）
+   - 单元测试（访问私有方法）
+   - 序列化/反序列化
+   - 但不应该用于破坏对象的不可变性
+
+---
+
+#### **总结**
+
+**修改 private String 字段的方法：**
+
+1. **通过 setter 方法**（推荐）：改变引用指向
+2. **使用反射**（谨慎）：打破封装修改字段
+3. **创建新对象**（间接）：替换整个对象
+
+**核心要点：**
+- String 是不可变的，只能改变引用，不能改变内容
+- 优先使用 setter 方法，遵循封装原则
+- 反射可以打破封装，但应谨慎使用
+- 永远不要通过反射修改 String 对象的内部内容
