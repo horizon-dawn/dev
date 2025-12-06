@@ -1,50 +1,5 @@
 
 ---
-
-## Java 与 C++ 主要区别对比图
-
-```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#4A90E2','primaryTextColor':'#fff','primaryBorderColor':'#2E5C8A','lineColor':'#6C757D','secondaryColor':'#E67E22','tertiaryColor':'#95A5A6'}}}%%
-graph LR
-    subgraph Java["☕ Java"]
-        direction TB
-        J1["🌍 平台无关性<br/><br/>通过 JVM 实现<br/>一次编写，到处运行"]
-        J2["🗑️ 自动内存管理<br/><br/>GC 垃圾回收器<br/>自动管理内存"]
-        J3["📦 值传递<br/><br/>只支持值传递<br/>传递引用的副本"]
-        J4["🔗 单继承<br/><br/>只支持单继承<br/>避免菱形继承问题"]
-        J5["🔒 内存安全<br/><br/>不能直接操作内存<br/>更安全但控制力弱"]
-        J6["⚙️ 解释型语言<br/><br/>编译成字节码<br/>JVM 解释执行"]
-    end
-    
-    subgraph CPP["⚡ C++"]
-        direction TB
-        C1["💻 平台相关性<br/><br/>需要针对不同<br/>平台编译"]
-        C2["🛠️ 手动内存管理<br/><br/>使用 new/delete<br/>手动管理内存"]
-        C3["🔄 多种传递方式<br/><br/>值传递<br/>指针传递/引用传递"]
-        C4["🌳 多继承<br/><br/>支持单继承<br/>和多继承"]
-        C5["🎯 直接操作内存<br/><br/>可直接操作<br/>内存和硬件"]
-        C6["🚀 编译型语言<br/><br/>直接编译成<br/>机器码执行"]
-    end
-    
-    style Java fill:#E3F2FD,stroke:#1976D2,stroke-width:3px,color:#000
-    style CPP fill:#FFF3E0,stroke:#F57C00,stroke-width:3px,color:#000
-    
-    style J1 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
-    style J2 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
-    style J3 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
-    style J4 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
-    style J5 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
-    style J6 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
-    
-    style C1 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
-    style C2 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
-    style C3 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
-    style C4 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
-    style C5 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
-    style C6 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
-```
-
----
 ## 📑 目录
 
 ### 一、Java 语言特性
@@ -237,6 +192,47 @@ Java 是平台无关的语言，通过 JVM 实现"一次编写，到处运行"�
 底层控制能力方面，Java 不能直接操作内存，C++ 可以直接操作内存和硬件。
 
 执行方式上，Java 是解释型语言，通过编译器编译成字节码再由 JVM 解释执行；C++ 是编译型语言，直接编译成机器码。
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#4A90E2','primaryTextColor':'#fff','primaryBorderColor':'#2E5C8A','lineColor':'#6C757D','secondaryColor':'#E67E22','tertiaryColor':'#95A5A6'}}}%%
+graph LR
+    subgraph Java["☕ Java"]
+        direction TB
+        J1["🌍 平台无关性<br/><br/>通过 JVM 实现<br/>一次编写，到处运行"]
+        J2["🗑️ 自动内存管理<br/><br/>GC 垃圾回收器<br/>自动管理内存"]
+        J3["📦 值传递<br/><br/>只支持值传递<br/>传递引用的副本"]
+        J4["🔗 单继承<br/><br/>只支持单继承<br/>避免菱形继承问题"]
+        J5["🔒 内存安全<br/><br/>不能直接操作内存<br/>更安全但控制力弱"]
+        J6["⚙️ 解释型语言<br/><br/>编译成字节码<br/>JVM 解释执行"]
+    end
+    
+    subgraph CPP["⚡ C++"]
+        direction TB
+        C1["💻 平台相关性<br/><br/>需要针对不同<br/>平台编译"]
+        C2["🛠️ 手动内存管理<br/><br/>使用 new/delete<br/>手动管理内存"]
+        C3["🔄 多种传递方式<br/><br/>值传递<br/>指针传递/引用传递"]
+        C4["🌳 多继承<br/><br/>支持单继承<br/>和多继承"]
+        C5["🎯 直接操作内存<br/><br/>可直接操作<br/>内存和硬件"]
+        C6["🚀 编译型语言<br/><br/>直接编译成<br/>机器码执行"]
+    end
+    
+    style Java fill:#E3F2FD,stroke:#1976D2,stroke-width:3px,color:#000
+    style CPP fill:#FFF3E0,stroke:#F57C00,stroke-width:3px,color:#000
+    
+    style J1 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
+    style J2 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
+    style J3 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
+    style J4 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
+    style J5 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
+    style J6 fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000,rx:10,ry:10
+    
+    style C1 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
+    style C2 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
+    style C3 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
+    style C4 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
+    style C5 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
+    style C6 fill:#FFE0B2,stroke:#F57C00,stroke-width:2px,color:#000,rx:10,ry:10
+```
 
 Java 的优点包括平台无关性强、生态丰富、社区支持完善、垃圾回收器降低内存泄露风险。缺点是：启动速度较慢、内存占用较大、性能不如 C++、底层控制能力弱。
 
