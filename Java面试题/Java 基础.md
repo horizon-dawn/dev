@@ -412,19 +412,9 @@ Java 的 main 方法必须遵循固定的签名格式：`public static void main
 
 ---
 
-#### **标准签名**
-
-```java
-public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
-```
-
 ---
 
-#### **为什么是 public？**
+ **为什么是 public？**
 
 **原因：让 JVM 能够从外部访问 main 方法**
 
@@ -448,7 +438,7 @@ public class Test {
 
 ---
 
-#### **为什么是 static？**
+ **为什么是 static？**
 
 **原因：避免创建对象，直接通过类调用**
 
@@ -480,7 +470,7 @@ public class Test {
 
 ---
 
-#### **为什么是 void？**
+**为什么是 void？**
 
 **原因：JVM 不需要 main 方法的返回值**
 
@@ -526,7 +516,7 @@ public static void main(String[] args) {
 
 ---
 
-#### **为什么参数是 String[] args？**
+**为什么参数是 String\[] args？**
 
 **原因：接收命令行参数**
 
@@ -561,45 +551,6 @@ java CommandLineDemo hello world 123
 
 ---
 
-#### **如果不遵循标准签名会怎样？**
-
-**1. 缺少 public：**
-
-```java
-static void main(String[] args) {
-    // 编译通过，但运行时报错
-}
-// Error: Main method not found in class
-```
-
-**2. 缺少 static：**
-
-```java
-public void main(String[] args) {
-    // 编译通过，但运行时报错
-}
-// Error: Main method is not static in class
-```
-
-**3. 返回值不是 void：**
-
-```java
-public static int main(String[] args) {
-    return 0;
-}
-// Error: Main method must return a value of type void in class
-```
-
-**4. 参数类型错误：**
-
-```java
-public static void main(String args) {
-    // 编译通过，但运行时报错
-}
-// Error: Main method not found in class
-```
-
----
 
 #### **可以重载 main 方法吗？**
 
@@ -645,27 +596,6 @@ void main() {
 ```
 
 ---
-
-#### **总结**
-
-| 修饰符/返回值 | 原因 |
-|--------------|------|
-| **public** | JVM 需要从外部访问 main 方法 |
-| **static** | 避免创建对象，JVM 可以直接通过类名调用 |
-| **void** | JVM 不需要返回值，退出状态通过 System.exit() 设置 |
-| **String[] args** | 接收命令行参数 |
-
-**记忆口诀：**
-- **public**：公开访问，JVM 能调用
-- **static**：静态方法，无需对象
-- **void**：无返回值，JVM 不需要
-- **main**：入口方法，约定俗成
-- **String[] args**：命令行参数
-
-**核心原因：这是 JVM 规范的要求，确保 JVM 能够正确启动 Java 程序！**
-
----
-
 
 ## 三、基本类型与包装类
 
