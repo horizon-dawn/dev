@@ -1,207 +1,188 @@
 # Java IO 流继承与装饰体系
 
-## 完整继承与装饰关系图
+---
+
+## 一、核心体系图
 
 ```mermaid
 graph TB
-    %% 字节流体系
-    subgraph 字节流体系
-        InputStream[InputStream<br/>字节输入流抽象基类]
-        OutputStream[OutputStream<br/>字节输出流抽象基类]
-        
-        %% InputStream 的实现类
-        FileInputStream[FileInputStream<br/>文件字节输入流]
-        ObjectInputStream[ObjectInputStream<br/>对象输入流]
-        BufferedInputStream[BufferedInputStream<br/>缓冲字节输入流<br/>装饰器]
-        
-        %% OutputStream 的实现类
-        FileOutputStream[FileOutputStream<br/>文件字节输出流]
-        ObjectOutputStream[ObjectOutputStream<br/>对象输出流]
-        PrintStream[PrintStream<br/>打印流]
-        BufferedOutputStream[BufferedOutputStream<br/>缓冲字节输出流<br/>装饰器]
-        
-        %% 继承关系
-        InputStream --> FileInputStream
-        InputStream --> ObjectInputStream
-        InputStream --> BufferedInputStream
-        
-        OutputStream --> FileOutputStream
-        OutputStream --> ObjectOutputStream
-        OutputStream --> PrintStream
-        OutputStream --> BufferedOutputStream
-        
-        %% 装饰关系
-        FileInputStream -.装饰.-> BufferedInputStream
-        ObjectInputStream -.装饰.-> BufferedInputStream
-        
-        FileOutputStream -.装饰.-> BufferedOutputStream
-        ObjectOutputStream -.装饰.-> BufferedOutputStream
-        FileOutputStream -.装饰.-> PrintStream
-    end
+    %% 定义样式
+    classDef abstract fill:#e1f5ff,stroke:#333,stroke-width:2px
+    classDef node fill:#fff,stroke:#333,stroke-width:1px
+    classDef decorator fill:#c8e6c9,stroke:#333,stroke-width:2px
+    classDef bridge fill:#ffe0b2,stroke:#333,stroke-width:2px
+
+    %% 字节流
+    InputStream[InputStream<br/>字节输入流基类]:::abstract
+    OutputStream[OutputStream<br/>字节输出流基类]:::abstract
     
-    %% 字符流体系
-    subgraph 字符流体系
-        Reader[Reader<br/>字符输入流抽象基类]
-        Writer[Writer<br/>字符输出流抽象基类]
-        
-        %% Reader 的实现类
-        InputStreamReader[InputStreamReader<br/>字节流转字符流<br/>桥接器]
-        FileReader[FileReader<br/>文件字符输入流]
-        BufferedReader[BufferedReader<br/>缓冲字符输入流<br/>装饰器]
-        
-        %% Writer 的实现类
-        OutputStreamWriter[OutputStreamWriter<br/>字节流转字符流<br/>桥接器]
-        FileWriter[FileWriter<br/>文件字符输出流]
-        BufferedWriter[BufferedWriter<br/>缓冲字符输出流<br/>装饰器]
-        PrintWriter[PrintWriter<br/>打印字符流]
-        
-        %% 继承关系
-        Reader --> InputStreamReader
-        Reader --> BufferedReader
-        InputStreamReader --> FileReader
-        
-        Writer --> OutputStreamWriter
-        Writer --> BufferedWriter
-        Writer --> PrintWriter
-        OutputStreamWriter --> FileWriter
-        
-        %% 装饰关系
-        InputStreamReader -.装饰.-> BufferedReader
-        FileReader -.装饰.-> BufferedReader
-        
-        OutputStreamWriter -.装饰.-> BufferedWriter
-        FileWriter -.装饰.-> BufferedWriter
-        OutputStreamWriter -.装饰.-> PrintWriter
-    end
+    FileInputStream[FileInputStream]:::node
+    ObjectInputStream[ObjectInputStream]:::node
+    BufferedInputStream[BufferedInputStream<br/>装饰器]:::decorator
     
-    %% 字节流与字符流的桥接
+    FileOutputStream[FileOutputStream]:::node
+    ObjectOutputStream[ObjectOutputStream]:::node
+    PrintStream[PrintStream]:::node
+    BufferedOutputStream[BufferedOutputStream<br/>装饰器]:::decorator
+    
+    %% 字符流
+    Reader[Reader<br/>字符输入流基类]:::abstract
+    Writer[Writer<br/>字符输出流基类]:::abstract
+    
+    InputStreamReader[InputStreamReader<br/>桥接器]:::bridge
+    FileReader[FileReader]:::node
+    BufferedReader[BufferedReader<br/>装饰器]:::decorator
+    
+    OutputStreamWriter[OutputStreamWriter<br/>桥接器]:::bridge
+    FileWriter[FileWriter]:::node
+    BufferedWriter[BufferedWriter<br/>装饰器]:::decorator
+    PrintWriter[PrintWriter]:::node
+    
+    %% 继承关系
+    InputStream --> FileInputStream
+    InputStream --> ObjectInputStream
+    InputStream --> BufferedInputStream
+    
+    OutputStream --> FileOutputStream
+    OutputStream --> ObjectOutputStream
+    OutputStream --> PrintStream
+    OutputStream --> BufferedOutputStream
+    
+    Reader --> InputStreamReader
+    Reader --> BufferedReader
+    InputStreamReader --> FileReader
+    
+    Writer --> OutputStreamWriter
+    Writer --> BufferedWriter
+    Writer --> PrintWriter
+    OutputStreamWriter --> FileWriter
+    
+    %% 装饰关系（虚线）
+    FileInputStream -.装饰.-> BufferedInputStream
+    FileOutputStream -.装饰.-> BufferedOutputStream
+    
+    InputStreamReader -.装饰.-> BufferedReader
+    FileReader -.装饰.-> BufferedReader
+    OutputStreamWriter -.装饰.-> BufferedWriter
+    FileWriter -.装饰.-> BufferedWriter
+    
+    %% 桥接关系
     InputStream -.桥接.-> InputStreamReader
     OutputStream -.桥接.-> OutputStreamWriter
-    
-    style InputStream fill:#e1f5ff
-    style OutputStream fill:#e1f5ff
-    style Reader fill:#fff4e1
-    style Writer fill:#fff4e1
-    style BufferedInputStream fill:#c8e6c9
-    style BufferedOutputStream fill:#c8e6c9
-    style BufferedReader fill:#c8e6c9
-    style BufferedWriter fill:#c8e6c9
 ```
 
 ---
 
-## 体系说明
-
-### 一、四大抽象基类
+## 二、四大抽象基类
 
 | 分类 | 字节流 | 字符流 |
-|------|--------|--------|
+|:----:|:------:|:------:|
 | **输入流** | InputStream | Reader |
 | **输出流** | OutputStream | Writer |
 
----
-
-### 二、字节流体系（InputStream / OutputStream）
-
-#### 2.1 InputStream 主要实现类
-
-| 类名 | 作用 | 类型 |
-|------|------|------|
-| **FileInputStream** | 从文件读取字节数据 | 节点流 |
-| **ObjectInputStream** | 读取对象（反序列化） | 处理流 |
-| **BufferedInputStream** | 提供缓冲功能，提高读取效率 | 装饰器 |
-
-#### 2.2 OutputStream 主要实现类
-
-| 类名 | 作用 | 类型 |
-|------|------|------|
-| **FileOutputStream** | 向文件写入字节数据 | 节点流 |
-| **ObjectOutputStream** | 写入对象（序列化） | 处理流 |
-| **PrintStream** | 提供打印功能（如 System.out） | 处理流 |
-| **BufferedOutputStream** | 提供缓冲功能，提高写入效率 | 装饰器 |
+**选择原则：**
+- 处理**文本文件** → 使用字符流（Reader/Writer）
+- 处理**二进制文件**（图片、视频等） → 使用字节流（InputStream/OutputStream）
 
 ---
 
-### 三、字符流体系（Reader / Writer）
+## 三、主要实现类
 
-#### 3.1 Reader 主要实现类
+### 3.1 字节流（InputStream / OutputStream）
 
-| 类名 | 作用 | 类型 |
-|------|------|------|
-| **FileReader** | 从文件读取字符数据 | 节点流 |
-| **InputStreamReader** | 字节流转字符流的桥接器 | 桥接器 |
-| **BufferedReader** | 提供缓冲功能，支持按行读取 | 装饰器 |
-
-#### 3.2 Writer 主要实现类
+#### 输入流（InputStream）
 
 | 类名 | 作用 | 类型 |
-|------|------|------|
-| **FileWriter** | 向文件写入字符数据 | 节点流 |
-| **OutputStreamWriter** | 字节流转字符流的桥接器 | 桥接器 |
-| **BufferedWriter** | 提供缓冲功能，提高写入效率 | 装饰器 |
-| **PrintWriter** | 提供打印功能，支持格式化输出 | 处理流 |
+|------|------|:----:|
+| FileInputStream | 从文件读取字节 | 节点流 |
+| ObjectInputStream | 读取对象（反序列化） | 处理流 |
+| BufferedInputStream | 提供缓冲，提高效率 | 装饰器 |
+
+#### 输出流（OutputStream）
+
+| 类名 | 作用 | 类型 |
+|------|------|:----:|
+| FileOutputStream | 向文件写入字节 | 节点流 |
+| ObjectOutputStream | 写入对象（序列化） | 处理流 |
+| PrintStream | 打印流（如 System.out） | 处理流 |
+| BufferedOutputStream | 提供缓冲，提高效率 | 装饰器 |
 
 ---
 
-### 四、关键设计模式
+### 3.2 字符流（Reader / Writer）
 
-#### 4.1 装饰器模式（Decorator Pattern）
+#### 输入流（Reader）
 
-装饰器模式用于动态地给对象添加额外的功能，而不改变其结构。
+| 类名 | 作用 | 类型 |
+|------|------|:----:|
+| FileReader | 从文件读取字符 | 节点流 |
+| InputStreamReader | 字节流→字符流转换 | 桥接器 |
+| BufferedReader | 提供缓冲，支持按行读取 | 装饰器 |
 
-**典型应用：**
+#### 输出流（Writer）
+
+| 类名 | 作用 | 类型 |
+|------|------|:----:|
+| FileWriter | 向文件写入字符 | 节点流 |
+| OutputStreamWriter | 字节流→字符流转换 | 桥接器 |
+| BufferedWriter | 提供缓冲，提高效率 | 装饰器 |
+| PrintWriter | 打印字符流，支持格式化 | 处理流 |
+
+---
+
+## 四、设计模式
+
+### 4.1 装饰器模式（Decorator）
+
+**作用：** 动态地给对象添加额外功能，不改变其结构
+
+**示例：**
 
 ```java
-// 使用 BufferedInputStream 装饰 FileInputStream
+// 给 FileInputStream 添加缓冲功能
 InputStream fis = new FileInputStream("file.txt");
-InputStream bis = new BufferedInputStream(fis);  // 添加缓冲功能
+InputStream bis = new BufferedInputStream(fis);
 
-// 使用 BufferedReader 装饰 FileReader
+// 给 FileReader 添加缓冲和按行读取功能
 Reader fr = new FileReader("file.txt");
-Reader br = new BufferedReader(fr);  // 添加缓冲和按行读取功能
+Reader br = new BufferedReader(fr);
 ```
 
-**装饰器类特点：**
-- 继承自抽象基类（如 InputStream、Reader）
-- 构造方法接收同类型的对象作为参数
-- 在原有功能基础上增强或添加新功能
+**特点：**
+- 装饰器类继承自抽象基类
+- 构造方法接收同类型对象
+- 在原功能基础上增强
 
 ---
 
-#### 4.2 桥接器模式（Bridge Pattern）
+### 4.2 桥接器模式（Bridge）
 
-桥接器用于连接字节流和字符流，实现编码转换。
+**作用：** 连接字节流和字符流，实现编码转换
 
-**典型应用：**
+**示例：**
 
 ```java
-// 字节流转字符流（输入）
+// 字节流 → 字符流（可指定编码）
 InputStream is = new FileInputStream("file.txt");
-Reader isr = new InputStreamReader(is, "UTF-8");  // 指定编码
+Reader isr = new InputStreamReader(is, "UTF-8");
 
-// 字节流转字符流（输出）
+// 字节流 → 字符流（输出）
 OutputStream os = new FileOutputStream("file.txt");
-Writer osw = new OutputStreamWriter(os, "UTF-8");  // 指定编码
+Writer osw = new OutputStreamWriter(os, "UTF-8");
 ```
 
-**桥接器类特点：**
-- InputStreamReader：将 InputStream 转换为 Reader
-- OutputStreamWriter：将 OutputStream 转换为 Writer
-- 支持指定字符编码
+**关键类：**
+- `InputStreamReader`：InputStream → Reader
+- `OutputStreamWriter`：OutputStream → Writer
 
 ---
 
-### 五、常用组合模式
+## 五、常用组合
 
-#### 5.1 高效文件读取
+### 5.1 高效读取文本文件
 
 ```java
-// 字节流 + 缓冲
-BufferedInputStream bis = new BufferedInputStream(
-    new FileInputStream("file.txt")
-);
-
-// 字符流 + 缓冲 + 按行读取
+// 推荐：缓冲 + 按行读取
 BufferedReader br = new BufferedReader(
     new FileReader("file.txt")
 );
@@ -209,32 +190,29 @@ String line;
 while ((line = br.readLine()) != null) {
     System.out.println(line);
 }
+br.close();
 ```
 
-#### 5.2 对象序列化
+---
+
+### 5.2 高效写入文本文件
 
 ```java
-// 对象输出流
-ObjectOutputStream oos = new ObjectOutputStream(
-    new BufferedOutputStream(
-        new FileOutputStream("object.dat")
-    )
+// 推荐：缓冲写入
+BufferedWriter bw = new BufferedWriter(
+    new FileWriter("file.txt")
 );
-oos.writeObject(myObject);
-
-// 对象输入流
-ObjectInputStream ois = new ObjectInputStream(
-    new BufferedInputStream(
-        new FileInputStream("object.dat")
-    )
-);
-MyObject obj = (MyObject) ois.readObject();
+bw.write("Hello World");
+bw.newLine();  // 写入换行符
+bw.close();
 ```
 
-#### 5.3 字节流转字符流 + 缓冲
+---
+
+### 5.3 字节流转字符流（指定编码）
 
 ```java
-// 读取
+// 读取：字节流 → 字符流 + 缓冲
 BufferedReader br = new BufferedReader(
     new InputStreamReader(
         new FileInputStream("file.txt"), 
@@ -242,7 +220,7 @@ BufferedReader br = new BufferedReader(
     )
 );
 
-// 写入
+// 写入：字节流 → 字符流 + 缓冲
 BufferedWriter bw = new BufferedWriter(
     new OutputStreamWriter(
         new FileOutputStream("file.txt"), 
@@ -253,110 +231,36 @@ BufferedWriter bw = new BufferedWriter(
 
 ---
 
-### 六、流的分类
-
-#### 6.1 按数据单位分类
-
-| 分类 | 说明 | 代表类 |
-|------|------|--------|
-| **字节流** | 以字节（8 bit）为单位处理数据 | InputStream、OutputStream |
-| **字符流** | 以字符（16 bit）为单位处理数据 | Reader、Writer |
-
-**使用建议：**
-- 处理文本文件：优先使用字符流
-- 处理二进制文件（图片、视频等）：必须使用字节流
-
----
-
-#### 6.2 按流的角色分类
-
-| 分类 | 说明 | 代表类 |
-|------|------|--------|
-| **节点流** | 直接连接数据源 | FileInputStream、FileReader |
-| **处理流** | 包装其他流，提供额外功能 | BufferedInputStream、BufferedReader |
-
-**处理流的优势：**
-- 提高性能（如缓冲流）
-- 简化操作（如 BufferedReader.readLine()）
-- 增强功能（如 ObjectInputStream 支持对象读取）
-
----
-
-### 七、核心要点总结
-
-1. **四大抽象基类**：InputStream、OutputStream、Reader、Writer
-2. **字节流 vs 字符流**：字节流处理所有类型数据，字符流专门处理文本
-3. **节点流 vs 处理流**：节点流直接连接数据源，处理流包装其他流
-4. **装饰器模式**：通过包装增强功能，如 BufferedInputStream 包装 FileInputStream
-5. **桥接器模式**：InputStreamReader 和 OutputStreamWriter 连接字节流和字符流
-6. **缓冲流**：BufferedXXX 系列提供缓冲功能，显著提升 IO 性能
-7. **关闭顺序**：先关闭外层流，再关闭内层流（实际上关闭外层流会自动关闭内层流）
-
----
-
-### 八、使用建议
-
-1. **优先使用缓冲流**：BufferedInputStream、BufferedReader 等可以显著提升性能
-2. **及时关闭流**：使用 try-with-resources 自动关闭流，避免资源泄露
-3. **选择合适的流**：
-   - 文本文件 → 字符流（Reader/Writer）
-   - 二进制文件 → 字节流（InputStream/OutputStream）
-   - 需要对象序列化 → ObjectInputStream/ObjectOutputStream
-4. **注意编码**：使用 InputStreamReader/OutputStreamWriter 时明确指定编码（如 UTF-8）
-5. **合理组合**：根据需求组合使用节点流和处理流，如 BufferedReader + InputStreamReader + FileInputStream
-
----
-
-## 面试常考点
-
-### Q1: 字节流和字符流的区别？
-
-**答：**
-- **处理单位**：字节流以字节（8 bit）为单位，字符流以字符（16 bit）为单位
-- **适用场景**：字节流可以处理所有类型的数据，字符流专门处理文本数据
-- **编码问题**：字符流内部使用字符编码（如 UTF-8），字节流不涉及编码
-- **性能**：处理文本时字符流更高效，因为减少了编码转换
-
-### Q2: 什么是装饰器模式？在 IO 流中如何体现？
-
-**答：**
-装饰器模式是一种设计模式，用于在不改变对象结构的情况下动态地给对象添加新功能。
-
-在 Java IO 中的体现：
-- BufferedInputStream 装饰 FileInputStream，添加缓冲功能
-- BufferedReader 装饰 FileReader，添加缓冲和按行读取功能
-- 装饰器类和被装饰类都继承自同一个抽象基类
-
-### Q3: 为什么要使用缓冲流？
-
-**答：**
-- **减少系统调用**：缓冲流内部维护一个缓冲区，减少了对底层系统的 IO 调用次数
-- **提升性能**：批量读写数据比单字节/字符读写效率高得多
-- **额外功能**：如 BufferedReader 提供 readLine() 方法，方便按行读取
-
-### Q4: InputStreamReader 和 FileReader 的区别？
-
-**答：**
-- **InputStreamReader**：是字节流到字符流的桥接器，可以指定字符编码
-- **FileReader**：继承自 InputStreamReader，使用系统默认编码，不能指定编码
-- **推荐使用**：优先使用 InputStreamReader，因为可以明确指定编码，避免乱码问题
+### 5.4 对象序列化
 
 ```java
-// 推荐：可以指定编码
-Reader reader = new InputStreamReader(new FileInputStream("file.txt"), "UTF-8");
+// 写入对象
+ObjectOutputStream oos = new ObjectOutputStream(
+    new BufferedOutputStream(
+        new FileOutputStream("object.dat")
+    )
+);
+oos.writeObject(myObject);
+oos.close();
 
-// 不推荐：使用系统默认编码，可能导致乱码
-Reader reader = new FileReader("file.txt");
+// 读取对象
+ObjectInputStream ois = new ObjectInputStream(
+    new BufferedInputStream(
+        new FileInputStream("object.dat")
+    )
+);
+MyObject obj = (MyObject) ois.readObject();
+ois.close();
 ```
 
-### Q5: 如何正确关闭流？
+---
 
-**答：**
-使用 try-with-resources 语句自动关闭流：
+### 5.5 使用 try-with-resources（推荐）
 
 ```java
-// Java 7+ 推荐写法
-try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {
+// 自动关闭流，避免资源泄露
+try (BufferedReader br = new BufferedReader(
+        new FileReader("file.txt"))) {
     String line;
     while ((line = br.readLine()) != null) {
         System.out.println(line);
@@ -364,10 +268,170 @@ try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {
 } catch (IOException e) {
     e.printStackTrace();
 }
-// 流会自动关闭，无需手动调用 close()
 ```
 
-**注意事项：**
+---
+
+## 六、核心知识点
+
+### 6.1 字节流 vs 字符流
+
+| 对比项 | 字节流 | 字符流 |
+|--------|--------|--------|
+| **处理单位** | 字节（8 bit） | 字符（16 bit） |
+| **适用场景** | 所有类型文件 | 文本文件 |
+| **编码处理** | 不涉及编码 | 内部处理编码 |
+| **基类** | InputStream/OutputStream | Reader/Writer |
+
+---
+
+### 6.2 节点流 vs 处理流
+
+| 类型 | 说明 | 示例 |
+|------|------|------|
+| **节点流** | 直接连接数据源 | FileInputStream、FileReader |
+| **处理流** | 包装其他流，提供额外功能 | BufferedInputStream、BufferedReader |
+
+**处理流的优势：**
+- 提高性能（缓冲流）
+- 简化操作（readLine()）
+- 增强功能（对象序列化）
+
+---
+
+### 6.3 为什么要使用缓冲流？
+
+1. **减少系统调用**：内部维护缓冲区，批量读写
+2. **显著提升性能**：减少磁盘 IO 次数
+3. **额外功能**：如 BufferedReader 的 readLine()
+
+**性能对比：**
+```java
+// 慢：每次读取一个字节
+FileInputStream fis = new FileInputStream("file.txt");
+int data;
+while ((data = fis.read()) != -1) { }
+
+// 快：使用缓冲区批量读取
+BufferedInputStream bis = new BufferedInputStream(
+    new FileInputStream("file.txt")
+);
+int data;
+while ((data = bis.read()) != -1) { }
+```
+
+---
+
+## 七、面试高频问题
+
+### Q1: 字节流和字符流的区别？
+
+**答：**
+- **处理单位**：字节流 8 bit，字符流 16 bit
+- **适用场景**：字节流处理所有文件，字符流专门处理文本
+- **编码问题**：字符流内部处理编码，字节流不涉及
+- **性能**：处理文本时字符流更高效
+
+---
+
+### Q2: 什么是装饰器模式？
+
+**答：**
+装饰器模式在不改变对象结构的情况下动态添加功能。
+
+**IO 中的体现：**
+- BufferedInputStream 装饰 FileInputStream → 添加缓冲
+- BufferedReader 装饰 FileReader → 添加缓冲和按行读取
+- 装饰器和被装饰类继承自同一基类
+
+---
+
+### Q3: InputStreamReader 和 FileReader 的区别？
+
+**答：**
+- **InputStreamReader**：字节流→字符流桥接器，可指定编码
+- **FileReader**：继承自 InputStreamReader，使用系统默认编码
+
+**推荐：**
+```java
+// 推荐：明确指定编码
+Reader reader = new InputStreamReader(
+    new FileInputStream("file.txt"), "UTF-8"
+);
+
+// 不推荐：使用默认编码，可能乱码
+Reader reader = new FileReader("file.txt");
+```
+
+---
+
+### Q4: 如何正确关闭流？
+
+**答：**
+使用 try-with-resources 自动关闭：
+
+```java
+try (BufferedReader br = new BufferedReader(
+        new FileReader("file.txt"))) {
+    // 使用流
+} catch (IOException e) {
+    e.printStackTrace();
+}
+// 自动关闭，无需手动 close()
+```
+
+**注意：**
 - 关闭外层流会自动关闭内层流
-- 使用 try-with-resources 可以避免忘记关闭流导致的资源泄露
-- 多个流可以在同一个 try 中声明，用分号分隔
+- 避免资源泄露
+- 多个流用分号分隔
+
+---
+
+### Q5: 为什么要使用缓冲流？
+
+**答：**
+- **性能提升**：减少系统调用次数，批量读写
+- **额外功能**：BufferedReader 提供 readLine()
+- **推荐使用**：几乎所有场景都应该使用缓冲流
+
+---
+
+## 八、使用建议
+
+1. ✅ **优先使用缓冲流**：BufferedXXX 显著提升性能
+2. ✅ **使用 try-with-resources**：自动关闭流，避免泄露
+3. ✅ **明确指定编码**：使用 InputStreamReader/OutputStreamWriter 时指定 UTF-8
+4. ✅ **选择合适的流**：
+   - 文本文件 → 字符流
+   - 二进制文件 → 字节流
+   - 对象序列化 → ObjectInputStream/ObjectOutputStream
+5. ✅ **合理组合**：节点流 + 处理流，如 BufferedReader + FileReader
+
+---
+
+## 九、记忆口诀
+
+```
+四大基类要记牢：InputStream、OutputStream、Reader、Writer
+字节处理用 Stream，字符处理用 Reader/Writer
+节点流直连数据源，处理流包装添功能
+缓冲装饰提性能，桥接转换字节字符
+关闭资源用 try-with，编码明确防乱码
+```
+
+---
+
+## 十、快速参考表
+
+| 需求 | 推荐方案 |
+|------|----------|
+| 读取文本文件 | BufferedReader + FileReader |
+| 写入文本文件 | BufferedWriter + FileWriter |
+| 读取二进制文件 | BufferedInputStream + FileInputStream |
+| 写入二进制文件 | BufferedOutputStream + FileOutputStream |
+| 指定编码读取 | BufferedReader + InputStreamReader |
+| 指定编码写入 | BufferedWriter + OutputStreamWriter |
+| 对象序列化 | ObjectOutputStream + BufferedOutputStream |
+| 对象反序列化 | ObjectInputStream + BufferedInputStream |
+| 按行读取 | BufferedReader.readLine() |
+| 格式化输出 | PrintWriter 或 PrintStream |
