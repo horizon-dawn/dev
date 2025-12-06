@@ -43,7 +43,8 @@
               "state": {
                 "file": "Java面试题/Java 基础.md",
                 "mode": "source",
-                "source": false
+                "source": false,
+                "backlinks": false
               },
               "icon": "lucide-file",
               "title": "Java 基础"
