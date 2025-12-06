@@ -353,3 +353,254 @@ System.out.println(s2);  // 输出 "hello world"
 
 ---
 
+
+## 五、泛型
+
+### 5.1 什么是泛型？有什么好处？
+
+泛型是 JDK 5 引入的类型参数化类型，允许在定义类、接口和方法时使用类型参数，使用时再指定具体类型。
+
+泛型主要有三个好处：
+
+首先是提高代码复用性。比如我想定义一个集合，既可以存字符串，又可以存整数，难道要创建两个集合类吗？用泛型就可以解决：
+
+```java
+List<String> stringList = new ArrayList<>();  // 存字符串
+List<Integer> intList = new ArrayList<>();    // 存整数
+```
+
+其次是增强类型安全。泛型在编译期就会进行类型检查，能在编译阶段发现类型错误，避免运行时出现 ClassCastException：
+
+```java
+// 使用泛型，编译期就能发现类型错误
+List<String> list = new ArrayList<>();
+list.add("hello");
+String s = list.get(0);  // 不需要强制转换
+
+// 不使用泛型，运行时才能发现错误
+List list2 = new ArrayList();
+list2.add("hello");
+String s2 = (String) list2.get(0);  // 需要强制转换，容易出错
+```
+
+最后是消除强制类型转换。使用泛型后，编译器知道集合里存的是什么类型，取出来时不需要强制转换，代码更简洁。
+
+需要注意的是，泛型是编译期的概念。编译时会进行类型检查，然后进行类型擦除，把泛型类型替换为 Object 或其边界类型。所以运行时 JVM 其实不知道泛型的具体类型信息。
+
+---
+
+### 5.2 什么是类型擦除？
+
+类型擦除是 Java 泛型在编译时把泛型类型参数替换成具体类型的过程。
+
+具体来说，编译器会做这样的转换：
+
+如果泛型类型没有指定上界，就会被替换成 Object 类型：
+
+```java
+// 源代码
+List<String> list = new ArrayList<>();
+
+// 编译后实际变成
+List list = new ArrayList();  // String 被擦除成 Object
+```
+
+如果泛型类型指定了上界，就会被替换成上界类型：
+
+```java
+// 源代码
+class Box<T extends Number> {
+    private T value;
+}
+
+// 编译后 T 被替换成 Number
+class Box {
+    private Number value;
+}
+```
+
+为什么要进行类型擦除？主要是为了保持向后兼容。Java 在 JDK 5 才引入泛型，为了让新代码能在旧的 JVM 上运行，同时让泛型代码和非泛型代码能够互相调用，就采用了类型擦除的方式。
+
+类型擦除带来的影响：
+
+运行时无法获取泛型的具体类型信息，比如无法通过 `instanceof` 判断泛型类型，也无法创建泛型数组。
+
+---
+
+### 5.3 泛型中 K T V E ? Object 等分别代表什么含义？
+
+这些都是泛型中常用的类型参数符号，它们本质上都是占位符，只是按照约定俗成的规范来命名，让代码更易读：
+
+**T (Type)**：表示任意类型，最常用的泛型参数。通常用在类、接口和方法中表示一个通用类型：
+
+```java
+class Box<T> {
+    private T value;
+}
+```
+
+**K (Key)** 和 **V (Value)**：表示键值对，通常在 Map 中使用：
+
+```java
+Map<K, V> map = new HashMap<>();
+Map<String, Integer> map = new HashMap<>();  // K=String, V=Integer
+```
+
+**E (Element)**：表示元素，通常在集合类中使用：
+
+```java
+List<E> list = new ArrayList<>();
+Set<E> set = new HashSet<>();
+```
+
+**? (通配符)**：表示不确定的类型，用于泛型的上下界限定：
+
+```java
+List<?> list;  // 可以接收任意类型的 List
+List<? extends Number> list;  // 只能接收 Number 及其子类
+List<? super Integer> list;  // 只能接收 Integer 及其父类
+```
+
+**Object**：这不是泛型参数，而是 Java 中所有类的父类。在泛型出现之前，我们用 Object 来实现通用性，但需要手动类型转换：
+
+```java
+// 使用 Object，需要强制转换
+List list = new ArrayList();
+list.add("hello");
+String s = (String) list.get(0);
+
+// 使用泛型，不需要转换
+List<String> list = new ArrayList<>();
+list.add("hello");
+String s = list.get(0);
+```
+
+---
+
+### 5.4 泛型中上下界限定符 extends 和 super 有什么区别？
+
+extends 和 super 是泛型中用来限定类型范围的关键字，它们的区别主要体现在限定的方向和使用场景上。
+
+**? extends T（上界通配符）**
+
+表示泛型类型的上界，? 必须是 T 类型或 T 的子类。这种方式适合读取数据的场景：
+
+```java
+List<? extends Number> list = new ArrayList<Integer>();  // Integer 是 Number 的子类
+Number num = list.get(0);  // 可以读取，因为肯定是 Number 或其子类
+// list.add(new Integer(1));  // 编译错误！不能写入
+```
+
+为什么不能写入？因为编译器不知道 list 里具体是什么类型，可能是 `List<Integer>`，也可能是 `List<Double>`，为了类型安全，干脆禁止写入。
+
+**? super T（下界通配符）**
+
+表示泛型类型的下界，? 必须是 T 类型或 T 的父类。这种方式适合写入数据的场景：
+
+```java
+List<? super Integer> list = new ArrayList<Number>();  // Number 是 Integer 的父类
+list.add(new Integer(1));  // 可以写入 Integer 或其子类
+// Integer num = list.get(0);  // 编译错误！只能用 Object 接收
+Object obj = list.get(0);  // 只能用 Object 接收
+```
+
+为什么读取时只能用 Object？因为编译器不知道 list 里具体是什么类型，可能是 `List<Integer>`，也可能是 `List<Number>`，甚至是 `List<Object>`，所以只能用它们的共同父类 Object 来接收。
+
+**使用场景总结**
+
+记住一个口诀：**PECS 原则**（Producer Extends, Consumer Super）
+
+- 如果你需要从集合中读取数据（生产者），用 `? extends T`
+- 如果你需要往集合中写入数据（消费者），用 `? super T`
+
+举个实际例子：
+
+```java
+// 从 src 读取数据，复制到 dest
+public static <T> void copy(List<? super T> dest, List<? extends T> src) {
+    for (T item : src) {
+        dest.add(item);  // src 用 extends 读取，dest 用 super 写入
+    }
+}
+```
+
+这样设计既保证了类型安全，又提供了足够的灵活性。
+
+---
+
+## 六、异常处理
+
+### 6.1 Java 中异常分哪两类？有什么区别？
+
+Java 的异常分为受检异常（Checked Exception）和非受检异常（Unchecked Exception）两大类。
+
+**受检异常**是指在编译期就必须处理的异常，比如 IOException、SQLException 等。这类异常必须通过 try-catch 捕获或者在方法签名中用 throws 声明抛出，否则代码无法通过编译。受检异常通常表示外部环境导致的可预见问题，比如文件不存在、网络连接失败等，程序应该对这些情况做出合理的处理。
+
+**非受检异常**主要指 RuntimeException 及其子类，以及 Error 类。这类异常在编译期不强制要求处理，可以选择捕获也可以不捕获。RuntimeException 通常是由程序逻辑错误引起的，比如 NullPointerException（空指针）、ArrayIndexOutOfBoundsException（数组越界）、IllegalArgumentException（非法参数）等。如果这类异常没有被捕获，会导致程序中断执行。Error 则表示严重的系统级错误，比如 OutOfMemoryError、StackOverflowError，这类错误通常无法恢复，程序也不应该去捕获。
+
+两者的核心区别在于：受检异常强制要求处理，代表可预见的外部问题；非受检异常不强制处理，通常代表程序 bug，应该通过修复代码来避免。
+
+---
+
+### 6.2 finally 中的代码一定会执行吗？
+
+在正常情况下，只要 try 语句块开始执行了，finally 中的代码就一定会执行，无论是否发生异常，也无论 try 或 catch 中是否有 return 语句。这是 finally 的设计初衷，用来保证资源释放等清理工作一定能够完成。
+
+但在一些极端情况下，finally 中的代码可能不会执行：
+
+第一，JVM 在 finally 执行前就终止了。比如在 try 或 catch 中调用了 `System.exit(0)` 强制退出虚拟机，或者进程被 `kill -9` 强制杀死，这时 JVM 直接终止，finally 来不及执行。
+
+第二，程序所在线程死亡。如果执行 try 的线程被中断或死亡，finally 也无法执行。
+
+第三，计算机断电或系统崩溃等不可抗力因素。
+
+第四，try 语句块中出现了死循环或长时间阻塞，导致程序一直无法执行到 finally。
+
+需要注意的是，即使 try 或 catch 中有 return 语句，finally 依然会在 return 之前执行。而且如果 finally 中也有 return 语句，会覆盖 try 或 catch 中的 return 值，这种写法应该避免，因为会让代码逻辑变得混乱。
+
+总结：在正常的程序流程中，finally 一定会执行；但在 JVM 异常终止等极端情况下，finally 可能不会执行。
+
+---
+
+## 七、注解与反射
+
+### 7.1 Java 注解的作用是什么？
+
+注解（Annotation）是 Java 提供的一种为代码添加元数据的机制。注解本身不会直接影响代码的执行逻辑，但可以被编译器、开发工具或运行时通过反射读取，从而影响程序的行为。比如，我们可以使用注解标记某些类或方法，然后在运行时通过反射检查这些注解，当满足特定条件时执行相应的操作。常见的应用场景包括：配置信息（如 Spring 的 @Component、@Autowired）、代码生成（如 Lombok 的 @Data）、编译检查（如 @Override）、运行时处理（如 JUnit 的 @Test）。Java 还提供了四个重要的元注解用于定义注解本身：@Target 指定注解的作用范围（类、方法、字段等），@Retention 指定注解的生命周期（源码期、编译期、运行期），@Documented 表示注解是否出现在 JavaDoc 中，@Inherited 表示注解是否可以被子类继承。通过这些元注解的组合，我们可以创建出功能强大且灵活的自定义注解。
+
+---
+
+### 7.2 什么是反射机制？为什么反射慢？
+
+反射（Reflection）是 Java 提供的一种机制，允许程序在运行时动态地获取类的信息并操作类的成员。通过反射可以在运行时获取类的构造方法、字段、方法等信息，还可以动态创建对象、调用方法、访问和修改字段。
+
+**反射的主要功能**
+
+- 获取类的信息：包名、类名、父类、实现的接口等
+- 获取类的成员：构造方法、字段、方法
+- 动态操作：创建对象、调用方法、访问和修改字段（包括私有成员）
+
+**为什么反射慢？**
+
+反射的性能开销主要来自以下几个方面：
+
+第一，无法进行编译器优化。正常的方法调用在编译期就确定了，编译器和 JIT（即时编译器）可以进行内联、逃逸分析等优化。而反射调用在编译期无法确定，这些优化都无法应用，只能在运行时动态解析。
+
+第二，类型检查和参数装箱。使用反射调用方法时，参数需要被包装成 Object 数组传递，基本类型会发生自动装箱。方法执行时又要将 Object 数组转换回真正的参数类型，这个过程会产生大量临时对象。对象多了就容易触发 GC，而 GC 会导致程序停顿，影响性能。
+
+第三，安全检查开销。反射可以访问私有成员，每次反射操作都需要进行安全性检查和访问权限验证，这些检查都需要时间。
+
+第四，方法查找开销。反射需要从类的方法数组中查找目标方法，这是一个线性查找过程，比直接调用慢得多。
+
+**如何优化反射性能？**
+
+虽然反射慢，但在某些场景下不可避免。可以通过以下方式优化：
+
+- 缓存反射对象：将 Class、Method、Field 等对象缓存起来，避免重复获取
+- 使用 `setAccessible(true)`：跳过安全检查，提升性能
+- 减少反射使用频率：只在必要时使用反射，核心逻辑尽量用普通调用
+
+总的来说，反射提供了强大的动态能力，但牺牲了性能。在框架开发、插件系统等场景下很有用，但在性能敏感的代码中应该谨慎使用。
+
+---
+
