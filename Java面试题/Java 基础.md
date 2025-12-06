@@ -2361,3 +2361,8 @@ public class Person {
 - 使用 IDE 或 Lombok 自动生成
 - 使用 `Objects.hash()` 工具方法
 - equals 和 hashCode 使用相同的字段
+
+
+## **怎么修改一个类中的private修饰的String参数的值**
+
+String 类是不可变的，一旦创建字符串就不会改变了，如果改变引用的指向也算修改的话，可以提供setter方法暴露接口来修改，也可以使用反射打破封装来修改。
