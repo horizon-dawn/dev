@@ -873,6 +873,41 @@ System.out.println(s2);  // 输出 "hello world"
 ---
 
 
+
+## 4.9 **怎么修改一个类中的private修饰的String参数的值**
+
+String 类是不可变的，一旦创建字符串就不会改变了，如果改变引用的指向也算修改的话，可以提供setter方法暴露接口来修改，也可以使用反射打破封装来修改。
+
+---
+
+这个问题涉及到 String 的不可变性、封装性和反射机制。
+
+ **重要前提：String 是不可变的**
+
+首先要明确，String 类是不可变的（immutable），一旦创建就不能改变其内容。我们能做的只是改变引用的指向，让它指向一个新的 String 对象。
+
+---
+
+ **方法一：通过 setter 方法修改（推荐）**
+
+这是最常规、最安全的做法，通过提供公共的 setter 方法来修改私有字段。
+**说明：**
+- 这种方式改变的是引用的指向，而不是 String 对象本身
+- 原来的 "张三" 对象仍然存在（如果没有其他引用，会被 GC 回收）
+- name 字段现在指向新的 "李四" 对象
+
+ **方法二：使用反射打破封装（不推荐）**
+
+如果类没有提供 setter 方法，可以使用反射强制访问和修改私有字段。
+
+**反射修改的步骤：**
+1. 获取 Class 对象
+2. 通过 `getDeclaredField()` 获取字段对象
+3. 调用 `setAccessible(true)` 打破封装
+4. 使用 `set()` 方法修改字段值
+
+---
+
 ## 五、泛型
 
 ### 5.1 什么是泛型？有什么好处？
@@ -2191,7 +2226,113 @@ Timer 通过优先级队列（最小堆）+ 单后台线程实现定时调度，
 
 ## **BigDecimal和Long表示金额哪个更合适，怎么选择？**
 
+（待补充）
 
+---
+
+### 13.10 Stream 的并行流一定比串行流更快吗？
+
+不一定，并行流并不总是比串行流快，在某些场景下甚至会更慢。
+
+**并行流的开销**
+
+并行流虽然可以利用多核 CPU 并行处理数据，但它也带来了额外的开销：
+
+1. **线程创建和销毁**：需要创建和管理工作线程
+2. **任务分解和合并**：需要将数据拆分成多个子任务，最后再合并结果
+3. **线程上下文切换**：多线程之间的切换有开销
+4. **线程同步**：需要协调多个线程的执行
+5. **环境准备**：Fork/Join 框架的初始化
+
+这些开销在数据量小的时候可能会超过并行带来的性能提升，导致并行流反而比串行流慢。
+
+**什么时候并行流更快？**
+
+并行流适合以下场景：
+
+1. **数据量大**：通常至少需要几千到几万条数据，才能抵消并行的开销
+2. **计算密集型任务**：每个元素的处理逻辑比较复杂，耗时较长
+3. **无状态操作**：操作之间相互独立，没有依赖关系
+4. **易于拆分的数据源**：ArrayList、数组等可以高效拆分，LinkedList 则不适合
+
+**什么时候串行流更快？**
+
+串行流适合以下场景：
+
+1. **数据量小**：几百条以内的数据，串行流通常更快
+2. **IO 密集型任务**：大量时间花在等待 IO 上，并行意义不大
+3. **有状态操作**：如 sorted()、distinct() 等需要全局状态的操作
+4. **顺序敏感**：需要保证处理顺序的场景
+
+**性能对比示例：**
+
+```java
+// 数据量小的情况（1000 条）
+List<Integer> smallList = IntStream.range(0, 1000)
+    .boxed()
+    .collect(Collectors.toList());
+
+// 串行流：约 1ms
+long start = System.currentTimeMillis();
+long sum1 = smallList.stream()
+    .mapToInt(i -> i * 2)
+    .sum();
+System.out.println("串行流耗时：" + (System.currentTimeMillis() - start) + "ms");
+
+// 并行流：约 5ms（更慢！）
+start = System.currentTimeMillis();
+long sum2 = smallList.parallelStream()
+    .mapToInt(i -> i * 2)
+    .sum();
+System.out.println("并行流耗时：" + (System.currentTimeMillis() - start) + "ms");
+
+// 数据量大的情况（1000万条）
+List<Integer> largeList = IntStream.range(0, 10_000_000)
+    .boxed()
+    .collect(Collectors.toList());
+
+// 串行流：约 200ms
+start = System.currentTimeMillis();
+sum1 = largeList.stream()
+    .mapToInt(i -> i * 2)
+    .sum();
+System.out.println("串行流耗时：" + (System.currentTimeMillis() - start) + "ms");
+
+// 并行流：约 50ms（更快！）
+start = System.currentTimeMillis();
+sum2 = largeList.parallelStream()
+    .mapToInt(i -> i * 2)
+    .sum();
+System.out.println("并行流耗时：" + (System.currentTimeMillis() - start) + "ms");
+```
+
+**使用建议**
+
+1. **不要盲目使用并行流**：默认使用串行流，只在确实需要时才使用并行流
+2. **先测试再决定**：通过性能测试对比串行和并行的实际效果
+3. **注意线程安全**：并行流中的操作必须是线程安全的
+4. **避免有状态操作**：尽量使用无状态的操作，如 map、filter
+5. **合理设置并行度**：可以通过系统属性调整 Fork/Join 线程池的大小
+
+**常见误区**
+
+```java
+// 误区1：认为并行流总是更快
+list.parallelStream()  // 不一定！需要根据场景判断
+
+// 误区2：在并行流中使用非线程安全的操作
+List<Integer> result = new ArrayList<>();  // ArrayList 不是线程安全的
+list.parallelStream()
+    .forEach(i -> result.add(i));  // 错误！可能丢失数据
+
+// 正确做法：使用线程安全的收集器
+List<Integer> result = list.parallelStream()
+    .collect(Collectors.toList());  // 正确
+```
+
+**总结**
+
+并行流不是银弹，它在数据量大、计算密集的场景下能显著提升性能，但在数据量小或 IO 密集的场景下反而会因为额外开销而变慢。使用时需要根据实际情况进行性能测试，选择最合适的方案。
 
 ---
 
@@ -2363,36 +2504,6 @@ public class Person {
 - equals 和 hashCode 使用相同的字段
 
 
-## **怎么修改一个类中的private修饰的String参数的值**
+## JDK 9中对字符串的拼接做了什么优化？
 
-String 类是不可变的，一旦创建字符串就不会改变了，如果改变引用的指向也算修改的话，可以提供setter方法暴露接口来修改，也可以使用反射打破封装来修改。
-
----
-
-这个问题涉及到 String 的不可变性、封装性和反射机制。
-
- **重要前提：String 是不可变的**
-
-首先要明确，String 类是不可变的（immutable），一旦创建就不能改变其内容。我们能做的只是改变引用的指向，让它指向一个新的 String 对象。
-
----
-
- **方法一：通过 setter 方法修改（推荐）**
-
-这是最常规、最安全的做法，通过提供公共的 setter 方法来修改私有字段。
-**说明：**
-- 这种方式改变的是引用的指向，而不是 String 对象本身
-- 原来的 "张三" 对象仍然存在（如果没有其他引用，会被 GC 回收）
-- name 字段现在指向新的 "李四" 对象
-
- **方法二：使用反射打破封装（不推荐）**
-
-如果类没有提供 setter 方法，可以使用反射强制访问和修改私有字段。
-
-**反射修改的步骤：**
-1. 获取 Class 对象
-2. 通过 `getDeclaredField()` 获取字段对象
-3. 调用 `setAccessible(true)` 打破封装
-4. 使用 `set()` 方法修改字段值
-
----
+JDK9 将字符串拼接由JDK8的编译期转为调用StringBuilder 推迟到了运行期，这样可以根据字符串的特点选择拼接策略。
