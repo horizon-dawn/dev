@@ -406,6 +406,266 @@ public class User {
 
 ---
 
+### 2.5 为什么 Java 中的 main 方法必须是 public static void 的？
+
+Java 的 main 方法必须遵循固定的签名格式：`public static void main(String[] args)`，这是为了满足 JVM 的调用需要。
+
+---
+
+#### **标准签名**
+
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+
+---
+
+#### **为什么是 public？**
+
+**原因：让 JVM 能够从外部访问 main 方法**
+
+- JVM 需要从类的外部调用 main 方法来启动程序
+- 如果 main 方法不是 public，JVM 无法访问它，程序无法启动
+- public 确保了 JVM 可以在任何地方调用 main 方法，而不受访问权限限制
+
+**错误示例：**
+
+```java
+public class Test {
+    // 错误：private 或 protected 或 默认访问权限
+    private static void main(String[] args) {
+        System.out.println("Hello");
+    }
+}
+
+// 运行时错误：
+// Error: Main method not found in class Test
+```
+
+---
+
+#### **为什么是 static？**
+
+**原因：避免创建对象，直接通过类调用**
+
+- JVM 启动程序时，还没有创建任何对象
+- 如果 main 方法不是 static，JVM 需要先创建类的实例才能调用 main 方法
+- 但 JVM 不知道如何创建这个实例（需要什么参数？调用哪个构造函数？）
+- static 方法属于类本身，可以直接通过类名调用，不需要创建对象
+
+**对比：**
+
+```java
+// 正确：static 方法，JVM 可以直接调用
+public class Test {
+    public static void main(String[] args) {
+        System.out.println("Hello");
+    }
+}
+// JVM 调用：Test.main(args)
+
+// 错误：非 static 方法
+public class Test {
+    public void main(String[] args) {
+        System.out.println("Hello");
+    }
+}
+// JVM 无法调用，因为需要先创建 Test 对象
+// 但 JVM 不知道如何创建：new Test()? new Test(参数)?
+```
+
+---
+
+#### **为什么是 void？**
+
+**原因：JVM 不需要 main 方法的返回值**
+
+- main 方法是程序的入口点，它的返回值对 JVM 没有意义
+- 程序的退出状态通过 `System.exit(int status)` 来设置，而不是通过返回值
+- void 表示方法不返回任何值，符合 main 方法的语义
+
+**与 C/C++ 的对比：**
+
+```c
+// C/C++ 的 main 函数有返回值
+int main(int argc, char* argv[]) {
+    printf("Hello, World!\n");
+    return 0;  // 返回 0 表示成功，非 0 表示错误
+}
+// 返回值可以被操作系统或调用程序获取
+```
+
+```java
+// Java 的 main 方法没有返回值
+public static void main(String[] args) {
+    System.out.println("Hello, World!");
+    // 不需要返回值
+    // 如果需要设置退出状态，使用 System.exit(0)
+}
+```
+
+**为什么 Java 不需要返回值？**
+
+1. **Java 程序运行在 JVM 中**：JVM 是一个独立的进程，Java 程序不会被外部程序直接调用
+2. **退出状态通过 System.exit() 设置**：
+   ```java
+   public static void main(String[] args) {
+       try {
+           // 业务逻辑
+           System.exit(0);  // 成功退出
+       } catch (Exception e) {
+           System.exit(1);  // 异常退出
+       }
+   }
+   ```
+3. **C/C++ 需要返回值**：因为 C/C++ 程序可能被 shell 脚本或其他程序调用，需要通过返回值判断执行结果
+
+---
+
+#### **为什么参数是 String[] args？**
+
+**原因：接收命令行参数**
+
+- args 是一个字符串数组，用于接收命令行传入的参数
+- 参数名可以是任意的（args、arguments、a 等），但习惯上使用 args
+- 数组类型必须是 String[]
+
+**示例：**
+
+```java
+public class CommandLineDemo {
+    public static void main(String[] args) {
+        System.out.println("参数个数：" + args.length);
+        for (int i = 0; i < args.length; i++) {
+            System.out.println("参数 " + i + ": " + args[i]);
+        }
+    }
+}
+```
+
+**运行：**
+
+```bash
+java CommandLineDemo hello world 123
+
+# 输出：
+# 参数个数：3
+# 参数 0: hello
+# 参数 1: world
+# 参数 2: 123
+```
+
+---
+
+#### **如果不遵循标准签名会怎样？**
+
+**1. 缺少 public：**
+
+```java
+static void main(String[] args) {
+    // 编译通过，但运行时报错
+}
+// Error: Main method not found in class
+```
+
+**2. 缺少 static：**
+
+```java
+public void main(String[] args) {
+    // 编译通过，但运行时报错
+}
+// Error: Main method is not static in class
+```
+
+**3. 返回值不是 void：**
+
+```java
+public static int main(String[] args) {
+    return 0;
+}
+// Error: Main method must return a value of type void in class
+```
+
+**4. 参数类型错误：**
+
+```java
+public static void main(String args) {
+    // 编译通过，但运行时报错
+}
+// Error: Main method not found in class
+```
+
+---
+
+#### **可以重载 main 方法吗？**
+
+**可以，但只有标准签名的 main 方法会被 JVM 调用**
+
+```java
+public class MainOverload {
+    // 标准 main 方法，JVM 会调用这个
+    public static void main(String[] args) {
+        System.out.println("标准 main 方法");
+        main(10);  // 手动调用重载的 main 方法
+    }
+    
+    // 重载的 main 方法，不会被 JVM 自动调用
+    public static void main(int num) {
+        System.out.println("重载的 main 方法：" + num);
+    }
+    
+    // 另一个重载
+    public static void main(String arg) {
+        System.out.println("另一个重载：" + arg);
+    }
+}
+
+// 输出：
+// 标准 main 方法
+// 重载的 main 方法：10
+```
+
+---
+
+#### **Java 21+ 的简化（预览特性）**
+
+Java 21 引入了简化的 main 方法（预览特性），用于简单的程序：
+
+```java
+// Java 21+ 可以这样写（预览特性）
+void main() {
+    System.out.println("Hello, World!");
+}
+// 不需要 public static，不需要 String[] args
+// 但这只是语法糖，编译器会自动转换为标准格式
+```
+
+---
+
+#### **总结**
+
+| 修饰符/返回值 | 原因 |
+|--------------|------|
+| **public** | JVM 需要从外部访问 main 方法 |
+| **static** | 避免创建对象，JVM 可以直接通过类名调用 |
+| **void** | JVM 不需要返回值，退出状态通过 System.exit() 设置 |
+| **String[] args** | 接收命令行参数 |
+
+**记忆口诀：**
+- **public**：公开访问，JVM 能调用
+- **static**：静态方法，无需对象
+- **void**：无返回值，JVM 不需要
+- **main**：入口方法，约定俗成
+- **String[] args**：命令行参数
+
+**核心原因：这是 JVM 规范的要求，确保 JVM 能够正确启动 Java 程序！**
+
+---
+
 
 ## 三、基本类型与包装类
 
