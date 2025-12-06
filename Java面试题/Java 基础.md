@@ -1,150 +1,154 @@
 
+> 本文档包含 Java 基础的核心面试题
+
+---
+
 ## 📑 <a id="table-of-contents">目录</a>
 
 ### 一、 Java 语言概论
 
-- [1.1 Java 和 C++ 主要有哪些区别？分别有什么优缺点？](https://www.google.com/search?q=%2311-java-%E5%92%8C-c-%E4%B8%BB%E8%A6%81%E6%9C%89%E5%93%AA%E4%BA%9B%E5%8C%BA%E5%88%AB%E5%88%86%E5%88%AB%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E7%BC%BA%E7%82%B9)
+- [1.1 Java 和 C++ 主要有哪些区别？分别有什么优缺点？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2311-java-%E5%92%8C-c-%E4%B8%BB%E8%A6%81%E6%9C%89%E5%93%AA%E4%BA%9B%E5%8C%BA%E5%88%AB%E5%88%86%E5%88%AB%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E7%BC%BA%E7%82%B9)
     
-- [1.2 如何理解面向对象和面向过程？](https://www.google.com/search?q=%2312-%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B)
+- [1.2 如何理解面向对象和面向过程？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2312-%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B)
     
-- [1.3 Java 是值传递还是引用传递？](https://www.google.com/search?q=%2313-java-%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92)
+- [1.3 Java 是值传递还是引用传递？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2313-java-%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92)
     
 
 ### 二、 基本数据类型与编码
 
-- [2.1 Java 中有了基本类型为什么还需要包装类？](https://www.google.com/search?q=%2321-java-%E4%B8%AD%E6%9C%89%E4%BA%86%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E9%9C%80%E8%A6%81%E5%8C%85%E8%A3%85%E7%B1%BB)
+- [2.1 Java 中有了基本类型为什么还需要包装类？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2321-java-%E4%B8%AD%E6%9C%89%E4%BA%86%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E9%9C%80%E8%A6%81%E5%8C%85%E8%A3%85%E7%B1%BB)
     
-- [2.2 RPC 接口返回中，使用基本类型还是包装类？](https://www.google.com/search?q=%2322-rpc-%E6%8E%A5%E5%8F%A3%E8%BF%94%E5%9B%9E%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BF%98%E6%98%AF%E5%8C%85%E8%A3%85%E7%B1%BB)
+- [2.2 RPC 接口返回中，使用基本类型还是包装类？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2322-rpc-%E6%8E%A5%E5%8F%A3%E8%BF%94%E5%9B%9E%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BF%98%E6%98%AF%E5%8C%85%E8%A3%85%E7%B1%BB)
     
-- [2.3 为什么不能用浮点数表示金额？](https://www.google.com/search?q=%2323-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E7%94%A8%E6%B5%AE%E7%82%B9%E6%95%B0%E8%A1%A8%E7%A4%BA%E9%87%91%E9%A2%9D)
+- [2.3 为什么不能用浮点数表示金额？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2323-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E7%94%A8%E6%B5%AE%E7%82%B9%E6%95%B0%E8%A1%A8%E7%A4%BA%E9%87%91%E9%A2%9D)
     
-- [2.4 BigDecimal 和 Long 表示金额哪个更合适，怎么选择？(待补充)](https://www.google.com/search?q=%2324-bigdecimal-%E5%92%8C-long-%E8%A1%A8%E7%A4%BA%E9%87%91%E9%A2%9D%E5%93%AA%E4%B8%AA%E6%9B%B4%E5%90%88%E9%80%82%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9)
+- [2.4 BigDecimal 和 Long 表示金额哪个更合适，怎么选择？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2324-bigdecimal-%E5%92%8C-long-%E8%A1%A8%E7%A4%BA%E9%87%91%E9%A2%9D%E5%93%AA%E4%B8%AA%E6%9B%B4%E5%90%88%E9%80%82%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E5%BE%85%E8%A1%A5%E5%85%85)
     
-- [2.5 为什么不能用 BigDecimal 的 equals 方法做等值比较？](https://www.google.com/search?q=%2325-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E7%94%A8-bigdecimal-%E7%9A%84-equals-%E6%96%B9%E6%B3%95%E5%81%9A%E7%AD%89%E5%80%BC%E6%AF%94%E8%BE%83)
+- [2.5 为什么不能用 BigDecimal 的 equals 方法做等值比较？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2325-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E7%94%A8-bigdecimal-%E7%9A%84-equals-%E6%96%B9%E6%B3%95%E5%81%9A%E7%AD%89%E5%80%BC%E6%AF%94%E8%BE%83)
     
-- [2.6 BigDecimal(double) 和 BigDecimal(String) 有什么区别？](https://www.google.com/search?q=%2326-bigdecimaldouble-%E5%92%8C-bigdecimalstring-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
+- [2.6 BigDecimal(double) 和 BigDecimal(String) 有什么区别？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2326-bigdecimaldouble-%E5%92%8C-bigdecimalstring-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
     
-- [2.7 为什么对 Java 中的负数取绝对值结果不一定是正数？](https://www.google.com/search?q=%2327-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AF%B9-java-%E4%B8%AD%E7%9A%84%E8%B4%9F%E6%95%B0%E5%8F%96%E7%BB%9D%E5%AF%B9%E5%80%BC%E7%BB%93%E6%9E%9C%E4%B8%8D%E4%B8%80%E5%AE%9A%E6%98%AF%E6%AD%A3%E6%95%B0)
+- [2.7 为什么对 Java 中的负数取绝对值结果不一定是正数？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2327-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AF%B9-java-%E4%B8%AD%E7%9A%84%E8%B4%9F%E6%95%B0%E5%8F%96%E7%BB%9D%E5%AF%B9%E5%80%BC%E7%BB%93%E6%9E%9C%E4%B8%8D%E4%B8%80%E5%AE%9A%E6%98%AF%E6%AD%A3%E6%95%B0)
     
-- [2.8 Integer a = 1000, a == b 是什么结果？如果是 100 呢？](https://www.google.com/search?q=%2328-integer-a--1000-integer-b--1000-a--b-%E6%98%AF%E4%BB%80%E4%B9%88%E7%BB%93%E6%9E%9C%E5%A6%82%E6%9E%9C%E6%98%AF-100-%E5%91%A2)
+- [2.8 Integer a = 1000, a == b 是什么结果？如果是 100 呢？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2328-integer-a--1000-integer-b--1000-a--b-%E6%98%AF%E4%BB%80%E4%B9%88%E7%BB%93%E6%9E%9C%E5%A6%82%E6%9E%9C%E6%98%AF-100-%E5%91%A2)
     
-- [2.9 Java 中的枚举有什么特点和好处？](https://www.google.com/search?q=%2329-java-%E4%B8%AD%E7%9A%84%E6%9E%9A%E4%B8%BE%E6%9C%89%E4%BB%80%E4%B9%88%E7%89%B9%E7%82%B9%E5%92%8C%E5%A5%BD%E5%A4%84)
+- [2.9 Java 中的枚举有什么特点和好处？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2329-java-%E4%B8%AD%E7%9A%84%E6%9E%9A%E4%B8%BE%E6%9C%89%E4%BB%80%E4%B9%88%E7%89%B9%E7%82%B9%E5%92%8C%E5%A5%BD%E5%A4%84)
     
-- [2.10 char 能存储中文吗？](https://www.google.com/search?q=%23210-char-%E8%83%BD%E5%AD%98%E5%82%A8%E4%B8%AD%E6%96%87%E5%90%97)
+- [2.10 char 能存储中文吗？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23210-char-%E8%83%BD%E5%AD%98%E5%82%A8%E4%B8%AD%E6%96%87%E5%90%97)
     
-- [2.11 常见的字符编码有哪些？有什么区别？](https://www.google.com/search?q=%23211-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%9C%89%E5%93%AA%E4%BA%9B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
+- [2.11 常见的字符编码有哪些？有什么区别？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23211-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%9C%89%E5%93%AA%E4%BA%9B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
     
 
 ### 三、 字符串体系 (String)
 
-- [3.1 String、StringBuilder 和 StringBuffer 的区别？](https://www.google.com/search?q=%2331-stringstringbuilder-%E5%92%8C-stringbuffer-%E7%9A%84%E5%8C%BA%E5%88%AB)
+- [3.1 String、StringBuilder 和 StringBuffer 的区别？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2331-stringstringbuilder-%E5%92%8C-stringbuffer-%E7%9A%84%E5%8C%BA%E5%88%AB)
     
-- [3.2 String 为什么设计成不可变的？](https://www.google.com/search?q=%2332-string-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%BE%E8%AE%A1%E6%88%90%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84)
+- [3.2 String 为什么设计成不可变的？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2332-string-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%BE%E8%AE%A1%E6%88%90%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84)
     
-- [3.3 String 是如何实现不可变的？](https://www.google.com/search?q=%2333-string-%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84)
+- [3.3 String 是如何实现不可变的？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2333-string-%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84)
     
-- [3.4 String str = new String("zhc") 创建了几个对象？](https://www.google.com/search?q=%2334-string-str--new-stringzhc-%E5%88%9B%E5%BB%BA%E4%BA%86%E5%87%A0%E4%B8%AA%E5%AF%B9%E8%B1%A1)
+- [3.4 String str = new String("zhc") 创建了几个对象？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2334-string-str--new-stringzhc-%E5%88%9B%E5%BB%BA%E4%BA%86%E5%87%A0%E4%B8%AA%E5%AF%B9%E8%B1%A1)
     
-- [3.5 String a = "ab"; String b = "a" + "b"; a == b 吗？](https://www.google.com/search?q=%2335-string-a--ab-string-b--a--b-a--b-%E5%90%97)
+- [3.5 String a = "ab"; String b = "a" + "b"; a == b 吗？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2335-string-a--ab-string-b--a--b-a--b-%E5%90%97)
     
-- [3.6 字符串常量是什么时候进入到字符串常量池的？](https://www.google.com/search?q=%2336-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%98%AF%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%BF%9B%E5%85%A5%E5%88%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E7%9A%84)
+- [3.6 字符串常量是什么时候进入到字符串常量池的？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2336-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%98%AF%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%BF%9B%E5%85%A5%E5%88%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E7%9A%84)
     
-- [3.7 String 中 intern 的原理是什么？(待补充)](https://www.google.com/search?q=%2337-string-%E4%B8%AD-intern-%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88)
+- [3.7 String 中 intern 的原理是什么？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2337-string-%E4%B8%AD-intern-%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%E5%BE%85%E8%A1%A5%E5%85%85)
     
-- [3.8 String 有长度限制吗？是多少？](https://www.google.com/search?q=%2338-string-%E6%9C%89%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E5%90%97%E6%98%AF%E5%A4%9A%E5%B0%91)
+- [3.8 String 有长度限制吗？是多少？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2338-string-%E6%9C%89%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E5%90%97%E6%98%AF%E5%A4%9A%E5%B0%91)
     
-- [3.9 为什么 JDK 9 中把 String 的 char[] 改成了 byte[]？](https://www.google.com/search?q=%2339-%E4%B8%BA%E4%BB%80%E4%B9%88-jdk-9-%E4%B8%AD%E6%8A%8A-string-%E7%9A%84-char-%E6%94%B9%E6%88%90%E4%BA%86-byte)
+- [3.9 为什么 JDK 9 中把 String 的 char[] 改成了 byte[]？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2339-%E4%B8%BA%E4%BB%80%E4%B9%88-jdk-9-%E4%B8%AD%E6%8A%8A-string-%E7%9A%84-char-%E6%94%B9%E6%88%90%E4%BA%86-byte)
     
-- [3.10 JDK 9 中对字符串拼接做了什么优化？](https://www.google.com/search?q=%23310-jdk-9-%E4%B8%AD%E5%AF%B9%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88%E4%BC%98%E5%8C%96)
+- [3.10 JDK 9 中对字符串拼接做了什么优化？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23310-jdk-9-%E4%B8%AD%E5%AF%B9%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88%E4%BC%98%E5%8C%96)
     
-- [3.11 怎么修改一个类中的 private 修饰的 String 参数的值？](https://www.google.com/search?q=%23311-%E6%80%8E%E4%B9%88%E4%BF%AE%E6%94%B9%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E7%9A%84-private-%E4%BF%AE%E9%A5%B0%E7%9A%84-string-%E5%8F%82%E6%95%B0%E7%9A%84%E5%80%BC)
+- [3.11 怎么修改一个类中的 private 修饰的 String 参数的值？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23311-%E6%80%8E%E4%B9%88%E4%BF%AE%E6%94%B9%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E7%9A%84-private-%E4%BF%AE%E9%A5%B0%E7%9A%84-string-%E5%8F%82%E6%95%B0%E7%9A%84%E5%80%BC)
     
 
 ### 四、 面向对象核心 (OOP)
 
-- [4.1 为什么 Java 不支持多继承？](https://www.google.com/search?q=%2341-%E4%B8%BA%E4%BB%80%E4%B9%88-java-%E4%B8%8D%E6%94%AF%E6%8C%81%E5%A4%9A%E7%BB%A7%E6%89%BF)
+- [4.1 为什么 Java 不支持多继承？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2341-%E4%B8%BA%E4%BB%80%E4%B9%88-java-%E4%B8%8D%E6%94%AF%E6%8C%81%E5%A4%9A%E7%BB%A7%E6%89%BF)
     
-- [4.2 接口和抽象类的区别，如何选择？](https://www.google.com/search?q=%2342-%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB%E7%9A%84%E5%8C%BA%E5%88%AB%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9)
+- [4.2 接口和抽象类的区别，如何选择？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2342-%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB%E7%9A%84%E5%8C%BA%E5%88%AB%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9)
     
-- [4.3 如何理解 Java 中的多态？](https://www.google.com/search?q=%2343-%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-java-%E4%B8%AD%E7%9A%84%E5%A4%9A%E6%80%81)
+- [4.3 如何理解 Java 中的多态？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2343-%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-java-%E4%B8%AD%E7%9A%84%E5%A4%9A%E6%80%81)
     
-- [4.4 为什么建议自定义一个无参构造函数？](https://www.google.com/search?q=%2344-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BB%BA%E8%AE%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%97%A0%E5%8F%82%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0)
+- [4.4 为什么建议自定义一个无参构造函数？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2344-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BB%BA%E8%AE%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%97%A0%E5%8F%82%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0)
     
-- [4.5 为什么 Java 中的 main 方法必须是 public static void 的？](https://www.google.com/search?q=%2345-%E4%B8%BA%E4%BB%80%E4%B9%88-java-%E4%B8%AD%E7%9A%84-main-%E6%96%B9%E6%B3%95%E5%BF%85%E9%A1%BB%E6%98%AF-public-static-void-%E7%9A%84)
+- [4.5 为什么 Java 中的 main 方法必须是 public static void 的？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2345-%E4%B8%BA%E4%BB%80%E4%B9%88-java-%E4%B8%AD%E7%9A%84-main-%E6%96%B9%E6%B3%95%E5%BF%85%E9%A1%BB%E6%98%AF-public-static-void-%E7%9A%84)
     
-- [4.6 有了 equals 为什么还需要 hashCode 方法？](https://www.google.com/search?q=%2346-%E6%9C%89%E4%BA%86-equals-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E9%9C%80%E8%A6%81-hashcode-%E6%96%B9%E6%B3%95)
+- [4.6 有了 equals 为什么还需要 hashCode 方法？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2346-%E6%9C%89%E4%BA%86-equals-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E9%9C%80%E8%A6%81-hashcode-%E6%96%B9%E6%B3%95)
     
-- [4.7 为什么建议多用组合少用继承？(待补充)](https://www.google.com/search?q=%2347-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BB%BA%E8%AE%AE%E5%A4%9A%E7%94%A8%E7%BB%84%E5%90%88%E5%B0%91%E7%94%A8%E7%BB%A7%E6%89%BF)
+- [4.7 为什么建议多用组合少用继承？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2347-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BB%BA%E8%AE%AE%E5%A4%9A%E7%94%A8%E7%BB%84%E5%90%88%E5%B0%91%E7%94%A8%E7%BB%A7%E6%89%BF%E5%BE%85%E8%A1%A5%E5%85%85)
     
-- [4.8 什么是深拷贝和浅拷贝？(待补充)](https://www.google.com/search?q=%2348-%E4%BB%80%E4%B9%88%E6%98%AF%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D)
+- [4.8 什么是深拷贝和浅拷贝？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2348-%E4%BB%80%E4%B9%88%E6%98%AF%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%BE%85%E8%A1%A5%E5%85%85)
     
 
 ### 五、 核心机制 (泛型/注解/反射/异常)
 
-- [5.1 什么是泛型？有什么好处？](https://www.google.com/search?q=%2351-%E4%BB%80%E4%B9%88%E6%98%AF%E6%B3%9B%E5%9E%8B%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84)
+- [5.1 什么是泛型？有什么好处？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2351-%E4%BB%80%E4%B9%88%E6%98%AF%E6%B3%9B%E5%9E%8B%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84)
     
-- [5.2 什么是类型擦除？](https://www.google.com/search?q=%2352-%E4%BB%80%E4%B9%88%E6%98%AF%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4)
+- [5.2 什么是类型擦除？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2352-%E4%BB%80%E4%B9%88%E6%98%AF%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4)
     
-- [5.3 泛型中 K T V E ? Object 等分别代表什么含义？](https://www.google.com/search?q=%2353-%E6%B3%9B%E5%9E%8B%E4%B8%AD-k-t-v-e--object-%E7%AD%89%E5%88%86%E5%88%AB%E4%BB%A3%E8%A1%A8%E4%BB%80%E4%B9%88%E5%90%AB%E4%B9%89)
+- [5.3 泛型中 K T V E ? Object 等分别代表什么含义？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2353-%E6%B3%9B%E5%9E%8B%E4%B8%AD-k-t-v-e--object-%E7%AD%89%E5%88%86%E5%88%AB%E4%BB%A3%E8%A1%A8%E4%BB%80%E4%B9%88%E5%90%AB%E4%B9%89)
     
-- [5.4 泛型中上下界限定符 extends 和 super 有什么区别？](https://www.google.com/search?q=%2354-%E6%B3%9B%E5%9E%8B%E4%B8%AD%E4%B8%8A%E4%B8%8B%E7%95%8C%E9%99%90%E5%AE%9A%E7%AC%A6-extends-%E5%92%8C-super-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
+- [5.4 泛型中上下界限定符 extends 和 super 有什么区别？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2354-%E6%B3%9B%E5%9E%8B%E4%B8%AD%E4%B8%8A%E4%B8%8B%E7%95%8C%E9%99%90%E5%AE%9A%E7%AC%A6-extends-%E5%92%8C-super-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
     
-- [5.5 Java 中异常分哪两类？有什么区别？](https://www.google.com/search?q=%2355-java-%E4%B8%AD%E5%BC%82%E5%B8%B8%E5%88%86%E5%93%AA%E4%B8%A4%E7%B1%BB%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
+- [5.5 Java 中异常分哪两类？有什么区别？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2355-java-%E4%B8%AD%E5%BC%82%E5%B8%B8%E5%88%86%E5%93%AA%E4%B8%A4%E7%B1%BB%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
     
-- [5.6 finally 中的代码一定会执行吗？](https://www.google.com/search?q=%2356-finally-%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%80%E5%AE%9A%E4%BC%9A%E6%89%A7%E8%A1%8C%E5%90%97)
+- [5.6 finally 中的代码一定会执行吗？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2356-finally-%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%80%E5%AE%9A%E4%BC%9A%E6%89%A7%E8%A1%8C%E5%90%97)
     
-- [5.7 try return A, finally return C，最终返回值是什么？](https://www.google.com/search?q=%2357-try-%E4%B8%AD-return-acatch-%E4%B8%AD-return-bfinally-%E4%B8%AD-return-c%E6%9C%80%E7%BB%88%E8%BF%94%E5%9B%9E%E5%80%BC%E6%98%AF%E4%BB%80%E4%B9%88)
+- [5.7 try return A, finally return C，最终返回值是什么？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2357-try-return-a-finally-return-c%E6%9C%80%E7%BB%88%E8%BF%94%E5%9B%9E%E5%80%BC%E6%98%AF%E4%BB%80%E4%B9%88)
     
-- [5.8 final、finally、finalize 有什么区别？](https://www.google.com/search?q=%2358-finalfinallyfinalize-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
+- [5.8 final、finally、finalize 有什么区别？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2358-finalfinallyfinalize-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
     
-- [5.9 为什么不建议使用异常控制业务流程？](https://www.google.com/search?q=%2359-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B)
+- [5.9 为什么不建议使用异常控制业务流程？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2359-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B)
     
-- [5.10 Java 注解的作用是什么？](https://www.google.com/search?q=%23510-java-%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88)
+- [5.10 Java 注解的作用是什么？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23510-java-%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88)
     
-- [5.11 什么是反射机制？为什么反射慢？](https://www.google.com/search?q=%23511-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%8D%E5%B0%84%E6%85%A2)
+- [5.11 什么是反射机制？为什么反射慢？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23511-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%8D%E5%B0%84%E6%85%A2)
     
-- [5.12 反射与封装是否矛盾？如何解决反射破坏封装的问题？](https://www.google.com/search?q=%23512-%E5%8F%8D%E5%B0%84%E4%B8%8E%E5%B0%81%E8%A3%85%E6%98%AF%E5%90%A6%E7%9F%9B%E7%9B%BE%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%8F%8D%E5%B0%84%E7%A0%B4%E5%9D%8F%E5%B0%81%E8%A3%85%E7%9A%84%E9%97%AE%E9%A2%98)
+- [5.12 反射与封装是否矛盾？如何解决反射破坏封装的问题？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23512-%E5%8F%8D%E5%B0%84%E4%B8%8E%E5%B0%81%E8%A3%85%E6%98%AF%E5%90%A6%E7%9F%9B%E7%9B%BE%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%8F%8D%E5%B0%84%E7%A0%B4%E5%9D%8F%E5%B0%81%E8%A3%85%E7%9A%84%E9%97%AE%E9%A2%98)
     
-- [5.13 Java 的动态代理如何实现？(待补充)](https://www.google.com/search?q=%23513-java-%E7%9A%84%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0)
+- [5.13 Java 的动态代理如何实现？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23513-java-%E7%9A%84%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BE%85%E8%A1%A5%E5%85%85)
     
 
 ### 六、 高级特性 (SPI/语法糖)
 
-- [6.1 什么是 SPI，和 API 有什么区别？](https://www.google.com/search?q=%2361-%E4%BB%80%E4%B9%88%E6%98%AF-spi%E5%92%8C-api-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
+- [6.1 什么是 SPI，和 API 有什么区别？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2361-%E4%BB%80%E4%B9%88%E6%98%AF-spi-%E5%92%8C-api-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
     
-- [6.2 说几个常见的语法糖？](https://www.google.com/search?q=%2362-%E8%AF%B4%E5%87%A0%E4%B8%AA%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AF%AD%E6%B3%95%E7%B3%96)
+- [6.2 说几个常见的语法糖？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2362-%E8%AF%B4%E5%87%A0%E4%B8%AA%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AF%AD%E6%B3%95%E7%B3%96)
     
-- [6.3 Lambda 表达式是如何实现的？](https://www.google.com/search?q=%2363-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84)
+- [6.3 Lambda 表达式是如何实现的？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2363-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84)
     
-- [6.4 while(true) 和 for(;;) 哪个性能好？](https://www.google.com/search?q=%2364-whiletrue-%E5%92%8C-for-%E5%93%AA%E4%B8%AA%E6%80%A7%E8%83%BD%E5%A5%BD)
+- [6.4 while(true) 和 for(;;) 哪个性能好？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2364-whiletrue-%E5%92%8C-for-%E5%93%AA%E4%B8%AA%E6%80%A7%E8%83%BD%E5%A5%BD)
     
 
 ### 七、 容器、时间与并发基础
 
-- [7.1 Stream 的并行流一定比串行流更快吗？](https://www.google.com/search?q=%2371-stream-%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%B5%81%E4%B8%80%E5%AE%9A%E6%AF%94%E4%B8%B2%E8%A1%8C%E6%B5%81%E6%9B%B4%E5%BF%AB%E5%90%97)
+- [7.1 Stream 的并行流一定比串行流更快吗？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2371-stream-%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%B5%81%E4%B8%80%E5%AE%9A%E6%AF%94%E4%B8%B2%E8%A1%8C%E6%B5%81%E6%9B%B4%E5%BF%AB%E5%90%97)
     
-- [7.2 SimpleDateFormat 是线程安全的吗？使用时应该注意什么？](https://www.google.com/search?q=%2372-simpledateformat-%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97%E4%BD%BF%E7%94%A8%E6%97%B6%E5%BA%94%E8%AF%A5%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88)
+- [7.2 SimpleDateFormat 是线程安全的吗？使用时应该注意什么？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2372-simpledateformat-%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97%E4%BD%BF%E7%94%A8%E6%97%B6%E5%BA%94%E8%AF%A5%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88)
     
-- [7.3 Java 中 Timer 实现定时调度的原理是什么？](https://www.google.com/search?q=%2373-java-%E4%B8%AD-timer-%E5%AE%9E%E7%8E%B0%E5%AE%9A%E6%97%B6%E8%B0%83%E5%BA%A6%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88)
+- [7.3 Java 中 Timer 实现定时调度的原理是什么？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2373-java-%E4%B8%AD-timer-%E5%AE%9E%E7%8E%B0%E5%AE%9A%E6%97%B6%E8%B0%83%E5%BA%A6%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88)
     
 
 ### 八、 系统底层与 JVM
 
-- [8.1 ClassNotFoundException 和 NoClassDefFoundError 的区别是什么？](https://www.google.com/search?q=%2381-classnotfoundexception-%E5%92%8C-noclassdeffounderror-%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88)
+- [8.1 ClassNotFoundException 和 NoClassDefFoundError 的区别是什么？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2381-classnotfoundexception-%E5%92%8C-noclassdeffounderror-%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88)
     
-- [8.2 Java 中创建对象有哪些种方式？](https://www.google.com/search?q=%2382-java-%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E6%9C%89%E5%93%AA%E4%BA%9B%E7%A7%8D%E6%96%B9%E5%BC%8F)
+- [8.2 Java 中创建对象有哪些种方式？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2382-java-%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E6%9C%89%E5%93%AA%E4%BA%9B%E7%A7%8D%E6%96%B9%E5%BC%8F)
     
-- [8.3 什么是 AIO、BIO 和 NIO？(待补充)](https://www.google.com/search?q=%2383-%E4%BB%80%E4%B9%88%E6%98%AF-aiobio-%E5%92%8C-nio)
+- [8.3 什么是 AIO、BIO 和 NIO？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2383-%E4%BB%80%E4%B9%88%E6%98%AF-aio-bio-%E5%92%8C-nio-%E5%BE%85%E8%A1%A5%E5%85%85)
     
-- [8.4 什么是序列化与反序列化？(待补充)](https://www.google.com/search?q=%2384-%E4%BB%80%E4%B9%88%E6%98%AF%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96)
+- [8.4 什么是序列化与反序列化？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2384-%E4%BB%80%E4%B9%88%E6%98%AF%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%BE%85%E8%A1%A5%E5%85%85)
     
-- [8.5 Java 序列化的原理是什么？(待补充)](https://www.google.com/search?q=%2385-java-%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88)
+- [8.5 Java 序列化的原理是什么？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2385-java-%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%E5%BE%85%E8%A1%A5%E5%85%85)
     
-- [8.6 serialVersionUID 有何用途？如果没定义会有什么问题？(待补充)](https://www.google.com/search?q=%2386-serialversionuid-%E6%9C%89%E4%BD%95%E7%94%A8%E9%80%94%E5%A6%82%E6%9E%9C%E6%B2%A1%E5%AE%9A%E4%B9%89%E4%BC%9A%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98)
+- [8.6 serialVersionUID 有何用途？如果没定义会有什么问题？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2386-serialversionuid-%E6%9C%89%E4%BD%95%E7%94%A8%E9%80%94%E5%A6%82%E6%9E%9C%E6%B2%A1%E5%AE%9A%E4%B9%89%E4%BC%9A%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E5%BE%85%E8%A1%A5%E5%85%85)
     
-- [8.7 你知道 fastjson 的反序列化漏洞吗？(待补充)](https://www.google.com/search?q=%2387-%E4%BD%A0%E7%9F%A5%E9%81%93-fastjson-%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%90%97)
+- [8.7 你知道 fastjson 的反序列化漏洞吗？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2387-%E4%BD%A0%E7%9F%A5%E9%81%93-fastjson-%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%90%97%E5%BE%85%E8%A1%A5%E5%85%85)
     
-- [8.8 什么是 UUID，能保证唯一吗？(待补充)](https://www.google.com/search?q=%2388-%E4%BB%80%E4%B9%88%E6%98%AF-uuid%E8%83%BD%E4%BF%9D%E8%AF%81%E5%94%AF%E4%B8%80%E5%90%97)
+- [8.8 什么是 UUID，能保证唯一吗？(待补充)](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2388-%E4%BB%80%E4%B9%88%E6%98%AF-uuid%E8%83%BD%E4%BF%9D%E8%AF%81%E5%94%AF%E4%B8%80%E5%90%97%E5%BE%85%E8%A1%A5%E5%85%85)
     
 
 ---
@@ -169,7 +173,7 @@ Java 的优点包括平台无关性强、生态丰富、社区支持完善、垃
 
 C++ 的优点包括性能高效、能直接操作内存和硬件、图形和音频库支持丰富。缺点是：内存管理复杂、学习曲线陡峭、容易造成内存泄露、跨平台开发困难。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 1.2 如何理解面向对象和面向过程？
 
@@ -179,7 +183,7 @@ C++ 的优点包括性能高效、能直接操作内存和硬件、图形和音�
 
 面向对象更关注"谁来做"，类似团队协作。在解决问题时，将问题分解成多个对象，每个对象负责特定的职责，通过对象间的协作来解决问题。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 1.3 Java 是值传递还是引用传递？
 
@@ -213,7 +217,7 @@ System.out.println(sb);  // 输出 "helloworld"，不是 "new"
 
 这个例子说明：传递的是引用的副本，而不是引用本身。如果是真正的引用传递，重新赋值应该会影响外部变量。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ---
 
@@ -227,7 +231,7 @@ Java 是面向对象的编程语言，更多场景需要使用对象而不是基
 
 总的来说，包装类让基本类型具备了对象的特性，使其能够适应面向对象编程的各种场景。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 2.2 RPC 接口返回中，使用基本类型还是包装类？
 
@@ -237,7 +241,7 @@ Java 是面向对象的编程语言，更多场景需要使用对象而不是基
 
 第二，明确表达"无值"状态。包装类可以用 null 来表示"无值"或"未知"的状态，这在很多业务场景下是必要的。比如：用户未填写某个可选字段、数据库中该字段为 NULL、远程调用失败未获取到数据。这些情况用 null 表示比用默认值更清晰、更准确。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 2.3 为什么不能用浮点数表示金额？
 
@@ -249,13 +253,13 @@ Java 是面向对象的编程语言，更多场景需要使用对象而不是基
 
 因此，在金额这种对精度要求极高的场景下，应该使用 BigDecimal 类来进行精确计算，它采用十进制表示，可以完全避免精度丢失的问题。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 2.4 BigDecimal 和 Long 表示金额哪个更合适，怎么选择？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 2.5 为什么不能用 BigDecimal 的 equals 方法做等值比较？
 
@@ -265,7 +269,7 @@ Java 是面向对象的编程语言，更多场景需要使用对象而不是基
 
 正确的做法是使用 compareTo 方法，它只比较数值大小，不考虑标度。当 compareTo 返回 0 时，表示两个 BigDecimal 的数值相等。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 2.6 BigDecimal(double) 和 BigDecimal(String) 有什么区别？
 
@@ -277,7 +281,7 @@ Java 是面向对象的编程语言，更多场景需要使用对象而不是基
 
 所以在实际开发中，特别是涉及金融计算的场景，我们应该始终使用字符串构造方法来创建 BigDecimal 对象，避免精度问题。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 2.7 为什么对 Java 中的负数取绝对值结果不一定是正数？
 
@@ -298,7 +302,7 @@ int abs = Math.abs((int)b);  // 结果是 128，正确
 
 或者更安全的做法是，在业务逻辑中先判断是否是最小值，避免这种边界情况的出现。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 2.8 Integer a = 1000, Integer b = 1000, a == b 是什么结果？如果是 100 呢？
 
@@ -334,7 +338,9 @@ System.out.println(c.equals(d));  // true，比较的是值
 
 **IntegerCache 的实现：**
 
-```Java
+Java
+
+```
 private static class IntegerCache {
     static final int low = -128;
     static final int high = 127;
@@ -398,7 +404,7 @@ if (a == b) {
 }
 ```
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 2.9 Java 中的枚举有什么特点和好处？
 
@@ -416,7 +422,7 @@ Java 枚举（Enum）是一种特殊的类，用于定义一组固定的常量�
 
 总的来说，枚举让代码更安全、更易读、更易维护，是定义固定常量集合的最佳选择。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 2.10 char 能存储中文吗？
 
@@ -438,7 +444,7 @@ System.out.println(c1 + " " + c2);  // 输出：中 文
 
 所以准确的说法是：char 可以存储 Unicode BMP 范围内的字符，包括绝大多数常用中文，但无法存储超出这个范围的生僻字和特殊符号。如果需要处理所有 Unicode 字符，应该使用 String 类型。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 2.11 常见的字符编码有哪些？有什么区别？
 
@@ -454,7 +460,7 @@ UTF-16 编码：Unicode 的另一种编码实现，使用 2 个或 4 个字节�
 
 GBK 编码：专门为中文设计的编码，使用 2 个字节编码一个汉字。相比 UTF-8 的 3 个字节，GBK 存储中文更节省空间。但它只支持中文和少量其他字符，不如 UTF-8 通用。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ---
 
@@ -472,7 +478,7 @@ GBK 编码：专门为中文设计的编码，使用 2 个字节编码一个汉�
 
 使用建议：单线程环境下频繁字符串拼接用 StringBuilder，多线程环境下需要字符串拼接用 StringBuffer，字符串内容不变或偶尔拼接用 String 就够了。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 3.2 String 为什么设计成不可变的？
 
@@ -488,7 +494,7 @@ String 设计成不可变主要是出于以下几个方面的考虑：
 
 第五，整体性能优化。正是因为有了字符串常量池和 hashCode 缓存这些机制，String 类在实际使用中的性能表现非常好。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 3.3 String 是如何实现不可变的？
 
@@ -517,7 +523,7 @@ System.out.println(s2);  // 输出 "hello world"
 
 这种多层防护的设计，从类、字段、方法、访问控制等多个维度保证了 String 的不可变性。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 3.4 String str = new String("zhc") 创建了几个对象？
 
@@ -533,7 +539,7 @@ System.out.println(s2);  // 输出 "hello world"
 
 需要注意的是，这两个对象是不同的。堆中的 String 对象会引用字符串常量池中的 "zhc"，但它们的内存地址是不同的。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 3.5 String a = "ab"; String b = "a" + "b"; a == b 吗？
 
@@ -561,7 +567,7 @@ System.out.println(a == c);  // false，因为 c 指向堆，a 指向常量池
 
 这是因为变量拼接在编译期无法确定值，只能在运行时通过 StringBuilder 来完成，会创建新的对象。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 3.6 字符串常量是什么时候进入到字符串常量池的？
 
@@ -601,13 +607,13 @@ String s2 = s1.intern();  // 手动将 "hello" 添加到字符串常量池
 - 如果字符串常量池中不存在该字符串，将其添加到常量池，并返回常量池中的引用
     
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 3.7 String 中 intern 的原理是什么？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 3.8 String 有长度限制吗？是多少？
 
@@ -623,7 +629,7 @@ String 是有长度限制的，而且在编译期和运行期的限制是不一�
 
 所以理论上运行时可以创建一个包含约 21 亿个字符的 String 对象，但实际上会受到 JVM 堆内存大小的限制。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 3.9 为什么 JDK 9 中把 String 的 char[] 改成了 byte[]？
 
@@ -658,7 +664,7 @@ String s2 = "你好";   // 需要 4 字节（2个字符×2字节），coder = UT
 
 根据统计，大部分 Java 应用中的字符串都是 Latin-1 字符，所以这个优化对整体性能提升明显。这是一个典型的空间换时间的优化案例，通过增加一个 coder 字段的开销，换来了大量的内存节省。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 3.10 JDK 9 中对字符串拼接做了什么优化？
 
@@ -789,7 +795,7 @@ public final class StringConcatFactory {
 }
 ```
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 3.11 怎么修改一个类中的 private 修饰的 String 参数的值？
 
@@ -833,7 +839,7 @@ String 类是不可变的，一旦创建字符串就不会改变了，如果改�
 4. 使用 `set()` 方法修改字段值
     
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ---
 
@@ -847,7 +853,7 @@ Java 不支持多继承主要是为了避免**菱形继承**问题，同时保�
 
 不支持多继承的好处包括：保持语言的简洁性、避免方法调用的歧义、降低类之间的耦合、防止子类过于臃肿（继承一些不必要的功能）。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 4.2 接口和抽象类的区别，如何选择？
 
@@ -861,7 +867,7 @@ Java 不支持多继承主要是为了避免**菱形继承**问题，同时保�
 
 抽象类侧重于代码复用，接口侧重于定义规范。实际开发中接口使用更频繁，因为更灵活。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 4.3 如何理解 Java 中的多态？
 
@@ -882,7 +888,7 @@ list.add(1);
 
 多态提高了代码的扩展性和灵活性，可以用统一的接口操作不同的对象，降低了代码的耦合度。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 4.4 为什么建议自定义一个无参构造函数？
 
@@ -1214,7 +1220,7 @@ public class User {
 
 **记住：一旦定义了有参构造函数，就一定要同时定义无参构造函数！**
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 4.5 为什么 Java 中的 main 方法必须是 public static void 的？
 
@@ -1437,7 +1443,7 @@ void main() {
 // 但这只是语法糖，编译器会自动转换为标准格式
 ```
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 4.6 有了 equals 为什么还需要 hashCode 方法？
 
@@ -1636,19 +1642,19 @@ public class Person {
 - equals 和 hashCode 使用相同的字段
     
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 4.7 为什么建议多用组合少用继承？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 4.8 什么是深拷贝和浅拷贝？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ---
 
@@ -1689,7 +1695,7 @@ String s2 = (String) list2.get(0);  // 需要强制转换，容易出错
 
 需要注意的是，泛型是编译期的概念。编译时会进行类型检查，然后进行类型擦除，把泛型类型替换为 Object 或其边界类型。所以运行时 JVM 其实不知道泛型的具体类型信息。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.2 什么是类型擦除？
 
@@ -1731,7 +1737,7 @@ class Box {
 
 运行时无法获取泛型的具体类型信息，比如无法通过 `instanceof` 判断泛型类型，也无法创建泛型数组。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.3 泛型中 K T V E ? Object 等分别代表什么含义？
 
@@ -1791,7 +1797,7 @@ list.add("hello");
 String s = list.get(0);
 ```
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.4 泛型中上下界限定符 extends 和 super 有什么区别？
 
@@ -1850,7 +1856,7 @@ public static <T> void copy(List<? super T> dest, List<? extends T> src) {
 
 这样设计既保证了类型安全，又提供了足够的灵活性。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.5 Java 中异常分哪两类？有什么区别？
 
@@ -1862,7 +1868,7 @@ Java 的异常分为受检异常（Checked Exception）和非受检异常（Unch
 
 两者的核心区别在于：受检异常强制要求处理，代表可预见的外部问题；非受检异常不强制处理，通常代表程序 bug，应该通过修复代码来避免。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.6 finally 中的代码一定会执行吗？
 
@@ -1882,7 +1888,7 @@ Java 的异常分为受检异常（Checked Exception）和非受检异常（Unch
 
 总结：在正常的程序流程中，finally 一定会执行；但在 JVM 异常终止等极端情况下，finally 可能不会执行。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.7 try return A, finally return C，最终返回值是什么？
 
@@ -2014,7 +2020,7 @@ System.out.println(test());  // 输出：AB
 - finally 中修改引用类型指向的对象内容会生效
     
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.8 final、finally、finalize 有什么区别？
 
@@ -2234,7 +2240,7 @@ public class MyResource implements AutoCloseable {
     - 显式提供 close() 或 dispose() 方法
         
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.9 为什么不建议使用异常控制业务流程？
 
@@ -2616,13 +2622,13 @@ public User loadUser(String filename) throws IOException {
 - 让异常向上传播，由合适的层级处理
     
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.10 Java 注解的作用是什么？
 
 注解（Annotation）是 Java 提供的一种为代码添加元数据的机制。注解本身不会直接影响代码的执行逻辑，但可以被编译器、开发工具或运行时通过反射读取，从而影响程序的行为。比如，我们可以使用注解标记某些类或方法，然后在运行时通过反射检查这些注解，当满足特定条件时执行相应的操作。常见的应用场景包括：配置信息（如 Spring 的 @Component、@Autowired）、代码生成（如 Lombok 的 @Data）、编译检查（如 @Override）、运行时处理（如 JUnit 的 @Test）。Java 还提供了四个重要的元注解用于定义注解本身：@Target 指定注解的作用范围（类、方法、字段等），@Retention 指定注解的生命周期（源码期、编译期、运行期），@Documented 表示注解是否出现在 JavaDoc 中，@Inherited 表示注解是否可以被子类继承。通过这些元注解的组合，我们可以创建出功能强大且灵活的自定义注解。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.11 什么是反射机制？为什么反射慢？
 
@@ -2662,7 +2668,7 @@ public User loadUser(String filename) throws IOException {
 
 总的来说，反射提供了强大的动态能力，但牺牲了性能。在框架开发、插件系统等场景下很有用，但在性能敏感的代码中应该谨慎使用。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.12 反射与封装是否矛盾？如何解决反射破坏封装的问题？
 
@@ -2686,13 +2692,13 @@ public User loadUser(String filename) throws IOException {
 
 总的来说，反射和封装并不矛盾，而是在不同层面服务于不同的目的。合理使用反射，配合必要的安全措施，可以在保证灵活性的同时，最大程度地维护封装性和安全性。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 5.13 Java 的动态代理如何实现？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ---
 
@@ -2795,7 +2801,7 @@ for (Driver driver : loader) {
 
 总结：API 是给别人用的，SPI 是让别人扩展的。API 关注功能实现，SPI 关注扩展性和插件化。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 6.2 说几个常见的语法糖？
 
@@ -2880,7 +2886,7 @@ list.forEach(item -> System.out.println(item));
 
 看起来是特殊的类型，实际上编译后会生成继承自 Enum 的类。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 6.3 Lambda 表达式是如何实现的？
 
@@ -2921,7 +2927,7 @@ private static void lambda$main$0(String s) {
 
 使用 invokedynamic 的优势：延迟绑定，只在第一次使用时才生成实现类；可以进行更多的运行时优化；减少了 class 文件的数量。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 6.4 while(true) 和 for(;;) 哪个性能好？
 
@@ -2929,7 +2935,7 @@ private static void lambda$main$0(String s) {
 
 这是一个常见的误区，很多人认为 for(;;) 性能更好，但实际上编译器会将它们优化成相同的字节码。所以在实际开发中，选择哪个完全取决于个人习惯和代码可读性，不需要考虑性能差异。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ---
 
@@ -3061,7 +3067,7 @@ List<Integer> result = list.parallelStream()
 
 并行流不是银弹，它在数据量大、计算密集的场景下能显著提升性能，但在数据量小或 IO 密集的场景下反而会因为额外开销而变慢。使用时需要根据实际情况进行性能测试，选择最合适的方案。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 7.2 SimpleDateFormat 是线程安全的吗？使用时应该注意什么？
 
@@ -3095,7 +3101,7 @@ String date = LocalDate.now().format(formatter);
 
 总结：SimpleDateFormat 不是线程安全的，在多线程环境下应该避免共享实例，优先使用 DateTimeFormatter 等线程安全的替代方案。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 7.3 Java 中 Timer 实现定时调度的原理是什么？
 
@@ -3200,7 +3206,7 @@ executor.scheduleAtFixedRate(() -> {
 
 Timer 通过优先级队列（最小堆）+ 单后台线程实现定时调度，适合简单场景。生产环境推荐使用 ScheduledExecutorService，它提供了更强大和可靠的定时调度能力。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ---
 
@@ -3261,7 +3267,7 @@ try {
 
 简单记忆：ClassNotFoundException 是"找不到类"，NoClassDefFoundError 是"类定义找不到"。
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 8.2 Java 中创建对象有哪些种方式？
 
@@ -3278,40 +3284,40 @@ Java 中创建对象主要有以下几种方式：
 5. **Unsafe**：通过 Unsafe 类的 allocateInstance() 方法直接分配内存创建对象，不调用构造方法，这种方式不安全，一般不推荐使用
     
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 8.3 什么是 AIO、BIO 和 NIO？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 8.4 什么是序列化与反序列化？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 8.5 Java 序列化的原理是什么？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 8.6 serialVersionUID 有何用途？如果没定义会有什么问题？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 8.7 你知道 fastjson 的反序列化漏洞吗？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
 
 ### 8.8 什么是 UUID，能保证唯一吗？
 
 (待补充)
 
-[↑ 返回目录](https://www.google.com/search?q=%23table-of-contents)
+[↑ 返回目录](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%23table-of-contents)
