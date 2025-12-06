@@ -596,6 +596,117 @@ Java 的异常分为受检异常（Checked Exception）和非受检异常（Unch
 
 ---
 
+### 6.3 try 中 return A，catch 中 return B，finally 中 return C，最终返回值是什么？
+
+最终返回值是 **C**。
+
+**原因分析：**
+
+finally 块中的 return 语句会覆盖 try 或 catch 块中的 return 语句。执行顺序如下：
+
+1. 执行 try 块，遇到 return A，先计算 A 的值并暂存
+2. 如果有异常，执行 catch 块，遇到 return B，先计算 B 的值并暂存
+3. 无论是否有异常，都会执行 finally 块
+4. finally 块中遇到 return C，直接返回 C，之前暂存的 A 或 B 被丢弃
+
+**代码示例：**
+
+```java
+public static String test() {
+    try {
+        System.out.println("执行 try");
+        return "A";  // 这个返回值会被覆盖
+    } catch (Exception e) {
+        System.out.println("执行 catch");
+        return "B";  // 这个返回值也会被覆盖
+    } finally {
+        System.out.println("执行 finally");
+        return "C";  // 最终返回这个值
+    }
+}
+
+// 调用结果
+String result = test();
+System.out.println(result);  // 输出：C
+```
+
+**输出：**
+```
+执行 try
+执行 finally
+C
+```
+
+**重要提示：**
+
+这种在 finally 中使用 return 的写法是**强烈不推荐**的，原因如下：
+
+1. **违反直觉**：会覆盖 try/catch 中的返回值，让代码逻辑变得混乱
+2. **隐藏异常**：如果 try/catch 中抛出了异常，finally 中的 return 会导致异常被吞掉
+3. **代码可读性差**：维护人员很难理解真正的返回逻辑
+
+**正确的做法：**
+
+```java
+public static String test() {
+    String result = "A";
+    try {
+        System.out.println("执行 try");
+        result = "A";
+    } catch (Exception e) {
+        System.out.println("执行 catch");
+        result = "B";
+    } finally {
+        System.out.println("执行 finally");
+        // 不要在 finally 中 return
+        // 可以在这里做清理工作
+    }
+    return result;  // 在方法最后统一返回
+}
+```
+
+**扩展：如果 finally 中没有 return，只修改返回值会怎样？**
+
+```java
+public static int test() {
+    int result = 1;
+    try {
+        return result;  // 返回 1，此时 result 的值已经被复制
+    } finally {
+        result = 2;  // 修改 result，但不影响返回值
+    }
+}
+
+System.out.println(test());  // 输出：1（不是 2）
+```
+
+这是因为 return 语句会先计算返回值并复制一份，finally 中修改的是原变量，不影响已经复制的返回值。
+
+**但是对于引用类型：**
+
+```java
+public static StringBuilder test() {
+    StringBuilder sb = new StringBuilder("A");
+    try {
+        return sb;  // 返回 sb 的引用
+    } finally {
+        sb.append("B");  // 修改 sb 指向的对象
+    }
+}
+
+System.out.println(test());  // 输出：AB
+```
+
+这种情况下，finally 中修改了对象的内容，会影响返回值，因为返回的是引用，指向的是同一个对象。
+
+**总结：**
+- finally 中的 return 会覆盖 try/catch 中的 return
+- 强烈不推荐在 finally 中使用 return
+- finally 中修改基本类型的返回值不会生效
+- finally 中修改引用类型指向的对象内容会生效
+
+---
+
 ## 七、注解与反射
 
 ### 7.1 Java 注解的作用是什么？
@@ -1102,8 +1213,3 @@ Timer 通过优先级队列（最小堆）+ 单后台线程实现定时调度，
 待补充）
 
 ---
-
-
-## try中return A，catch中return B，finally中return C，最终返回值是什么?
-
-最终会return C 。
