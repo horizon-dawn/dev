@@ -2380,33 +2380,6 @@ String 类是不可变的，一旦创建字符串就不会改变了，如果改�
  **方法一：通过 setter 方法修改（推荐）**
 
 这是最常规、最安全的做法，通过提供公共的 setter 方法来修改私有字段。
-
-```java
-public class User {
-    private String name;
-    
-    public User(String name) {
-        this.name = name;
-    }
-    
-    // 提供 setter 方法
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public String getName() {
-        return name;
-    }
-}
-
-// 使用
-User user = new User("张三");
-System.out.println(user.getName());  // 张三
-
-user.setName("李四");  // 通过 setter 修改
-System.out.println(user.getName());  // 李四
-```
-
 **说明：**
 - 这种方式改变的是引用的指向，而不是 String 对象本身
 - 原来的 "张三" 对象仍然存在（如果没有其他引用，会被 GC 回收）
