@@ -18,12 +18,12 @@ graph TB
     
     FileInputStream[FileInputStream]:::node
     ObjectInputStream[ObjectInputStream]:::node
-    BufferedInputStream[BufferedInputStream<br/>封装器]:::decorator
+    BufferedInputStream[BufferedInputStream]:::decorator
     
     FileOutputStream[FileOutputStream]:::node
     ObjectOutputStream[ObjectOutputStream]:::node
     PrintStream[PrintStream]:::node
-    BufferedOutputStream[BufferedOutputStream<br/>封装器]:::decorator
+    BufferedOutputStream[BufferedOutputStream]:::decorator
     
     %% 字符流
     Reader[Reader<br/>字符输入流基类]:::abstract
@@ -31,11 +31,11 @@ graph TB
     
     InputStreamReader[InputStreamReader<br/>桥接器]:::bridge
     FileReader[FileReader]:::node
-    BufferedReader[BufferedReader<br/>封装器]:::decorator
+    BufferedReader[BufferedReader]:::decorator
     
     OutputStreamWriter[OutputStreamWriter<br/>桥接器]:::bridge
     FileWriter[FileWriter]:::node
-    BufferedWriter[BufferedWriter<br/>封装器]:::decorator
+    BufferedWriter[BufferedWriter]:::decorator
     PrintWriter[PrintWriter]:::node
     
     %% 继承关系
@@ -96,7 +96,7 @@ graph TB
 |------|------|:----:|
 | FileInputStream | 从文件读取字节 | 节点流 |
 | ObjectInputStream | 读取对象（反序列化） | 处理流 |
-| BufferedInputStream | 提供缓冲，提高效率 | 封装器 |
+| BufferedInputStream | 提供缓冲，提高效率 | 封装 |
 
 #### 输出流（OutputStream）
 
@@ -105,7 +105,7 @@ graph TB
 | FileOutputStream | 向文件写入字节 | 节点流 |
 | ObjectOutputStream | 写入对象（序列化） | 处理流 |
 | PrintStream | 打印流（如 System.out） | 处理流 |
-| BufferedOutputStream | 提供缓冲，提高效率 | 封装器 |
+| BufferedOutputStream | 提供缓冲，提高效率 | 封装 |
 
 ---
 
@@ -117,7 +117,7 @@ graph TB
 |------|------|:----:|
 | FileReader | 从文件读取字符 | 节点流 |
 | InputStreamReader | 字节流→字符流转换 | 桥接器 |
-| BufferedReader | 提供缓冲，支持按行读取 | 封装器 |
+| BufferedReader | 提供缓冲，支持按行读取 | 封装 |
 
 #### 输出流（Writer）
 
@@ -125,7 +125,7 @@ graph TB
 |------|------|:----:|
 | FileWriter | 向文件写入字符 | 节点流 |
 | OutputStreamWriter | 字节流→字符流转换 | 桥接器 |
-| BufferedWriter | 提供缓冲，提高效率 | 封装器 |
+| BufferedWriter | 提供缓冲，提高效率 | 封装 |
 | PrintWriter | 打印字符流，支持格式化 | 处理流 |
 
 ---
