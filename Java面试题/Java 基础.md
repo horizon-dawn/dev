@@ -707,6 +707,193 @@ System.out.println(test());  // 输出：AB
 
 ---
 
+### 6.4 final、finally、finalize 有什么区别？
+
+这三个虽然名字相近，但是完全不同的概念，分别属于不同的领域：
+
+---
+
+#### **1. final（关键字 - 修饰符）**
+
+final 是一个修饰符关键字，表示"最终的、不可改变的"，可以修饰类、方法和变量。
+
+**修饰类：**
+```java
+public final class String {
+    // String 类不能被继承
+}
+```
+- 类不能被继承，无法产生子类
+- 常见例子：String、Integer 等包装类
+
+**修饰方法：**
+```java
+public class Parent {
+    public final void show() {
+        // 方法不能被重写
+    }
+}
+```
+- 方法不能被子类重写
+- 可以被继承，但不能被覆盖
+
+**修饰变量：**
+```java
+// 修饰基本类型：值不能改变
+final int count = 10;
+// count = 20;  // 编译错误
+
+// 修饰引用类型：引用不能改变，但对象内容可以改变
+final List<String> list = new ArrayList<>();
+list.add("hello");  // 可以，修改对象内容
+// list = new ArrayList<>();  // 编译错误，不能改变引用
+```
+
+**使用场景：**
+- 定义常量：`public static final int MAX_SIZE = 100;`
+- 防止继承：确保类的行为不被改变
+- 防止重写：确保方法的实现不被改变
+- 线程安全：final 变量天然线程安全
+
+---
+
+#### **2. finally（关键字 - 异常处理）**
+
+finally 是异常处理机制的一部分，用于定义无论是否发生异常都要执行的代码块。
+
+**语法：**
+```java
+try {
+    // 可能抛出异常的代码
+} catch (Exception e) {
+    // 异常处理
+} finally {
+    // 无论如何都会执行的代码
+    // 通常用于资源清理
+}
+```
+
+**典型用途：**
+```java
+FileInputStream fis = null;
+try {
+    fis = new FileInputStream("file.txt");
+    // 读取文件
+} catch (IOException e) {
+    e.printStackTrace();
+} finally {
+    // 确保资源被释放
+    if (fis != null) {
+        try {
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**特点：**
+- 只要 try 执行了，finally 就一定会执行（除非 JVM 终止）
+- 常用于资源清理：关闭文件、释放连接、解锁等
+- 推荐使用 try-with-resources 替代手动 finally
+
+---
+
+#### **3. finalize（方法 - 垃圾回收）**
+
+finalize 是 Object 类的一个方法，在对象被垃圾回收器回收之前调用。
+
+**方法签名：**
+```java
+protected void finalize() throws Throwable {
+    // 对象被回收前的清理工作
+}
+```
+
+**示例：**
+```java
+public class Resource {
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("对象被回收，执行清理");
+            // 释放资源
+        } finally {
+            super.finalize();
+        }
+    }
+}
+```
+
+**为什么不推荐使用？**
+
+1. **执行时机不确定**：无法预测 GC 何时运行，finalize 可能很晚才执行，甚至不执行
+2. **性能开销大**：使用 finalize 的对象需要至少两次 GC 才能回收
+3. **可能导致问题**：finalize 中的异常会被忽略，可能导致资源泄露
+4. **已被废弃**：Java 9 开始标记为 @Deprecated
+
+**推荐替代方案：**
+
+使用 try-with-resources 或显式的 close() 方法：
+
+```java
+// 推荐：try-with-resources
+try (FileInputStream fis = new FileInputStream("file.txt")) {
+    // 使用资源
+} // 自动调用 close()
+
+// 或者实现 AutoCloseable 接口
+public class MyResource implements AutoCloseable {
+    @Override
+    public void close() {
+        // 清理资源
+    }
+}
+```
+
+---
+
+#### **对比总结**
+
+| 特性 | final | finally | finalize |
+|------|-------|---------|----------|
+| **类型** | 关键字/修饰符 | 关键字/异常处理 | 方法 |
+| **作用域** | 类、方法、变量 | try-catch-finally 块 | Object 类的方法 |
+| **用途** | 表示不可变/不可继承/不可重写 | 确保代码一定执行 | 对象回收前的清理 |
+| **执行时机** | 编译期检查 | try 执行后必定执行 | GC 回收对象前（不确定） |
+| **推荐使用** | ✅ 推荐 | ✅ 推荐（或用 try-with-resources） | ❌ 不推荐（已废弃） |
+
+---
+
+#### **记忆技巧**
+
+- **final**：最终的，一旦确定就不能改变
+- **finally**：最终执行，无论如何都要执行
+- **finalize**：最终清理，对象生命的终点（但不可靠）
+
+---
+
+#### **面试加分项**
+
+如果面试官问到这个问题，可以补充说明：
+
+1. **final 的深入理解**：
+   - final 修饰的引用类型，引用不可变但对象内容可变
+   - final 方法可以被继承但不能被重写
+   - final 类的所有方法隐式为 final
+
+2. **finally 的执行时机**：
+   - 即使 try/catch 中有 return，finally 也会在 return 之前执行
+   - 但不推荐在 finally 中使用 return，会覆盖 try/catch 的返回值
+
+3. **finalize 的替代方案**：
+   - Java 9+ 使用 Cleaner 和 PhantomReference
+   - 实现 AutoCloseable 接口，使用 try-with-resources
+   - 显式提供 close() 或 dispose() 方法
+
+---
+
 ## 七、注解与反射
 
 ### 7.1 Java 注解的作用是什么？
@@ -1213,7 +1400,11 @@ Timer 通过优先级队列（最小堆）+ 单后台线程实现定时调度，
 待补充）
 
 ---
-## **final、finally、finalize有什么区别？**
+## **final、finally、finalize 有什么区别？**
 
 这三个都是Java的关键字，只是名字相近，没有本质的联系。
-final： 表示最终的，修饰类 m/mjk
+final： 表示最终的，修饰类表示类不能被继承、产生子类。修饰基本数据类型变量表示变量的值不能被修改，修饰引用数据类型表示引用的指向无法被修改。修饰方法表示方法无法被重写。
+
+finally：是异常处理关键字，一般用于资源的清理和释放。只要try语句执行，那么所对应的finally代码块的代码总会执行。
+
+finalize：是Object类的方法，用于GC在垃圾回收器回收对象之前通知对象进行资源的清理和释放。但是由于GC的时机不好把握，所以不建议使用。
