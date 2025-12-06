@@ -334,9 +334,7 @@ System.out.println(c.equals(d));  // true，比较的是值
 
 **IntegerCache 的实现：**
 
-Java
-
-```
+```Java
 private static class IntegerCache {
     static final int low = -128;
     static final int high = 127;
