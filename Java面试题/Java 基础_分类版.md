@@ -604,3 +604,374 @@ Java 的异常分为受检异常（Checked Exception）和非受检异常（Unch
 
 ---
 
+
+## 八、枚举
+
+### 8.1 Java 中的枚举有什么特点和好处？
+
+Java 枚举（Enum）是一种特殊的类，用于定义一组固定的常量。它有以下几个重要特点和好处：
+
+第一，类型安全。枚举提供了编译期的类型检查，只能使用预定义的枚举值，不能传入其他值。相比使用 int 或 String 常量，枚举可以避免传入非法值的问题。比如定义一个表示星期的枚举，方法参数只能接收 MONDAY、TUESDAY 等预定义的值，而不会出现传入 8 或 "星期八" 这种错误。
+
+第二，可扩展性强。枚举不仅可以定义常量，还可以有自己的属性、构造方法和普通方法。比如可以给每个枚举值关联一个描述信息或编码，还可以定义业务方法。这让枚举不只是简单的常量，而是功能完整的对象。
+
+第三，天然的单例模式。每个枚举值在 JVM 中只会存在一个实例，由 JVM 保证线程安全和单例特性。这使得枚举成为实现单例模式最简单、最安全的方式，不需要考虑线程同步、序列化、反射等问题。
+
+第四，可以用于 switch 语句。枚举可以直接在 switch 中使用，代码更清晰易读。
+
+第五，提供了实用方法。枚举自动继承 java.lang.Enum 类，提供了 values()、valueOf()、name()、ordinal() 等方法，方便进行枚举值的遍历和转换。
+
+总的来说，枚举让代码更安全、更易读、更易维护，是定义固定常量集合的最佳选择。
+
+---
+
+## 九、编码与字符集
+
+### 9.1 常见的字符编码有哪些？有什么区别？
+
+常见的字符编码主要有 ASCII、Unicode、UTF-8、GBK 等，它们各有特点：
+
+ASCII 编码：最早的字符编码，使用 1 个字节（7 位）编码，只能表示 128 个字符，主要是英文字母、数字和一些符号。它是其他编码的基础。
+
+Unicode 编码：这是一个字符集标准，不是具体的编码实现。它为世界上几乎所有的字符都分配了一个唯一的编号（码点），解决了不同编码之间的兼容问题。但 Unicode 只是定义了字符和编号的对应关系，具体如何存储需要由 UTF-8、UTF-16 等编码方式来实现。
+
+UTF-8 编码：Unicode 的一种变长编码实现，使用 1 到 4 个字节来编码字符。ASCII 字符占 1 个字节，常用汉字占 3 个字节，生僻字或 emoji 占 4 个字节。UTF-8 的优点是兼容 ASCII，节省存储空间，是目前互联网上使用最广泛的编码方式。
+
+UTF-16 编码：Unicode 的另一种编码实现，使用 2 个或 4 个字节。Java 内部就是使用 UTF-16 来存储字符的。它的优点是大部分常用字符都是 2 个字节，访问效率高，但不兼容 ASCII。
+
+GBK 编码：专门为中文设计的编码，使用 2 个字节编码一个汉字。相比 UTF-8 的 3 个字节，GBK 存储中文更节省空间。但它只支持中文和少量其他字符，不如 UTF-8 通用。
+
+---
+
+## 十、语法糖
+
+### 10.1 说几个常见的语法糖？
+
+1. 自动装箱和拆箱（Autoboxing/Unboxing）
+
+基本类型和包装类之间可以自动转换，编译器会自动调用 valueOf() 和 xxxValue() 方法：
+
+```java
+Integer i = 10;  // 自动装箱，等价于 Integer.valueOf(10)
+int j = i;       // 自动拆箱，等价于 i.intValue()
+```
+
+2. try-with-resources
+
+自动资源管理，只要资源实现了 AutoCloseable 或 Closeable 接口，try 执行完毕后会自动调用 close() 方法释放资源，不需要手动关闭：
+
+```java
+try (FileInputStream fis = new FileInputStream("file.txt")) {
+    // 使用资源
+} // 自动调用 fis.close()
+```
+
+3. 增强 for 循环（for-each）
+
+简化了集合和数组的遍历，编译器会将其转换为迭代器或普通 for 循环：
+
+```java
+for (String item : list) {
+    System.out.println(item);
+}
+```
+
+4. 泛型
+
+编译时提供类型检查，运行时会进行类型擦除：
+
+```java
+List<String> list = new ArrayList<>();  // 编译后泛型信息会被擦除
+```
+
+5. 可变参数（Varargs）
+
+方法可以接收不定数量的参数，编译器会将其转换为数组：
+
+```java
+public void method(String... args) {}  // 实际是 String[] args
+```
+
+6. Lambda 表达式
+
+简化了匿名内部类的写法，编译器会将其转换为函数式接口的实现：
+
+```java
+list.forEach(item -> System.out.println(item));
+```
+
+7. switch 支持 String 和枚举
+
+早期 switch 只支持整型，现在支持 String 和枚举，编译器会转换为 if-else 或整型 switch。
+
+8. 枚举类型
+
+看起来是特殊的类型，实际上编译后会生成继承自 Enum 的类。
+
+---
+
+### 10.2 Lambda 表达式是如何实现的？
+
+Lambda 表达式的实现比较复杂，它并不是简单的语法糖，而是通过 invokedynamic 指令和方法句柄来实现的。
+
+实现机制：
+
+第一步：编译时转换
+
+编译器在编译 Lambda 表达式时，会做两件事：将 Lambda 表达式的代码体生成为一个私有静态方法（或实例方法），在 Lambda 表达式的位置生成一个 invokedynamic 指令。
+
+举个例子：
+
+```java
+List<String> list = Arrays.asList("a", "b", "c");
+list.forEach(s -> System.out.println(s));
+```
+
+编译后，Lambda 体会被转换成类似这样的私有方法：
+
+```java
+private static void lambda$main$0(String s) {
+    System.out.println(s);
+}
+```
+
+第二步：运行时动态链接
+
+当程序第一次执行到 Lambda 表达式时，invokedynamic 指令会调用 Java 提供的 LambdaMetafactory 工厂类，动态生成一个实现了函数式接口的内部类，这个内部类会调用前面生成的私有方法。
+
+为什么不用匿名内部类？
+
+使用匿名内部类有明显的缺点：每个 Lambda 都会生成一个 class 文件，增加类加载开销；性能较差，启动速度慢。
+
+使用 invokedynamic 的优势：延迟绑定，只在第一次使用时才生成实现类；可以进行更多的运行时优化；减少了 class 文件的数量。
+
+---
+
+### 10.3 while(true) 和 for(;;) 哪个性能好？
+
+它们的性能一样好，因为底层实现是相同的，都是使用 goto 指令实现的，反编译的字节码完全相同。
+
+这是一个常见的误区，很多人认为 for(;;) 性能更好，但实际上编译器会将它们优化成相同的字节码。所以在实际开发中，选择哪个完全取决于个人习惯和代码可读性，不需要考虑性能差异。
+
+---
+
+## 十一、SPI 机制
+
+### 11.1 什么是 SPI，和 API 有什么区别？
+
+SPI（Service Provider Interface）是服务提供者接口，API（Application Programming Interface）是应用程序编程接口。它们最大的区别在于调用方向和使用场景不同。
+
+**API 的特点**
+
+API 是实现方提供接口并完成实现，调用方直接使用。调用流程是：调用方 → API 接口 → API 实现。
+
+举个例子，我们使用 JDBC 连接数据库：
+
+```java
+// 我们调用 API
+Connection conn = DriverManager.getConnection(url);
+Statement stmt = conn.createStatement();
+```
+
+这里我们是调用方，直接使用 JDBC 提供的 API。
+
+**SPI 的特点**
+
+SPI 是接口提供方定义接口规范，由第三方来实现，然后接口提供方通过某种机制来发现和加载这些实现。调用流程是：接口定义方 → SPI 接口 ← 第三方实现。
+
+还是 JDBC 的例子，但从另一个角度看：
+
+```java
+// Java 定义了 Driver 接口（SPI）
+public interface Driver {
+    Connection connect(String url, Properties info);
+}
+
+// MySQL 实现这个接口
+public class MySQLDriver implements Driver {
+    // 具体实现
+}
+
+// Oracle 实现这个接口
+public class OracleDriver implements Driver {
+    // 具体实现
+}
+```
+
+Java 只定义了 Driver 接口规范，具体实现由各个数据库厂商提供。Java 通过 SPI 机制自动发现和加载这些实现。
+
+**核心区别**
+
+调用方向不同：
+- API：我们调用别人提供的功能
+- SPI：别人实现我们定义的规范
+
+使用场景不同：
+- API：提供具体功能给别人用
+- SPI：定义扩展点，让别人来扩展
+
+**SPI 的实现机制**
+
+Java 的 SPI 机制通过 `ServiceLoader` 来实现。具体步骤：
+
+1. 在 `META-INF/services/` 目录下创建以接口全限定名命名的文件
+2. 文件内容是实现类的全限定名
+3. 使用 `ServiceLoader` 加载实现类
+
+```java
+// 加载所有 Driver 的实现
+ServiceLoader<Driver> loader = ServiceLoader.load(Driver.class);
+for (Driver driver : loader) {
+    // 使用具体的实现
+}
+```
+
+**常见的 SPI 应用**
+
+- JDBC 驱动加载
+- Spring Boot 的自动配置
+- Dubbo 的扩展机制
+- SLF4J 日志框架
+
+总结：API 是给别人用的，SPI 是让别人扩展的。API 关注功能实现，SPI 关注扩展性和插件化。
+
+---
+
+## 十二、其他常见问题
+
+### 12.1 SimpleDateFormat 是线程安全的吗？使用时应该注意什么？
+
+SimpleDateFormat 不是线程安全的。这是因为它内部使用了 Calendar 对象来存储中间状态，多个线程同时使用同一个 SimpleDateFormat 实例时，会相互干扰，导致解析或格式化结果错误，甚至抛出异常。
+
+**使用时的注意事项和解决方案：**
+
+第一，避免共享实例。不要用 static 修饰 SimpleDateFormat，也不要将其作为类的成员变量在多线程间共享。最简单的做法是每次使用时都创建新的实例，用完即丢弃。虽然会有一些性能开销，但保证了线程安全。
+
+第二，使用 ThreadLocal。如果频繁创建 SimpleDateFormat 对象影响性能，可以使用 ThreadLocal 为每个线程维护一个独立的实例：
+
+```java
+private static ThreadLocal<SimpleDateFormat> threadLocal = 
+    ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
+```
+
+第三，加锁同步。如果必须共享同一个实例，可以使用 synchronized 加锁，但这会降低并发性能，不推荐。
+
+第四，使用替代方案。推荐使用 Java 8 引入的 DateTimeFormatter，它是线程安全的，性能也更好：
+
+```java
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+String date = LocalDate.now().format(formatter);
+```
+
+或者使用 Apache Commons Lang 的 FastDateFormat，它也是线程安全的。
+
+总结：SimpleDateFormat 不是线程安全的，在多线程环境下应该避免共享实例，优先使用 DateTimeFormatter 等线程安全的替代方案。
+
+---
+
+### 12.2 ClassNotFoundException 和 NoClassDefFoundError 的区别是什么？
+
+这两者有本质区别，一个是异常（Exception），一个是错误（Error）。
+
+**ClassNotFoundException**
+
+这是一个受检异常，继承自 Exception。它发生在程序运行时尝试通过反射动态加载类，但找不到对应的类文件时。比如：
+
+- 使用 `Class.forName("com.example.MyClass")` 加载类时，类名写错或类不存在
+- 使用 `ClassLoader.loadClass()` 加载类时找不到类文件
+- 加载 JDBC 驱动时类路径配置错误
+
+因为是受检异常，所以必须显式捕获或声明抛出，可以通过 try-catch 处理：
+
+```java
+try {
+    Class.forName("com.mysql.jdbc.Driver");
+} catch (ClassNotFoundException e) {
+    // 处理异常
+}
+```
+
+**NoClassDefFoundError**
+
+这是一个错误，继承自 Error。它发生在编译时类存在，但运行时 JVM 在类路径中找不到类定义时。常见原因包括：
+
+- 类文件在编译后被删除或移动
+- JAR 包缺失或版本不匹配
+- 类的静态初始化块抛出异常导致类加载失败
+- 类路径配置错误
+
+因为是 Error，通常不应该捕获，它表示严重的系统级问题。
+
+**核心区别总结**
+
+1. 类型不同：ClassNotFoundException 是异常，NoClassDefFoundError 是错误
+2. 发生时机不同：前者发生在动态加载类时，后者发生在类已经编译但运行时找不到
+3. 处理方式不同：前者可以捕获处理，后者通常不应该捕获
+4. 原因不同：前者通常是类名错误或类不存在，后者通常是类路径问题或依赖缺失
+
+简单记忆：ClassNotFoundException 是"找不到类"，NoClassDefFoundError 是"类定义找不到"。
+
+---
+
+### 12.3 Java 中创建对象有哪些种方式？
+
+Java 中创建对象主要有以下几种方式：
+
+1. **new 关键字**：最常用的方式，直接调用类的构造方法创建对象
+2. **反射**：通过 Class.newInstance() 或 Constructor.newInstance() 动态创建对象
+3. **clone() 方法**：通过复制现有对象创建新对象，需要实现 Cloneable 接口
+4. **序列化**：通过反序列化从字节流中恢复对象
+5. **Unsafe**：通过 Unsafe 类的 allocateInstance() 方法直接分配内存创建对象，不调用构造方法，这种方式不安全，一般不推荐使用
+
+---
+
+## 十三、待补充问题
+
+以下问题待补充详细答案：
+
+### 13.1 Java 的动态代理如何实现？
+
+（待补充）
+
+---
+
+### 13.2 Java 序列化的原理是什么？
+
+（待补充）
+
+---
+
+### 13.3 serialVersionUID 有何用途？如果没定义会有什么问题？
+
+（待补充）
+
+---
+
+### 13.4 你知道 fastjson 的反序列化漏洞吗？
+
+（待补充）
+
+---
+
+### 13.5 什么是 AIO、BIO 和 NIO？
+
+（待补充）
+
+---
+
+### 13.6 什么是深拷贝和浅拷贝？
+
+（待补充）
+
+---
+
+### 13.7 什么是 UUID，能保证唯一吗？
+
+（待补充）
+
+---
+
+**文档说明：**
+- 本文档按知识点分类整理了 Java 基础面试题
+- 每个大类下的问题都进行了编号，方便查找和引用
+- 部分问题待补充详细答案，会持续更新完善
