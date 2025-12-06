@@ -330,41 +330,18 @@ String s2 = s1.intern();  // 手动将 "hello" 添加到字符串常量池
 - 如果字符串常量池中已经存在该字符串，直接返回常量池中的引用
 - 如果字符串常量池中不存在该字符串，将其添加到常量池，并返回常量池中的引用
 
-**示例对比：**
-
-```java
-// 情况1：字面量，编译期进入常量池
-String s1 = "abc";
-String s2 = "abc";
-System.out.println(s1 == s2);  // true，指向同一个常量池对象
-
-// 情况2：new 创建，在堆中
-String s3 = new String("abc");
-String s4 = new String("abc");
-System.out.println(s3 == s4);  // false，两个不同的堆对象
-
-// 情况3：使用 intern() 手动添加
-String s5 = new String("xyz").intern();
-String s6 = "xyz";
-System.out.println(s5 == s6);  // true，都指向常量池
-```
-
-**总结：**
-- 字符串字面量：编译时进入 class 文件常量池 → 类加载时进入字符串常量池
-- 运行时创建：通过 `intern()` 方法手动添加到字符串常量池
-
 ---
 
-### 4.7 为什么 JDK 9 中把 String 的 char[] 改成了 byte[]？
+### 4.7 为什么 JDK 9 中把 String 的 char\[] 改成了 byte\[]？
 
 主要是为了节省内存空间，提升性能。
 
-在 JDK 9 之前，String 内部使用 char[] 数组存储字符，每个 char 占用 2 个字节。但实际应用中，大部分字符串都是 Latin-1 字符（如英文、数字、常见符号），这些字符用 1 个字节就能表示，用 2 个字节存储造成了 50% 的内存浪费。
+在 JDK 9 之前，String 内部使用 char\[] 数组存储字符，每个 char 占用 2 个字节。但实际应用中，大部分字符串都是 Latin-1 字符（如英文、数字、常见符号），这些字符用 1 个字节就能表示，用 2 个字节存储造成了 50% 的内存浪费。
 
-JDK 9 引入了**紧凑字符串（Compact Strings）**的概念，将 String 的内部存储从 char[] 改为 byte[]，并新增了一个 coder 字段来标识编码方式：
+JDK 9 引入了**紧凑字符串（Compact Strings）**的概念，将 String 的内部存储从 char[] 改为 byte\[]，并新增了一个 coder 字段来标识编码方式：
 
 - **coder = LATIN1（0）**：表示字符串中所有字符都是 Latin-1 字符，每个字节存储一个字符，节省一半内存
-- **coder = UTF16（1）**：表示字符串包含非 Latin-1 字符（如中文），每两个字节存储一个字符，和之前的 char[] 效果一样
+- **coder = UTF16（1）**：表示字符串包含非 Latin-1 字符（如中文），每两个字节存储一个字符，和之前的 char\[] 效果一样
 
 举个例子：
 
