@@ -1,6 +1,106 @@
-# Java 基础面试题
+# Java 基础面试题（详细分类版）
+
+> 本文档包含 Java 基础的所有核心面试题，按知识点详细分类，每个题目都可以通过目录快速跳转。
 
 ---
+
+## 📑 目录
+
+### 一、Java 语言特性
+- [1.1 Java 和 C++ 主要有哪些区别？分别有什么优缺点？](#11-java-和-c-主要有哪些区别分别有什么优缺点)
+- [1.2 如何理解面向对象和面向过程？](#12-如何理解面向对象和面向过程)
+- [1.3 Java 是值传递还是引用传递？](#13-java-是值传递还是引用传递)
+
+### 二、面向对象
+- [2.1 为什么 Java 不支持多继承？](#21-为什么-java-不支持多继承)
+- [2.2 接口和抽象类的区别，如何选择？](#22-接口和抽象类的区别如何选择)
+- [2.3 如何理解 Java 中的多态？](#23-如何理解-java-中的多态)
+- [2.4 为什么建议自定义一个无参构造函数？](#24-为什么建议自定义一个无参构造函数)
+- [2.5 为什么 Java 中的 main 方法必须是 public static void 的？](#25-为什么-java-中的-main-方法必须是-public-static-void-的)
+- [2.6 有了 equals 为什么还需要 hashCode 方法？](#26-有了-equals-为什么还需要-hashcode-方法)
+- [2.7 反射与封装是否矛盾？如何解决反射破坏封装的问题？](#27-反射与封装是否矛盾如何解决反射破坏封装的问题)
+
+### 三、基本类型与包装类
+- [3.1 Java 中有了基本类型为什么还需要包装类？](#31-java-中有了基本类型为什么还需要包装类)
+- [3.2 为什么不能用浮点数表示金额？](#32-为什么不能用浮点数表示金额)
+- [3.3 为什么不能用 BigDecimal 的 equals 方法做等值比较？](#33-为什么不能用-bigdecimal-的-equals-方法做等值比较)
+- [3.4 BigDecimal(double) 和 BigDecimal(String) 有什么区别？](#34-bigdecimaldouble-和-bigdecimalstring-有什么区别)
+- [3.5 为什么对 Java 中的负数取绝对值结果不一定是正数？](#35-为什么对-java-中的负数取绝对值结果不一定是正数)
+- [3.6 RPC 接口返回中，使用基本类型还是包装类？](#36-rpc-接口返回中使用基本类型还是包装类)
+- [3.7 char 能存储中文吗？](#37-char-能存储中文吗)
+- [3.8 Integer a = 1000, Integer b = 1000, a == b 是什么结果？如果是 100 呢？](#38-integer-a--1000-integer-b--1000-a--b-是什么结果如果是-100-呢)
+
+### 四、String 类
+- [4.1 String、StringBuilder 和 StringBuffer 的区别？](#41-stringstringbuilder-和-stringbuffer-的区别)
+- [4.2 String 为什么设计成不可变的？](#42-string-为什么设计成不可变的)
+- [4.3 String str = new String("zhc") 创建了几个对象？](#43-string-str--new-stringzhc-创建了几个对象)
+- [4.4 String a = "ab"; String b = "a" + "b"; a == b 吗？](#44-string-a--ab-string-b--a--b-a--b-吗)
+- [4.5 String 有长度限制吗？是多少？](#45-string-有长度限制吗是多少)
+- [4.6 字符串常量是什么时候进入到字符串常量池的？](#46-字符串常量是什么时候进入到字符串常量池的)
+- [4.7 为什么 JDK 9 中把 String 的 char[] 改成了 byte[]？](#47-为什么-jdk-9-中把-string-的-char-改成了-byte)
+- [4.8 String 是如何实现不可变的？](#48-string-是如何实现不可变的)
+- [4.9 怎么修改一个类中的 private 修饰的 String 参数的值？](#49-怎么修改一个类中的-private-修饰的-string-参数的值)
+- [4.10 JDK 9 中对字符串拼接做了什么优化？](#410-jdk-9-中对字符串拼接做了什么优化)
+
+### 五、泛型
+- [5.1 什么是泛型？有什么好处？](#51-什么是泛型有什么好处)
+- [5.2 什么是类型擦除？](#52-什么是类型擦除)
+- [5.3 泛型中 K T V E ? Object 等分别代表什么含义？](#53-泛型中-k-t-v-e--object-等分别代表什么含义)
+- [5.4 泛型中上下界限定符 extends 和 super 有什么区别？](#54-泛型中上下界限定符-extends-和-super-有什么区别)
+
+### 六、异常处理
+- [6.1 Java 中异常分哪两类？有什么区别？](#61-java-中异常分哪两类有什么区别)
+- [6.2 finally 中的代码一定会执行吗？](#62-finally-中的代码一定会执行吗)
+- [6.3 try 中 return A，catch 中 return B，finally 中 return C，最终返回值是什么？](#63-try-中-return-acatch-中-return-bfinally-中-return-c最终返回值是什么)
+- [6.4 final、finally、finalize 有什么区别？](#64-finalfinallyfinalize-有什么区别)
+- [6.5 为什么不建议使用异常控制业务流程？](#65-为什么不建议使用异常控制业务流程)
+
+### 七、注解与反射
+- [7.1 Java 注解的作用是什么？](#71-java-注解的作用是什么)
+- [7.2 什么是反射机制？为什么反射慢？](#72-什么是反射机制为什么反射慢)
+
+### 八、枚举
+- [8.1 Java 中的枚举有什么特点和好处？](#81-java-中的枚举有什么特点和好处)
+
+### 九、编码与字符集
+- [9.1 常见的字符编码有哪些？有什么区别？](#91-常见的字符编码有哪些有什么区别)
+
+### 十、语法糖
+- [10.1 说几个常见的语法糖？](#101-说几个常见的语法糖)
+- [10.2 Lambda 表达式是如何实现的？](#102-lambda-表达式是如何实现的)
+- [10.3 while(true) 和 for(;;) 哪个性能好？](#103-whiletrue-和-for-哪个性能好)
+
+### 十一、SPI 机制
+- [11.1 什么是 SPI，和 API 有什么区别？](#111-什么是-spi和-api-有什么区别)
+
+### 十二、集合与 Stream
+- [12.1 Stream 的并行流一定比串行流更快吗？](#121-stream-的并行流一定比串行流更快吗)
+
+### 十三、日期时间
+- [13.1 SimpleDateFormat 是线程安全的吗？使用时应该注意什么？](#131-simpledateformat-是线程安全的吗使用时应该注意什么)
+
+### 十四、类加载与对象创建
+- [14.1 ClassNotFoundException 和 NoClassDefFoundError 的区别是什么？](#141-classnotfoundexception-和-noclassdeffounderror-的区别是什么)
+- [14.2 Java 中创建对象有哪些种方式？](#142-java-中创建对象有哪些种方式)
+
+### 十五、定时任务
+- [15.1 Java 中 Timer 实现定时调度的原理是什么？](#151-java-中-timer-实现定时调度的原理是什么)
+
+### 十六、待补充问题
+- [16.1 Java 的动态代理如何实现？](#161-java-的动态代理如何实现)
+- [16.2 Java 序列化的原理是什么？](#162-java-序列化的原理是什么)
+- [16.3 serialVersionUID 有何用途？如果没定义会有什么问题？](#163-serialversionuid-有何用途如果没定义会有什么问题)
+- [16.4 你知道 fastjson 的反序列化漏洞吗？](#164-你知道-fastjson-的反序列化漏洞吗)
+- [16.5 什么是 AIO、BIO 和 NIO？](#165-什么是-aiobio-和-nio)
+- [16.6 什么是深拷贝和浅拷贝？](#166-什么是深拷贝和浅拷贝)
+- [16.7 什么是 UUID，能保证唯一吗？](#167-什么是-uuid能保证唯一吗)
+- [16.8 String 中 intern 的原理是什么？](#168-string-中-intern-的原理是什么)
+- [16.9 什么是序列化与反序列化？](#169-什么是序列化与反序列化)
+- [16.10 为什么建议多用组合少用继承？](#1610-为什么建议多用组合少用继承)
+- [16.11 BigDecimal 和 Long 表示金额哪个更合适，怎么选择？](#1611-bigdecimal-和-long-表示金额哪个更合适怎么选择)
+
+---
+
 ## 一、Java 语言特性
 
 
@@ -2379,9 +2479,119 @@ for (Driver driver : loader) {
 
 ---
 
-## 十二、其他常见问题
+## 十二、集合与 Stream
 
-### 12.1 SimpleDateFormat 是线程安全的吗？使用时应该注意什么？
+### 12.1 Stream 的并行流一定比串行流更快吗？
+
+不一定，并行流并不总是比串行流快，在某些场景下甚至会更慢。
+
+**并行流的开销**
+
+并行流虽然可以利用多核 CPU 并行处理数据，但它也带来了额外的开销：
+
+1. **线程创建和销毁**：需要创建和管理工作线程
+2. **任务分解和合并**：需要将数据拆分成多个子任务，最后再合并结果
+3. **线程上下文切换**：多线程之间的切换有开销
+4. **线程同步**：需要协调多个线程的执行
+5. **环境准备**：Fork/Join 框架的初始化
+
+这些开销在数据量小的时候可能会超过并行带来的性能提升，导致并行流反而比串行流慢。
+
+**什么时候并行流更快？**
+
+并行流适合以下场景：
+
+1. **数据量大**：通常至少需要几千到几万条数据，才能抵消并行的开销
+2. **计算密集型任务**：每个元素的处理逻辑比较复杂，耗时较长
+3. **无状态操作**：操作之间相互独立，没有依赖关系
+4. **易于拆分的数据源**：ArrayList、数组等可以高效拆分，LinkedList 则不适合
+
+**什么时候串行流更快？**
+
+串行流适合以下场景：
+
+1. **数据量小**：几百条以内的数据，串行流通常更快
+2. **IO 密集型任务**：大量时间花在等待 IO 上，并行意义不大
+3. **有状态操作**：如 sorted()、distinct() 等需要全局状态的操作
+4. **顺序敏感**：需要保证处理顺序的场景
+
+**性能对比示例：**
+
+```java
+// 数据量小的情况（1000 条）
+List<Integer> smallList = IntStream.range(0, 1000)
+    .boxed()
+    .collect(Collectors.toList());
+
+// 串行流：约 1ms
+long start = System.currentTimeMillis();
+long sum1 = smallList.stream()
+    .mapToInt(i -> i * 2)
+    .sum();
+System.out.println("串行流耗时：" + (System.currentTimeMillis() - start) + "ms");
+
+// 并行流：约 5ms（更慢！）
+start = System.currentTimeMillis();
+long sum2 = smallList.parallelStream()
+    .mapToInt(i -> i * 2)
+    .sum();
+System.out.println("并行流耗时：" + (System.currentTimeMillis() - start) + "ms");
+
+// 数据量大的情况（1000万条）
+List<Integer> largeList = IntStream.range(0, 10_000_000)
+    .boxed()
+    .collect(Collectors.toList());
+
+// 串行流：约 200ms
+start = System.currentTimeMillis();
+sum1 = largeList.stream()
+    .mapToInt(i -> i * 2)
+    .sum();
+System.out.println("串行流耗时：" + (System.currentTimeMillis() - start) + "ms");
+
+// 并行流：约 50ms（更快！）
+start = System.currentTimeMillis();
+sum2 = largeList.parallelStream()
+    .mapToInt(i -> i * 2)
+    .sum();
+System.out.println("并行流耗时：" + (System.currentTimeMillis() - start) + "ms");
+```
+
+**使用建议**
+
+1. **不要盲目使用并行流**：默认使用串行流，只在确实需要时才使用并行流
+2. **先测试再决定**：通过性能测试对比串行和并行的实际效果
+3. **注意线程安全**：并行流中的操作必须是线程安全的
+4. **避免有状态操作**：尽量使用无状态的操作，如 map、filter
+5. **合理设置并行度**：可以通过系统属性调整 Fork/Join 线程池的大小
+
+**常见误区**
+
+```java
+// 误区1：认为并行流总是更快
+list.parallelStream()  // 不一定！需要根据场景判断
+
+// 误区2：在并行流中使用非线程安全的操作
+List<Integer> result = new ArrayList<>();  // ArrayList 不是线程安全的
+list.parallelStream()
+    .forEach(i -> result.add(i));  // 错误！可能丢失数据
+
+// 正确做法：使用线程安全的收集器
+List<Integer> result = list.parallelStream()
+    .collect(Collectors.toList());  // 正确
+```
+
+**总结**
+
+并行流不是银弹，它在数据量大、计算密集的场景下能显著提升性能，但在数据量小或 IO 密集的场景下反而会因为额外开销而变慢。使用时需要根据实际情况进行性能测试，选择最合适的方案。
+
+[↑ 返回目录](#-目录)
+
+---
+
+## 十三、日期时间
+
+### 13.1 SimpleDateFormat 是线程安全的吗？使用时应该注意什么？
 
 SimpleDateFormat 不是线程安全的。这是因为它内部使用了 Calendar 对象来存储中间状态，多个线程同时使用同一个 SimpleDateFormat 实例时，会相互干扰，导致解析或格式化结果错误，甚至抛出异常。
 
