@@ -1,4 +1,4 @@
-# Java IO 流继承与装饰体系
+# Java IO 流继承与封装体系
 
 ---
 
@@ -18,12 +18,12 @@ graph TB
     
     FileInputStream[FileInputStream]:::node
     ObjectInputStream[ObjectInputStream]:::node
-    BufferedInputStream[BufferedInputStream<br/>装饰器]:::decorator
+    BufferedInputStream[BufferedInputStream<br/>封装器]:::decorator
     
     FileOutputStream[FileOutputStream]:::node
     ObjectOutputStream[ObjectOutputStream]:::node
     PrintStream[PrintStream]:::node
-    BufferedOutputStream[BufferedOutputStream<br/>装饰器]:::decorator
+    BufferedOutputStream[BufferedOutputStream<br/>封装器]:::decorator
     
     %% 字符流
     Reader[Reader<br/>字符输入流基类]:::abstract
@@ -31,40 +31,40 @@ graph TB
     
     InputStreamReader[InputStreamReader<br/>桥接器]:::bridge
     FileReader[FileReader]:::node
-    BufferedReader[BufferedReader<br/>装饰器]:::decorator
+    BufferedReader[BufferedReader<br/>封装器]:::decorator
     
     OutputStreamWriter[OutputStreamWriter<br/>桥接器]:::bridge
     FileWriter[FileWriter]:::node
-    BufferedWriter[BufferedWriter<br/>装饰器]:::decorator
+    BufferedWriter[BufferedWriter<br/>封装器]:::decorator
     PrintWriter[PrintWriter]:::node
     
     %% 继承关系
-    InputStream --> FileInputStream
-    InputStream --> ObjectInputStream
-    InputStream --> BufferedInputStream
+    InputStream -->|继承| FileInputStream
+    InputStream -->|继承| ObjectInputStream
+    InputStream -->|继承| BufferedInputStream
     
-    OutputStream --> FileOutputStream
-    OutputStream --> ObjectOutputStream
-    OutputStream --> PrintStream
-    OutputStream --> BufferedOutputStream
+    OutputStream -->|继承| FileOutputStream
+    OutputStream -->|继承| ObjectOutputStream
+    OutputStream -->|继承| PrintStream
+    OutputStream -->|继承| BufferedOutputStream
     
-    Reader --> InputStreamReader
-    Reader --> BufferedReader
-    InputStreamReader --> FileReader
+    Reader -->|继承| InputStreamReader
+    Reader -->|继承| BufferedReader
+    InputStreamReader -->|继承| FileReader
     
-    Writer --> OutputStreamWriter
-    Writer --> BufferedWriter
-    Writer --> PrintWriter
-    OutputStreamWriter --> FileWriter
+    Writer -->|继承| OutputStreamWriter
+    Writer -->|继承| BufferedWriter
+    Writer -->|继承| PrintWriter
+    OutputStreamWriter -->|继承| FileWriter
     
-    %% 装饰关系（虚线）
-    FileInputStream -.装饰.-> BufferedInputStream
-    FileOutputStream -.装饰.-> BufferedOutputStream
+    %% 封装关系（虚线）
+    FileInputStream -.封装.-> BufferedInputStream
+    FileOutputStream -.封装.-> BufferedOutputStream
     
-    InputStreamReader -.装饰.-> BufferedReader
-    FileReader -.装饰.-> BufferedReader
-    OutputStreamWriter -.装饰.-> BufferedWriter
-    FileWriter -.装饰.-> BufferedWriter
+    InputStreamReader -.封装.-> BufferedReader
+    FileReader -.封装.-> BufferedReader
+    OutputStreamWriter -.封装.-> BufferedWriter
+    FileWriter -.封装.-> BufferedWriter
     
     %% 桥接关系
     InputStream -.桥接.-> InputStreamReader
@@ -96,7 +96,7 @@ graph TB
 |------|------|:----:|
 | FileInputStream | 从文件读取字节 | 节点流 |
 | ObjectInputStream | 读取对象（反序列化） | 处理流 |
-| BufferedInputStream | 提供缓冲，提高效率 | 装饰器 |
+| BufferedInputStream | 提供缓冲，提高效率 | 封装器 |
 
 #### 输出流（OutputStream）
 
@@ -105,7 +105,7 @@ graph TB
 | FileOutputStream | 向文件写入字节 | 节点流 |
 | ObjectOutputStream | 写入对象（序列化） | 处理流 |
 | PrintStream | 打印流（如 System.out） | 处理流 |
-| BufferedOutputStream | 提供缓冲，提高效率 | 装饰器 |
+| BufferedOutputStream | 提供缓冲，提高效率 | 封装器 |
 
 ---
 
@@ -117,7 +117,7 @@ graph TB
 |------|------|:----:|
 | FileReader | 从文件读取字符 | 节点流 |
 | InputStreamReader | 字节流→字符流转换 | 桥接器 |
-| BufferedReader | 提供缓冲，支持按行读取 | 装饰器 |
+| BufferedReader | 提供缓冲，支持按行读取 | 封装器 |
 
 #### 输出流（Writer）
 
@@ -125,16 +125,16 @@ graph TB
 |------|------|:----:|
 | FileWriter | 向文件写入字符 | 节点流 |
 | OutputStreamWriter | 字节流→字符流转换 | 桥接器 |
-| BufferedWriter | 提供缓冲，提高效率 | 装饰器 |
+| BufferedWriter | 提供缓冲，提高效率 | 封装器 |
 | PrintWriter | 打印字符流，支持格式化 | 处理流 |
 
 ---
 
 ## 四、设计模式
 
-### 4.1 装饰器模式（Decorator）
+### 4.1 封装模式（Wrapper）
 
-**作用：** 动态地给对象添加额外功能，不改变其结构
+**作用：** 通过封装对象来动态添加额外功能，不改变其结构
 
 **示例：**
 
@@ -149,7 +149,7 @@ Reader br = new BufferedReader(fr);
 ```
 
 **特点：**
-- 装饰器类继承自抽象基类
+- 封装器类继承自抽象基类
 - 构造方法接收同类型对象
 - 在原功能基础上增强
 
@@ -334,15 +334,15 @@ while ((data = bis.read()) != -1) { }
 
 ---
 
-### Q2: 什么是装饰器模式？
+### Q2: 什么是封装模式？
 
 **答：**
-装饰器模式在不改变对象结构的情况下动态添加功能。
+封装模式通过包装对象在不改变其结构的情况下动态添加功能。
 
 **IO 中的体现：**
-- BufferedInputStream 装饰 FileInputStream → 添加缓冲
-- BufferedReader 装饰 FileReader → 添加缓冲和按行读取
-- 装饰器和被装饰类继承自同一基类
+- BufferedInputStream 封装 FileInputStream → 添加缓冲
+- BufferedReader 封装 FileReader → 添加缓冲和按行读取
+- 封装器和被封装类继承自同一基类
 
 ---
 
@@ -415,7 +415,7 @@ try (BufferedReader br = new BufferedReader(
 四大基类要记牢：InputStream、OutputStream、Reader、Writer
 字节处理用 Stream，字符处理用 Reader/Writer
 节点流直连数据源，处理流包装添功能
-缓冲装饰提性能，桥接转换字节字符
+缓冲封装提性能，桥接转换字节字符
 关闭资源用 try-with，编码明确防乱码
 ```
 
