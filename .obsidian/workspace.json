@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "477b2ab612aa52ac",
@@ -187,6 +186,7 @@
   "active": "bac8017ae6d63c80",
   "lastOpenFiles": [
     "Java面试题/Java IO流继承体系.md",
+    "Java面试题/Java 基础_新版.md",
     "Java面试题/Java 基础.md",
     "Java面试题/Java 基础_分类版.md",
     "未命名.md",
