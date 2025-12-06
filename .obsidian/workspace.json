@@ -11,14 +11,10 @@
             "id": "bac8017ae6d63c80",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Java面试题/Java 基础.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Java 基础"
+              "title": "新标签页"
             }
           }
         ]
@@ -156,13 +152,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Java面试题/Java 基础.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Java 基础 的大纲"
+              "title": "大纲"
             }
           }
         ],
@@ -186,8 +181,8 @@
   },
   "active": "bac8017ae6d63c80",
   "lastOpenFiles": [
-    "Java面试题/Java IO流继承体系.md",
     "Java面试题/Java 基础.md",
+    "Java面试题/Java IO流继承体系.md",
     "Java面试题/Java 基础_分类版.md",
     "未命名.md",
     "README.md",
