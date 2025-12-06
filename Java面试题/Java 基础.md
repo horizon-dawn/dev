@@ -959,6 +959,87 @@ Java 中创建对象主要有以下几种方式：
 
 ---
 
+### 12.4 Java 中 Timer 实现定时调度的原理是什么？
+
+Timer 是 Java 提供的一个简单的定时任务调度工具，它的实现原理主要依赖两个核心组件：
+
+**核心组件：**
+
+1. **任务队列（TaskQueue）**：一个基于最小堆实现的优先级队列，用来存储所有的定时任务（TimerTask）。队列始终保证执行时间最早的任务排在队首，这样可以快速获取下一个需要执行的任务。
+
+2. **后台线程（TimerThread）**：一个守护线程，不断地扫描任务队列的队首，检查任务的执行时间是否到达。
+
+**工作流程：**
+
+1. 用户通过 `timer.schedule()` 方法提交定时任务，任务被添加到优先级队列中
+2. 后台线程持续监控队首任务的执行时间
+3. 当队首任务的执行时间到达时，后台线程将其从队列中取出
+4. 调用任务的 `run()` 方法执行任务
+5. 如果是周期性任务，重新计算下次执行时间，再次加入队列
+6. 继续监控下一个队首任务
+
+**示例代码：**
+
+```java
+Timer timer = new Timer();
+
+// 延迟 1 秒后执行
+timer.schedule(new TimerTask() {
+    @Override
+    public void run() {
+        System.out.println("任务执行");
+    }
+}, 1000);
+
+// 延迟 1 秒后执行，之后每隔 2 秒执行一次
+timer.schedule(new TimerTask() {
+    @Override
+    public void run() {
+        System.out.println("周期性任务");
+    }
+}, 1000, 2000);
+```
+
+**Timer 的优缺点：**
+
+**优点：**
+- 使用简单，API 清晰
+- 适合简单的定时任务场景
+
+**缺点：**
+- 单线程执行：所有任务都在同一个线程中串行执行，如果某个任务执行时间过长，会影响其他任务
+- 异常处理差：如果某个任务抛出未捕获的异常，整个 Timer 线程会终止，后续任务都无法执行
+- 不支持并发：无法并行执行多个任务
+
+**推荐替代方案：**
+
+对于生产环境，推荐使用 `ScheduledExecutorService`，它解决了 Timer 的所有缺点：
+
+```java
+ScheduledExecutorService executor = Executors.newScheduledThreadPool(5);
+
+// 延迟 1 秒后执行
+executor.schedule(() -> {
+    System.out.println("任务执行");
+}, 1, TimeUnit.SECONDS);
+
+// 延迟 1 秒后执行，之后每隔 2 秒执行一次
+executor.scheduleAtFixedRate(() -> {
+    System.out.println("周期性任务");
+}, 1, 2, TimeUnit.SECONDS);
+```
+
+**ScheduledExecutorService 的优势：**
+- 多线程执行：可以并发执行多个任务
+- 异常隔离：某个任务异常不会影响其他任务
+- 更灵活的调度策略：支持固定延迟和固定频率两种模式
+- 更好的资源管理：基于线程池，可以复用线程
+
+**总结：**
+Timer 通过优先级队列（最小堆）+ 单后台线程实现定时调度，适合简单场景。生产环境推荐使用 ScheduledExecutorService，它提供了更强大和可靠的定时调度能力。
+
+---
+
 ## 十三、待补充问题
 
 以下问题待补充详细答案：
