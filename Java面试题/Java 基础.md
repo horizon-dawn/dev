@@ -1554,7 +1554,10 @@ Object obj = list.get(0);  // 只能用 Object 接收
 
 ```java
 // 从 src 读取数据，复制到 dest
-public static <T> void copy(List<? super T> dest, List<? extends T> src) {
+input type :Number 、 Integer
+output type:
+
+public static <T> void copy( List<? extends T> src,List<? super T> dest) {
     for (T item : src) {
         dest.add(item);  // src 用 extends 读取，dest 用 super 写入
     }
