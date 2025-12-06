@@ -1008,7 +1008,7 @@ System.out.println(test());  // 输出：AB
 
 ---
 
-#### **1. final（关键字 - 修饰符）**
+ **1. final（关键字 - 修饰符）**
 
 final 是一个修饰符关键字，表示"最终的、不可改变的"，可以修饰类、方法和变量。
 
@@ -1052,7 +1052,7 @@ list.add("hello");  // 可以，修改对象内容
 
 ---
 
-#### **2. finally（关键字 - 异常处理）**
+2. finally（关键字 - 异常处理）**
 
 finally 是异常处理机制的一部分，用于定义无论是否发生异常都要执行的代码块。
 
@@ -1095,7 +1095,7 @@ try {
 
 ---
 
-#### **3. finalize（方法 - 垃圾回收）**
+3. finalize（方法 - 垃圾回收）**
 
 finalize 是 Object 类的一个方法，在对象被垃圾回收器回收之前调用。
 
@@ -1150,7 +1150,7 @@ public class MyResource implements AutoCloseable {
 
 ---
 
-#### **面试加分项**
+**面试加分项**
 
 如果面试官问到这个问题，可以补充说明：
 
@@ -1209,6 +1209,328 @@ public class MyResource implements AutoCloseable {
 - 减少反射使用频率：只在必要时使用反射，核心逻辑尽量用普通调用
 
 总的来说，反射提供了强大的动态能力，但牺牲了性能。在框架开发、插件系统等场景下很有用，但在性能敏感的代码中应该谨慎使用。
+
+---
+
+### 7.3 为什么不建议使用异常控制业务流程？
+
+使用异常来控制业务流程是一种不好的编程实践，主要有以下几个原因：
+
+---
+
+ **1. 性能开销大**
+
+异常处理机制的性能开销远大于普通的条件判断。
+
+**异常的开销来源：**
+
+- **创建异常对象**：需要分配内存
+- **填充异常栈**：需要捕获当前的调用栈信息，这是一个昂贵的操作
+- **异常传播**：异常需要沿着调用链向上传播，直到被捕获
+- **栈展开（Stack Unwinding）**：JVM 需要逐层退出方法调用栈
+
+**性能对比示例：**
+
+```java
+// 错误做法：使用异常控制流程
+public int parseIntBad(String str) {
+    try {
+        return Integer.parseInt(str);
+    } catch (NumberFormatException e) {
+        return 0;  // 使用异常处理非数字情况
+    }
+}
+
+// 正确做法：使用条件判断
+public int parseIntGood(String str) {
+    if (str == null || !str.matches("\\d+")) {
+        return 0;  // 提前判断
+    }
+    return Integer.parseInt(str);
+}
+```
+
+**性能测试结果：**
+- 条件判断：纳秒级
+- 异常处理：微秒级（慢 100-1000 倍）
+
+---
+
+2. **违反异常的设计初衷**
+
+异常的设计目的是处理**异常情况**（exceptional conditions），而不是处理**正常的业务逻辑**。
+
+**异常应该用于：**
+- 文件不存在
+- 网络连接失败
+- 数组越界
+- 空指针引用
+- 其他不可预期的错误情况
+
+**异常不应该用于：**
+- 用户输入验证
+- 业务规则判断
+- 流程控制
+- 循环终止条件
+
+**错误示例：**
+
+```java
+// 错误：使用异常控制循环
+public void processItems(List<String> items) {
+    int index = 0;
+    try {
+        while (true) {
+            String item = items.get(index++);
+            process(item);
+        }
+    } catch (IndexOutOfBoundsException e) {
+        // 使用异常作为循环终止条件
+    }
+}
+
+// 正确：使用正常的循环控制
+public void processItems(List<String> items) {
+    for (String item : items) {
+        process(item);
+    }
+}
+```
+
+---
+
+ **3. 降低代码可读性和可维护性**
+
+使用异常控制业务流程会让代码逻辑变得晦涩难懂。
+
+**错误示例：**
+
+```java
+// 错误：使用异常控制业务流程
+public void withdraw(Account account, double amount) {
+    try {
+        if (account.getBalance() < amount) {
+            throw new InsufficientFundsException("余额不足");
+        }
+        account.deduct(amount);
+    } catch (InsufficientFundsException e) {
+        // 处理余额不足的情况
+        notifyUser(e.getMessage());
+    }
+}
+
+// 正确：使用条件判断
+public void withdraw(Account account, double amount) {
+    if (account.getBalance() < amount) {
+        notifyUser("余额不足");
+        return;
+    }
+    account.deduct(amount);
+}
+```
+
+**为什么第二种更好？**
+- 逻辑清晰：一眼就能看出是在检查余额
+- 意图明确：这是正常的业务判断，不是异常情况
+- 易于维护：不需要理解异常的传播路径
+
+---
+
+**4. 破坏代码的正常流程**
+
+异常会打断正常的代码执行流程，使得程序的控制流变得复杂。
+
+**错误示例：**
+
+```java
+// 错误：使用异常控制多分支逻辑
+public String getUserLevel(int score) {
+    try {
+        if (score >= 90) {
+            throw new ExcellentException();
+        } else if (score >= 60) {
+            throw new PassException();
+        } else {
+            throw new FailException();
+        }
+    } catch (ExcellentException e) {
+        return "优秀";
+    } catch (PassException e) {
+        return "及格";
+    } catch (FailException e) {
+        return "不及格";
+    }
+}
+
+// 正确：使用 if-else
+public String getUserLevel(int score) {
+    if (score >= 90) {
+        return "优秀";
+    } else if (score >= 60) {
+        return "及格";
+    } else {
+        return "不及格";
+    }
+}
+```
+
+---
+
+ **5. 调试困难**
+
+使用异常控制流程会产生大量的异常栈信息，增加调试难度。
+
+**问题：**
+- 日志中充斥着大量的异常栈信息
+- 难以区分真正的异常和用于流程控制的异常
+- 影响问题排查效率
+
+---
+
+ **6. 可能掩盖真正的异常**
+
+如果用异常控制业务流程，可能会不小心捕获并掩盖真正的异常。
+
+**错误示例：**
+
+```java
+// 危险：可能掩盖真正的异常
+public void processData(String data) {
+    try {
+        // 业务逻辑
+        if (data.isEmpty()) {
+            throw new IllegalArgumentException("数据为空");
+        }
+        // 更多处理...
+        someMethod(data);  // 这里可能抛出其他异常
+    } catch (Exception e) {
+        // 本意是捕获 IllegalArgumentException
+        // 但也会捕获 someMethod 中的其他异常
+        handleEmptyData();
+    }
+}
+```
+
+---
+
+ **正确的做法**
+
+**1. 使用返回值表示结果：**
+
+```java
+// 使用 Optional
+public Optional<User> findUser(String id) {
+    User user = database.query(id);
+    return Optional.ofNullable(user);
+}
+
+// 使用
+Optional<User> userOpt = findUser("123");
+if (userOpt.isPresent()) {
+    User user = userOpt.get();
+    // 处理用户
+} else {
+    // 用户不存在
+}
+```
+
+**2. 使用状态码或结果对象：**
+
+```java
+public class Result<T> {
+    private boolean success;
+    private T data;
+    private String message;
+    
+    public static <T> Result<T> success(T data) {
+        Result<T> result = new Result<>();
+        result.success = true;
+        result.data = data;
+        return result;
+    }
+    
+    public static <T> Result<T> fail(String message) {
+        Result<T> result = new Result<>();
+        result.success = false;
+        result.message = message;
+        return result;
+    }
+}
+
+// 使用
+public Result<User> createUser(String name) {
+    if (name == null || name.isEmpty()) {
+        return Result.fail("用户名不能为空");
+    }
+    User user = new User(name);
+    return Result.success(user);
+}
+```
+
+**3. 使用条件判断：**
+
+```java
+public void processOrder(Order order) {
+    // 使用条件判断，而不是异常
+    if (order == null) {
+        log.warn("订单为空");
+        return;
+    }
+    
+    if (order.getAmount() <= 0) {
+        log.warn("订单金额无效");
+        return;
+    }
+    
+    // 正常处理订单
+    processValidOrder(order);
+}
+```
+
+---
+
+ **什么时候应该使用异常？**
+
+异常应该用于处理真正的异常情况：
+
+1. **外部资源问题**：文件不存在、网络连接失败、数据库连接失败
+2. **系统错误**：内存不足、栈溢出
+3. **编程错误**：空指针、数组越界、类型转换错误
+4. **不可预期的情况**：无法通过正常逻辑处理的情况
+
+**正确使用异常的示例：**
+
+```java
+public User loadUser(String filename) throws IOException {
+    // 文件操作可能失败，这是真正的异常情况
+    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        String json = reader.readLine();
+        return parseUser(json);
+    }
+    // IOException 会向上传播，由调用者处理
+}
+```
+
+---
+
+ **总结**
+
+不建议使用异常控制业务流程的原因：
+
+1. **性能开销大**：异常处理比条件判断慢 100-1000 倍
+2. **违反设计初衷**：异常是为了处理异常情况，不是业务逻辑
+3. **降低可读性**：代码逻辑变得晦涩难懂
+4. **破坏正常流程**：打断代码的正常执行流
+5. **调试困难**：产生大量异常栈信息
+6. **可能掩盖真正的异常**：不小心捕获了不该捕获的异常
+
+**记住：异常是用来处理异常的，不是用来控制流程的！**
+
+**最佳实践：**
+- 使用条件判断处理可预期的情况
+- 使用返回值（Optional、Result）表示操作结果
+- 只在真正的异常情况下使用异常
+- 让异常向上传播，由合适的层级处理
 
 ---
 
@@ -1677,13 +1999,3 @@ Timer 通过优先级队列（最小堆）+ 单后台线程实现定时调度，
 
 ---
 
-## **为什么不建议使用异常控制业务流程**
-
-使用异常来控制业务流程会产生额外开销
-
-- 异常链的传播和捕获
-- 异常栈的填充、跟踪
-
-异常的职责就是处理代码的异常情况的，而不是控制业务流程的。
-
-使用异常控制业务流程会导致代码的可读性降低
