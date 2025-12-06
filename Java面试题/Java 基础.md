@@ -2818,7 +2818,7 @@ List<Integer> result = list.parallelStream()
 
 ---
 
-## **13.11 BigDecimal和Long表示金额哪个更合适，怎么选择？**
+### **13.11 BigDecimal和Long表示金额哪个更合适，怎么选择？**
 
 （待补充）
 
