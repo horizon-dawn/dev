@@ -2191,3 +2191,173 @@ Timer 通过优先级队列（最小堆）+ 单后台线程实现定时调度，
 
 ## **BigDecimal和Long表示金额哪个更合适，怎么选择？**
 
+
+
+---
+
+## 补充：equals 和 hashCode
+
+### 有了 equals 为什么还需要 hashCode 方法？
+
+这是一个非常重要的面试题，涉及到 Java 对象相等性判断和哈希表的工作原理。
+
+**核心原因：为了保证哈希表（HashMap、HashSet 等）的正确性和性能。**
+
+---
+
+#### **Java 的约定（equals 和 hashCode 契约）**
+
+Java 规定了 equals 和 hashCode 之间必须遵守的契约：
+
+1. **如果两个对象 equals 相等，那么它们的 hashCode 必须相同**
+2. **如果两个对象 hashCode 相同，它们不一定 equals 相等**（哈希冲突）
+3. **如果重写了 equals 方法，就必须重写 hashCode 方法**
+
+**用一句话总结：**
+- equals 相等 → hashCode 必须相同
+- hashCode 相同 → equals 不一定相等
+
+---
+
+#### **为什么需要 hashCode？**
+
+**1. 提高性能**
+
+hashCode 提供了一种快速定位对象的方式。HashMap、HashSet 等集合使用哈希表存储数据，查找过程分两步：
+
+```
+第一步：通过 hashCode() 快速定位到桶（bucket）- O(1)
+第二步：在桶内通过 equals() 精确比较 - O(k)，k 是桶内元素数量
+```
+
+如果没有 hashCode，就需要遍历所有元素用 equals 逐个比较，时间复杂度是 O(n)。
+
+**2. 保证数据准确性**
+
+equals 相等的对象必须有相同的 hashCode，这样才能保证在哈希表中能正确找到对象。
+
+---
+
+#### **如果只重写 equals 不重写 hashCode 会怎样？**
+
+**问题示例：**
+
+```java
+public class Person {
+    private String name;
+    private int age;
+    
+    // 只重写了 equals
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Person person = (Person) obj;
+        return age == person.age && Objects.equals(name, person.name);
+    }
+    
+    // 没有重写 hashCode，使用 Object 的默认实现（基于内存地址）
+}
+
+// 使用
+Person p1 = new Person("张三", 25);
+Person p2 = new Person("张三", 25);
+
+System.out.println(p1.equals(p2));  // true，equals 判断相等
+
+// 放入 HashMap
+HashMap<Person, String> map = new HashMap<>();
+map.put(p1, "工程师");
+System.out.println(map.get(p2));  // null！无法获取到值
+```
+
+**为什么 get 返回 null？**
+
+1. p1 和 p2 虽然 equals 相等，但 hashCode 不同（基于不同的内存地址）
+2. put(p1) 时，根据 p1.hashCode() 存储在某个桶中
+3. get(p2) 时，根据 p2.hashCode() 去另一个桶中查找
+4. 两个桶不同，所以找不到，返回 null
+
+**这违反了 Java 的契约，导致哈希表无法正常工作！**
+
+---
+
+#### **正确的做法：同时重写 equals 和 hashCode**
+
+```java
+public class Person {
+    private String name;
+    private int age;
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Person person = (Person) obj;
+        return age == person.age && Objects.equals(name, person.name);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);  // 使用相同的字段计算 hashCode
+    }
+}
+
+// 使用
+Person p1 = new Person("张三", 25);
+Person p2 = new Person("张三", 25);
+
+System.out.println(p1.equals(p2));  // true
+System.out.println(p1.hashCode() == p2.hashCode());  // true
+
+HashMap<Person, String> map = new HashMap<>();
+map.put(p1, "工程师");
+System.out.println(map.get(p2));  // "工程师"，正常工作！
+```
+
+---
+
+#### **hashCode 的设计原则**
+
+1. **一致性**：同一个对象多次调用 hashCode() 必须返回相同的值
+2. **相等性**：equals 相等的对象，hashCode 必须相同
+3. **高效性**：hashCode 的计算应该快速
+4. **分散性**：不同对象的 hashCode 应该尽量分散，减少哈希冲突
+
+**推荐的 hashCode 实现：**
+
+```java
+@Override
+public int hashCode() {
+    // 推荐：使用 Objects.hash() 工具方法
+    return Objects.hash(name, age, email);
+}
+
+// 或者使用 Lombok
+@Data  // 自动生成 equals、hashCode、getter、setter 等
+public class Person {
+    private String name;
+    private int age;
+}
+```
+
+---
+
+#### **总结**
+
+**为什么需要 hashCode？**
+
+1. **性能优化**：提供快速定位能力，O(1) 时间复杂度
+2. **契约要求**：equals 相等的对象必须有相同的 hashCode
+3. **哈希表正确性**：保证 HashMap、HashSet 等集合正常工作
+4. **数据准确性**：确保逻辑上相等的对象在哈希表中能被正确找到
+
+**记住三个原则：**
+1. equals 相等 → hashCode 必须相同
+2. hashCode 相同 → equals 不一定相等
+3. 重写 equals 必须重写 hashCode
+
+**最佳实践：**
+- 使用 IDE 或 Lombok 自动生成
+- 使用 `Objects.hash()` 工具方法
+- equals 和 hashCode 使用相同的字段
