@@ -29,11 +29,11 @@ graph TB
     Reader[Reader<br/>字符输入流基类]:::abstract
     Writer[Writer<br/>字符输出流基类]:::abstract
     
-    InputStreamReader[InputStreamReader<br/>桥接器]:::bridge
+    InputStreamReader[InputStreamReader<br/>转换流]:::bridge
     FileReader[FileReader]:::node
     BufferedReader[BufferedReader]:::decorator
     
-    OutputStreamWriter[OutputStreamWriter<br/>桥接器]:::bridge
+    OutputStreamWriter[OutputStreamWriter<br/>转换流]:::bridge
     FileWriter[FileWriter]:::node
     BufferedWriter[BufferedWriter]:::decorator
     PrintWriter[PrintWriter]:::node
@@ -66,9 +66,9 @@ graph TB
     OutputStreamWriter -.封装.-> BufferedWriter
     FileWriter -.封装.-> BufferedWriter
     
-    %% 桥接关系
-    InputStream -.桥接.-> InputStreamReader
-    OutputStream -.桥接.-> OutputStreamWriter
+    %% 转换关系
+    InputStream -.封装.-> InputStreamReader
+    OutputStream -.封装.-> OutputStreamWriter
 ```
 
 ---
@@ -116,7 +116,7 @@ graph TB
 | 类名 | 作用 | 类型 |
 |------|------|:----:|
 | FileReader | 从文件读取字符 | 节点流 |
-| InputStreamReader | 字节流→字符流转换 | 桥接器 |
+| InputStreamReader | 字节流→字符流转换 | 转换流 |
 | BufferedReader | 提供缓冲，支持按行读取 | 封装 |
 
 #### 输出流（Writer）
@@ -124,7 +124,7 @@ graph TB
 | 类名 | 作用 | 类型 |
 |------|------|:----:|
 | FileWriter | 向文件写入字符 | 节点流 |
-| OutputStreamWriter | 字节流→字符流转换 | 桥接器 |
+| OutputStreamWriter | 字节流→字符流转换 | 转换流 |
 | BufferedWriter | 提供缓冲，提高效率 | 封装 |
 | PrintWriter | 打印字符流，支持格式化 | 处理流 |
 
@@ -155,25 +155,25 @@ Reader br = new BufferedReader(fr);
 
 ---
 
-### 4.2 桥接器模式（Bridge）
+### 4.2 转换流（字节流与字符流的转换）
 
-**作用：** 连接字节流和字符流，实现编码转换
+**作用：** 将字节流转换为字符流，实现编码转换
 
 **示例：**
 
 ```java
 // 字节流 → 字符流（可指定编码）
 InputStream is = new FileInputStream("file.txt");
-Reader isr = new InputStreamReader(is, "UTF-8");
+Reader isr = new InputStreamReader(is, "UTF-8");  // 封装字节流
 
 // 字节流 → 字符流（输出）
 OutputStream os = new FileOutputStream("file.txt");
-Writer osw = new OutputStreamWriter(os, "UTF-8");
+Writer osw = new OutputStreamWriter(os, "UTF-8");  // 封装字节流
 ```
 
 **关键类：**
-- `InputStreamReader`：InputStream → Reader
-- `OutputStreamWriter`：OutputStream → Writer
+- `InputStreamReader`：封装 InputStream，转换为 Reader
+- `OutputStreamWriter`：封装 OutputStream，转换为 Writer
 
 ---
 
@@ -349,7 +349,7 @@ while ((data = bis.read()) != -1) { }
 ### Q3: InputStreamReader 和 FileReader 的区别？
 
 **答：**
-- **InputStreamReader**：字节流→字符流桥接器，可指定编码
+- **InputStreamReader**：转换流，封装字节流转为字符流，可指定编码
 - **FileReader**：继承自 InputStreamReader，使用系统默认编码
 
 **推荐：**
@@ -415,7 +415,7 @@ try (BufferedReader br = new BufferedReader(
 四大基类要记牢：InputStream、OutputStream、Reader、Writer
 字节处理用 Stream，字符处理用 Reader/Writer
 节点流直连数据源，处理流包装添功能
-缓冲封装提性能，桥接转换字节字符
+缓冲封装提性能，转换流连字节字符
 关闭资源用 try-with，编码明确防乱码
 ```
 
