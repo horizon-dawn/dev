@@ -7,7 +7,7 @@
 
 ### 一、 Java 语言概论
 
-- [1.1 Java 和 C++ 主要有哪些区别？分别有什么优缺点？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2311-java-%E5%92%8C-c-%E4%B8%BB%E8%A6%81%E6%9C%89%E5%93%AA%E4%BA%9B%E5%8C%BA%E5%88%AB%E5%88%86%E5%88%AB%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E7%BC%BA%E7%82%B9)
+- [1.1 Java 和 C++ 主要有哪些区别？分别有什么优缺点？](https://github.com/horizon-dawn/dev-docs/blob/main/Java%E9%9D%A2%E8%AF%95%E9%A2%98/Java%20%E5%9F%BA%E7%A1%80.md#211-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%9C%89%E5%93%AA%E4%BA%9B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
     
 - [1.2 如何理解面向对象和面向过程？](https://www.google.com/search?q=https://github.com/horizon-dawn/dev-docs/blob/main/Java%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598/Java%2520%25E5%259F%25BA%25E7%25A1%2580.md%2312-%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B)
     
