@@ -1,4 +1,10 @@
-## Java 和 C++ 主要有哪些区别？分别有什么优缺点？
+# Java 基础面试题（按知识点分类）
+
+---
+
+## 一、Java 语言特性
+
+### 1.1 Java 和 C++ 主要有哪些区别？分别有什么优缺点？
 
 Java 是平台无关的语言，通过 JVM 实现"一次编写，到处运行"；而 C++ 是平台相关的，需要针对不同平台编译。
 
@@ -18,7 +24,7 @@ C++ 的优点包括性能高效、能直接操作内存和硬件、图形和音�
 
 ---
 
-## 如何理解面向对象和面向过程？
+### 1.2 如何理解面向对象和面向过程？
 
 面向过程和面向对象是两种不同的编程思维方式。
 
@@ -28,7 +34,41 @@ C++ 的优点包括性能高效、能直接操作内存和硬件、图形和音�
 
 ---
 
-## 为什么 Java 不支持多继承？
+### 1.3 Java 是值传递还是引用传递？
+
+Java 只有值传递，没有引用传递。这是一个容易混淆的概念，需要分情况理解：
+
+**对于基本数据类型**：传递的是数值的副本。方法内对参数的修改不会影响原变量。比如传入一个 int 类型的变量，方法内修改这个参数，外部的原变量不会改变。
+
+**对于引用数据类型**：传递的是引用地址的副本。这里容易产生误解，看起来像引用传递，但本质上传递的是引用值的拷贝。具体来说：
+
+- 方法接收到的是对象引用的一个副本，这个副本和原引用指向同一个对象
+- 通过这个副本可以修改对象的内容，所以外部能看到对象内部状态的变化
+- 但如果在方法内给参数重新赋值（指向新对象），不会影响外部的原引用
+
+举个例子：
+
+```java
+public void test(StringBuilder sb) {
+    sb.append("world");  // 修改对象内容，外部可见
+    sb = new StringBuilder("new");  // 重新赋值，外部不可见
+}
+
+StringBuilder sb = new StringBuilder("hello");
+test(sb);
+System.out.println(sb);  // 输出 "helloworld"，不是 "new"
+```
+
+这个例子说明：传递的是引用的副本，而不是引用本身。如果是真正的引用传递，重新赋值应该会影响外部变量。
+
+总结：Java 永远是值传递，只不过传递的"值"可能是基本类型的数值，也可能是引用类型的地址值。
+
+---
+
+
+## 二、面向对象
+
+### 2.1 为什么 Java 不支持多继承？
 
 Java 不支持多继承主要是为了避免**菱形继承**问题，同时保持**语言的简洁性**。
 
@@ -38,7 +78,7 @@ Java 不支持多继承主要是为了避免**菱形继承**问题，同时保�
 
 ---
 
-## 接口和抽象类的区别，如何选择？
+### 2.2 接口和抽象类的区别，如何选择？
 
 接口和抽象类的主要区别在于：
 
@@ -52,7 +92,7 @@ Java 不支持多继承主要是为了避免**菱形继承**问题，同时保�
 
 ---
 
-## 如何理解 Java 中的多态？
+### 2.3 如何理解 Java 中的多态？
 
 Java 多态是指同一操作作用于不同的对象，可以有不同的解释，产生不同的结果。
 
@@ -71,7 +111,10 @@ list.add(1);
 
 ---
 
-## Java 中有了基本类型为什么还需要包装类？
+
+## 三、基本类型与包装类
+
+### 3.1 Java 中有了基本类型为什么还需要包装类？
 
 Java 是面向对象的编程语言，更多场景需要使用对象而不是基本类型。
 
@@ -81,7 +124,7 @@ Java 是面向对象的编程语言，更多场景需要使用对象而不是基
 
 ---
 
-## 为什么不能用浮点数表示金额？
+### 3.2 为什么不能用浮点数表示金额？
 
 不能用浮点数表示金额主要是因为浮点数存在精度问题。
 
@@ -93,7 +136,7 @@ Java 是面向对象的编程语言，更多场景需要使用对象而不是基
 
 ---
 
-## 为什么不能用 BigDecimal 的 equals 方法做等值比较？
+### 3.3 为什么不能用 BigDecimal 的 equals 方法做等值比较？
 
 主要原因是 equals 方法不仅会比较数值本身，还会比较标度（scale）。
 
@@ -103,7 +146,7 @@ Java 是面向对象的编程语言，更多场景需要使用对象而不是基
 
 ---
 
-## BigDecimal(double) 和 BigDecimal(String) 有什么区别？
+### 3.4 BigDecimal(double) 和 BigDecimal(String) 有什么区别？
 
 这两个构造方法最大的区别在于精度问题。
 
@@ -115,7 +158,7 @@ Java 是面向对象的编程语言，更多场景需要使用对象而不是基
 
 ---
 
-## 为什么对 Java 中的负数取绝对值结果不一定是正数？
+### 3.5 为什么对 Java 中的负数取绝对值结果不一定是正数？
 
 这个问题的根源在于 Java 整数类型的取值范围是不对称的。
 
@@ -134,7 +177,40 @@ int abs = Math.abs((int)b);  // 结果是 128，正确
 
 ---
 
-## String、StringBuilder 和 StringBuffer 的区别？
+### 3.6 RPC 接口返回中，使用基本类型还是包装类？
+
+推荐使用包装类，主要有以下几个原因：
+
+第一，避免语义歧义。基本类型都有默认值，比如 int 默认是 0，boolean 默认是 false。当 RPC 接口返回 0 或 false 时，你无法判断这是业务逻辑正常返回的值，还是因为字段未赋值而产生的默认值。
+
+第二，明确表达"无值"状态。包装类可以用 null 来表示"无值"或"未知"的状态，这在很多业务场景下是必要的。比如：用户未填写某个可选字段、数据库中该字段为 NULL、远程调用失败未获取到数据。这些情况用 null 表示比用默认值更清晰、更准确。
+
+---
+
+### 3.7 char 能存储中文吗？
+
+char 可以存储中文，但只能存储大部分常用中文字符。
+
+Java 中的 char 类型使用 2 个字节（16 位）来存储一个字符，采用 UTF-16 编码。这意味着 char 可以表示 Unicode 基本多文种平面（BMP）中的字符，范围是 U+0000 到 U+FFFF，共 65536 个字符。大部分常用的中文汉字都在这个范围内，所以可以正常存储。
+
+举个例子：
+
+```java
+char c1 = '中';
+char c2 = '文';
+System.out.println(c1 + " " + c2);  // 输出：中 文
+```
+
+但需要注意的是，一些生僻字、emoji 表情符号等超出了 BMP 范围，它们的 Unicode 码点大于 U+FFFF，需要用两个 char（即一个代理对）来表示，单个 char 无法存储。比如 emoji "😀" 的码点是 U+1F600，超出了 char 的表示范围。
+
+所以准确的说法是：char 可以存储 Unicode BMP 范围内的字符，包括绝大多数常用中文，但无法存储超出这个范围的生僻字和特殊符号。如果需要处理所有 Unicode 字符，应该使用 String 类型。
+
+---
+
+
+## 四、String 类
+
+### 4.1 String、StringBuilder 和 StringBuffer 的区别？
 
 主要从三个角度来说：可变性、线程安全性和性能。
 
@@ -148,7 +224,7 @@ int abs = Math.abs((int)b);  // 结果是 128，正确
 
 ---
 
-## String 为什么设计成不可变的？
+### 4.2 String 为什么设计成不可变的？
 
 String 设计成不可变主要是出于以下几个方面的考虑：
 
@@ -164,7 +240,7 @@ String 设计成不可变主要是出于以下几个方面的考虑：
 
 ---
 
-## String str = new String("zhc") 创建了几个对象？
+### 4.3 String str = new String("zhc") 创建了几个对象？
 
 分两种情况：
 
@@ -180,7 +256,7 @@ String 设计成不可变主要是出于以下几个方面的考虑：
 
 ---
 
-## String a = "ab"; String b = "a" + "b"; a == b 吗？
+### 4.4 String a = "ab"; String b = "a" + "b"; a == b 吗？
 
 答案是 true，a == b。
 
@@ -206,7 +282,7 @@ System.out.println(a == c);  // false，因为 c 指向堆，a 指向常量池
 
 ---
 
-## String 有长度限制吗？是多少？
+### 4.5 String 有长度限制吗？是多少？
 
 String 是有长度限制的，而且在编译期和运行期的限制是不一样的。
 
@@ -222,17 +298,336 @@ String 是有长度限制的，而且在编译期和运行期的限制是不一�
 
 ---
 
-## RPC 接口返回中，使用基本类型还是包装类？
+### 4.6 为什么 JDK 9 中把 String 的 char[] 改成了 byte[]？
 
-推荐使用包装类，主要有以下几个原因：
+主要是为了节省内存空间，提升性能。
 
-第一，避免语义歧义。基本类型都有默认值，比如 int 默认是 0，boolean 默认是 false。当 RPC 接口返回 0 或 false 时，你无法判断这是业务逻辑正常返回的值，还是因为字段未赋值而产生的默认值。
+在 JDK 9 之前，String 内部使用 char[] 数组存储字符，每个 char 占用 2 个字节。但实际应用中，大部分字符串都是 Latin-1 字符（如英文、数字、常见符号），这些字符用 1 个字节就能表示，用 2 个字节存储造成了 50% 的内存浪费。
 
-第二，明确表达"无值"状态。包装类可以用 null 来表示"无值"或"未知"的状态，这在很多业务场景下是必要的。比如：用户未填写某个可选字段、数据库中该字段为 NULL、远程调用失败未获取到数据。这些情况用 null 表示比用默认值更清晰、更准确。
+JDK 9 引入了**紧凑字符串（Compact Strings）**的概念，将 String 的内部存储从 char[] 改为 byte[]，并新增了一个 coder 字段来标识编码方式：
+
+- **coder = LATIN1（0）**：表示字符串中所有字符都是 Latin-1 字符，每个字节存储一个字符，节省一半内存
+- **coder = UTF16（1）**：表示字符串包含非 Latin-1 字符（如中文），每两个字节存储一个字符，和之前的 char[] 效果一样
+
+举个例子：
+
+```java
+String s1 = "hello";  // 只需 5 字节，coder = LATIN1
+String s2 = "你好";   // 需要 4 字节（2个字符×2字节），coder = UTF16
+```
+
+这个改进带来的好处：
+
+1. 内存占用减少：对于纯 ASCII 或 Latin-1 字符串，内存占用减半
+2. GC 压力降低：String 对象变小，垃圾回收效率提升
+3. 缓存友好：更小的对象意味着更好的 CPU 缓存命中率
+
+根据统计，大部分 Java 应用中的字符串都是 Latin-1 字符，所以这个优化对整体性能提升明显。这是一个典型的空间换时间的优化案例，通过增加一个 coder 字段的开销，换来了大量的内存节省。
 
 ---
 
-## 常见的字符编码有哪些？有什么区别？
+### 4.7 String 是如何实现不可变的？
+
+String 的不可变性是通过多层防护机制来保证的：
+
+**第一，类被 final 修饰**。String 类被声明为 final，这意味着它不能被继承，防止子类重写方法来破坏不可变性。如果允许继承，子类可能会重写方法来修改内部状态。
+
+**第二，内部数组被 final 修饰**。在 JDK 9 之前，String 内部使用 `private final char[] value` 存储字符；JDK 9 之后改为 `private final byte[] value`。final 关键字保证了数组引用不能被修改，即不能指向其他数组。
+
+**第三，没有提供修改方法**。String 类没有提供任何可以修改内部数组内容的 public 方法，所有看起来"修改"字符串的方法（如 substring、concat、replace）实际上都是创建并返回新的 String 对象，原字符串保持不变。
+
+**第四，内部数组私有且不暴露**。value 数组被声明为 private，外部无法直接访问。即使有返回字符数组的方法（如 toCharArray），也是返回数组的副本，而不是原数组的引用。
+
+举个例子：
+
+```java
+String s1 = "hello";
+String s2 = s1.concat(" world");  // 创建新对象
+System.out.println(s1);  // 输出 "hello"，原字符串未改变
+System.out.println(s2);  // 输出 "hello world"
+```
+
+需要注意的是，虽然 final 修饰了数组引用，但如果能获取到数组的引用，理论上还是可以修改数组内容的。所以 String 通过 private 访问控制和不提供修改方法，确保了外部无法获取和修改内部数组。
+
+这种多层防护的设计，从类、字段、方法、访问控制等多个维度保证了 String 的不可变性。
+
+---
+
+
+## 五、泛型
+
+### 5.1 什么是泛型？有什么好处？
+
+泛型是 JDK 5 引入的类型参数化类型，允许在定义类、接口和方法时使用类型参数，使用时再指定具体类型。
+
+泛型主要有三个好处：
+
+首先是提高代码复用性。比如我想定义一个集合，既可以存字符串，又可以存整数，难道要创建两个集合类吗？用泛型就可以解决：
+
+```java
+List<String> stringList = new ArrayList<>();  // 存字符串
+List<Integer> intList = new ArrayList<>();    // 存整数
+```
+
+其次是增强类型安全。泛型在编译期就会进行类型检查，能在编译阶段发现类型错误，避免运行时出现 ClassCastException：
+
+```java
+// 使用泛型，编译期就能发现类型错误
+List<String> list = new ArrayList<>();
+list.add("hello");
+String s = list.get(0);  // 不需要强制转换
+
+// 不使用泛型，运行时才能发现错误
+List list2 = new ArrayList();
+list2.add("hello");
+String s2 = (String) list2.get(0);  // 需要强制转换，容易出错
+```
+
+最后是消除强制类型转换。使用泛型后，编译器知道集合里存的是什么类型，取出来时不需要强制转换，代码更简洁。
+
+需要注意的是，泛型是编译期的概念。编译时会进行类型检查，然后进行类型擦除，把泛型类型替换为 Object 或其边界类型。所以运行时 JVM 其实不知道泛型的具体类型信息。
+
+---
+
+### 5.2 什么是类型擦除？
+
+类型擦除是 Java 泛型在编译时把泛型类型参数替换成具体类型的过程。
+
+具体来说，编译器会做这样的转换：
+
+如果泛型类型没有指定上界，就会被替换成 Object 类型：
+
+```java
+// 源代码
+List<String> list = new ArrayList<>();
+
+// 编译后实际变成
+List list = new ArrayList();  // String 被擦除成 Object
+```
+
+如果泛型类型指定了上界，就会被替换成上界类型：
+
+```java
+// 源代码
+class Box<T extends Number> {
+    private T value;
+}
+
+// 编译后 T 被替换成 Number
+class Box {
+    private Number value;
+}
+```
+
+为什么要进行类型擦除？主要是为了保持向后兼容。Java 在 JDK 5 才引入泛型，为了让新代码能在旧的 JVM 上运行，同时让泛型代码和非泛型代码能够互相调用，就采用了类型擦除的方式。
+
+类型擦除带来的影响：
+
+运行时无法获取泛型的具体类型信息，比如无法通过 `instanceof` 判断泛型类型，也无法创建泛型数组。
+
+---
+
+### 5.3 泛型中 K T V E ? Object 等分别代表什么含义？
+
+这些都是泛型中常用的类型参数符号，它们本质上都是占位符，只是按照约定俗成的规范来命名，让代码更易读：
+
+**T (Type)**：表示任意类型，最常用的泛型参数。通常用在类、接口和方法中表示一个通用类型：
+
+```java
+class Box<T> {
+    private T value;
+}
+```
+
+**K (Key)** 和 **V (Value)**：表示键值对，通常在 Map 中使用：
+
+```java
+Map<K, V> map = new HashMap<>();
+Map<String, Integer> map = new HashMap<>();  // K=String, V=Integer
+```
+
+**E (Element)**：表示元素，通常在集合类中使用：
+
+```java
+List<E> list = new ArrayList<>();
+Set<E> set = new HashSet<>();
+```
+
+**? (通配符)**：表示不确定的类型，用于泛型的上下界限定：
+
+```java
+List<?> list;  // 可以接收任意类型的 List
+List<? extends Number> list;  // 只能接收 Number 及其子类
+List<? super Integer> list;  // 只能接收 Integer 及其父类
+```
+
+**Object**：这不是泛型参数，而是 Java 中所有类的父类。在泛型出现之前，我们用 Object 来实现通用性，但需要手动类型转换：
+
+```java
+// 使用 Object，需要强制转换
+List list = new ArrayList();
+list.add("hello");
+String s = (String) list.get(0);
+
+// 使用泛型，不需要转换
+List<String> list = new ArrayList<>();
+list.add("hello");
+String s = list.get(0);
+```
+
+---
+
+### 5.4 泛型中上下界限定符 extends 和 super 有什么区别？
+
+extends 和 super 是泛型中用来限定类型范围的关键字，它们的区别主要体现在限定的方向和使用场景上。
+
+**? extends T（上界通配符）**
+
+表示泛型类型的上界，? 必须是 T 类型或 T 的子类。这种方式适合读取数据的场景：
+
+```java
+List<? extends Number> list = new ArrayList<Integer>();  // Integer 是 Number 的子类
+Number num = list.get(0);  // 可以读取，因为肯定是 Number 或其子类
+// list.add(new Integer(1));  // 编译错误！不能写入
+```
+
+为什么不能写入？因为编译器不知道 list 里具体是什么类型，可能是 `List<Integer>`，也可能是 `List<Double>`，为了类型安全，干脆禁止写入。
+
+**? super T（下界通配符）**
+
+表示泛型类型的下界，? 必须是 T 类型或 T 的父类。这种方式适合写入数据的场景：
+
+```java
+List<? super Integer> list = new ArrayList<Number>();  // Number 是 Integer 的父类
+list.add(new Integer(1));  // 可以写入 Integer 或其子类
+// Integer num = list.get(0);  // 编译错误！只能用 Object 接收
+Object obj = list.get(0);  // 只能用 Object 接收
+```
+
+为什么读取时只能用 Object？因为编译器不知道 list 里具体是什么类型，可能是 `List<Integer>`，也可能是 `List<Number>`，甚至是 `List<Object>`，所以只能用它们的共同父类 Object 来接收。
+
+**使用场景总结**
+
+记住一个口诀：**PECS 原则**（Producer Extends, Consumer Super）
+
+- 如果你需要从集合中读取数据（生产者），用 `? extends T`
+- 如果你需要往集合中写入数据（消费者），用 `? super T`
+
+举个实际例子：
+
+```java
+// 从 src 读取数据，复制到 dest
+public static <T> void copy(List<? super T> dest, List<? extends T> src) {
+    for (T item : src) {
+        dest.add(item);  // src 用 extends 读取，dest 用 super 写入
+    }
+}
+```
+
+这样设计既保证了类型安全，又提供了足够的灵活性。
+
+---
+
+## 六、异常处理
+
+### 6.1 Java 中异常分哪两类？有什么区别？
+
+Java 的异常分为受检异常（Checked Exception）和非受检异常（Unchecked Exception）两大类。
+
+**受检异常**是指在编译期就必须处理的异常，比如 IOException、SQLException 等。这类异常必须通过 try-catch 捕获或者在方法签名中用 throws 声明抛出，否则代码无法通过编译。受检异常通常表示外部环境导致的可预见问题，比如文件不存在、网络连接失败等，程序应该对这些情况做出合理的处理。
+
+**非受检异常**主要指 RuntimeException 及其子类，以及 Error 类。这类异常在编译期不强制要求处理，可以选择捕获也可以不捕获。RuntimeException 通常是由程序逻辑错误引起的，比如 NullPointerException（空指针）、ArrayIndexOutOfBoundsException（数组越界）、IllegalArgumentException（非法参数）等。如果这类异常没有被捕获，会导致程序中断执行。Error 则表示严重的系统级错误，比如 OutOfMemoryError、StackOverflowError，这类错误通常无法恢复，程序也不应该去捕获。
+
+两者的核心区别在于：受检异常强制要求处理，代表可预见的外部问题；非受检异常不强制处理，通常代表程序 bug，应该通过修复代码来避免。
+
+---
+
+### 6.2 finally 中的代码一定会执行吗？
+
+在正常情况下，只要 try 语句块开始执行了，finally 中的代码就一定会执行，无论是否发生异常，也无论 try 或 catch 中是否有 return 语句。这是 finally 的设计初衷，用来保证资源释放等清理工作一定能够完成。
+
+但在一些极端情况下，finally 中的代码可能不会执行：
+
+第一，JVM 在 finally 执行前就终止了。比如在 try 或 catch 中调用了 `System.exit(0)` 强制退出虚拟机，或者进程被 `kill -9` 强制杀死，这时 JVM 直接终止，finally 来不及执行。
+
+第二，程序所在线程死亡。如果执行 try 的线程被中断或死亡，finally 也无法执行。
+
+第三，计算机断电或系统崩溃等不可抗力因素。
+
+第四，try 语句块中出现了死循环或长时间阻塞，导致程序一直无法执行到 finally。
+
+需要注意的是，即使 try 或 catch 中有 return 语句，finally 依然会在 return 之前执行。而且如果 finally 中也有 return 语句，会覆盖 try 或 catch 中的 return 值，这种写法应该避免，因为会让代码逻辑变得混乱。
+
+总结：在正常的程序流程中，finally 一定会执行；但在 JVM 异常终止等极端情况下，finally 可能不会执行。
+
+---
+
+## 七、注解与反射
+
+### 7.1 Java 注解的作用是什么？
+
+注解（Annotation）是 Java 提供的一种为代码添加元数据的机制。注解本身不会直接影响代码的执行逻辑，但可以被编译器、开发工具或运行时通过反射读取，从而影响程序的行为。比如，我们可以使用注解标记某些类或方法，然后在运行时通过反射检查这些注解，当满足特定条件时执行相应的操作。常见的应用场景包括：配置信息（如 Spring 的 @Component、@Autowired）、代码生成（如 Lombok 的 @Data）、编译检查（如 @Override）、运行时处理（如 JUnit 的 @Test）。Java 还提供了四个重要的元注解用于定义注解本身：@Target 指定注解的作用范围（类、方法、字段等），@Retention 指定注解的生命周期（源码期、编译期、运行期），@Documented 表示注解是否出现在 JavaDoc 中，@Inherited 表示注解是否可以被子类继承。通过这些元注解的组合，我们可以创建出功能强大且灵活的自定义注解。
+
+---
+
+### 7.2 什么是反射机制？为什么反射慢？
+
+反射（Reflection）是 Java 提供的一种机制，允许程序在运行时动态地获取类的信息并操作类的成员。通过反射可以在运行时获取类的构造方法、字段、方法等信息，还可以动态创建对象、调用方法、访问和修改字段。
+
+**反射的主要功能**
+
+- 获取类的信息：包名、类名、父类、实现的接口等
+- 获取类的成员：构造方法、字段、方法
+- 动态操作：创建对象、调用方法、访问和修改字段（包括私有成员）
+
+**为什么反射慢？**
+
+反射的性能开销主要来自以下几个方面：
+
+第一，无法进行编译器优化。正常的方法调用在编译期就确定了，编译器和 JIT（即时编译器）可以进行内联、逃逸分析等优化。而反射调用在编译期无法确定，这些优化都无法应用，只能在运行时动态解析。
+
+第二，类型检查和参数装箱。使用反射调用方法时，参数需要被包装成 Object 数组传递，基本类型会发生自动装箱。方法执行时又要将 Object 数组转换回真正的参数类型，这个过程会产生大量临时对象。对象多了就容易触发 GC，而 GC 会导致程序停顿，影响性能。
+
+第三，安全检查开销。反射可以访问私有成员，每次反射操作都需要进行安全性检查和访问权限验证，这些检查都需要时间。
+
+第四，方法查找开销。反射需要从类的方法数组中查找目标方法，这是一个线性查找过程，比直接调用慢得多。
+
+**如何优化反射性能？**
+
+虽然反射慢，但在某些场景下不可避免。可以通过以下方式优化：
+
+- 缓存反射对象：将 Class、Method、Field 等对象缓存起来，避免重复获取
+- 使用 `setAccessible(true)`：跳过安全检查，提升性能
+- 减少反射使用频率：只在必要时使用反射，核心逻辑尽量用普通调用
+
+总的来说，反射提供了强大的动态能力，但牺牲了性能。在框架开发、插件系统等场景下很有用，但在性能敏感的代码中应该谨慎使用。
+
+---
+
+
+## 八、枚举
+
+### 8.1 Java 中的枚举有什么特点和好处？
+
+Java 枚举（Enum）是一种特殊的类，用于定义一组固定的常量。它有以下几个重要特点和好处：
+
+第一，类型安全。枚举提供了编译期的类型检查，只能使用预定义的枚举值，不能传入其他值。相比使用 int 或 String 常量，枚举可以避免传入非法值的问题。比如定义一个表示星期的枚举，方法参数只能接收 MONDAY、TUESDAY 等预定义的值，而不会出现传入 8 或 "星期八" 这种错误。
+
+第二，可扩展性强。枚举不仅可以定义常量，还可以有自己的属性、构造方法和普通方法。比如可以给每个枚举值关联一个描述信息或编码，还可以定义业务方法。这让枚举不只是简单的常量，而是功能完整的对象。
+
+第三，天然的单例模式。每个枚举值在 JVM 中只会存在一个实例，由 JVM 保证线程安全和单例特性。这使得枚举成为实现单例模式最简单、最安全的方式，不需要考虑线程同步、序列化、反射等问题。
+
+第四，可以用于 switch 语句。枚举可以直接在 switch 中使用，代码更清晰易读。
+
+第五，提供了实用方法。枚举自动继承 java.lang.Enum 类，提供了 values()、valueOf()、name()、ordinal() 等方法，方便进行枚举值的遍历和转换。
+
+总的来说，枚举让代码更安全、更易读、更易维护，是定义固定常量集合的最佳选择。
+
+---
+
+## 九、编码与字符集
+
+### 9.1 常见的字符编码有哪些？有什么区别？
 
 常见的字符编码主要有 ASCII、Unicode、UTF-8、GBK 等，它们各有特点：
 
@@ -248,7 +643,9 @@ GBK 编码：专门为中文设计的编码，使用 2 个字节编码一个汉�
 
 ---
 
-## 说几个常见的语法糖？
+## 十、语法糖
+
+### 10.1 说几个常见的语法糖？
 
 1. 自动装箱和拆箱（Autoboxing/Unboxing）
 
@@ -313,7 +710,7 @@ list.forEach(item -> System.out.println(item));
 
 ---
 
-## Lambda 表达式是如何实现的？
+### 10.2 Lambda 表达式是如何实现的？
 
 Lambda 表达式的实现比较复杂，它并不是简单的语法糖，而是通过 invokedynamic 指令和方法句柄来实现的。
 
@@ -348,191 +745,19 @@ private static void lambda$main$0(String s) {
 
 使用 invokedynamic 的优势：延迟绑定，只在第一次使用时才生成实现类；可以进行更多的运行时优化；减少了 class 文件的数量。
 
+---
 
-## **什么是泛型？有什么好处？**
-泛型是JDK5引入的类型参数，允许在定义类和静态方法时指定类型参数。好处就是可以提高代码的复用，比如我定义一个集合存的是字符串，我又想存整数了又创建一个吗？这时候就可以使用集合。泛型是编译期的概念，在编译时会对泛型进行擦除，同时进行类型检查，一定程度上增加了安全性。
+### 10.3 while(true) 和 for(;;) 哪个性能好？
+
+它们的性能一样好，因为底层实现是相同的，都是使用 goto 指令实现的，反编译的字节码完全相同。
+
+这是一个常见的误区，很多人认为 for(;;) 性能更好，但实际上编译器会将它们优化成相同的字节码。所以在实际开发中，选择哪个完全取决于个人习惯和代码可读性，不需要考虑性能差异。
 
 ---
 
-泛型是 JDK 5 引入的类型参数化类型，允许在定义类、接口和方法时使用类型参数，使用时再指定具体类型。
+## 十一、SPI 机制
 
-泛型主要有三个好处：
-
-首先是提高代码复用性。比如我想定义一个集合，既可以存字符串，又可以存整数，难道要创建两个集合类吗？用泛型就可以解决：
-
-```java
-List<String> stringList = new ArrayList<>();  // 存字符串
-List<Integer> intList = new ArrayList<>();    // 存整数
-```
-
-其次是增强类型安全。泛型在编译期就会进行类型检查，能在编译阶段发现类型错误，避免运行时出现 ClassCastException：
-
-```java
-// 使用泛型，编译期就能发现类型错误
-List<String> list = new ArrayList<>();
-list.add("hello");
-String s = list.get(0);  // 不需要强制转换
-
-// 不使用泛型，运行时才能发现错误
-List list2 = new ArrayList();
-list2.add("hello");
-String s2 = (String) list2.get(0);  // 需要强制转换，容易出错
-```
-
-最后是消除强制类型转换。使用泛型后，编译器知道集合里存的是什么类型，取出来时不需要强制转换，代码更简洁。
-
-需要注意的是，泛型是编译期的概念。编译时会进行类型检查，然后进行类型擦除，把泛型类型替换为 Object 或其边界类型。所以运行时 JVM 其实不知道泛型的具体类型信息。
-
-
-## **什么是类型擦除？**
-
-类型擦除是指Java泛型在编译时被编译器将泛型参数转换成具体类型的过程。
-
----
-
-类型擦除是 Java 泛型在编译时把泛型类型参数替换成具体类型的过程。
-
-具体来说，编译器会做这样的转换：
-
-如果泛型类型没有指定上界，就会被替换成 Object 类型：
-
-```java
-// 源代码
-List<String> list = new ArrayList<>();
-
-// 编译后实际变成
-List list = new ArrayList();  // String 被擦除成 Object
-```
-
-如果泛型类型指定了上界，就会被替换成上界类型：
-
-```java
-// 源代码
-class Box<T extends Number> {
-    private T value;
-}
-
-// 编译后 T 被替换成 Number
-class Box {
-    private Number value;
-}
-```
-
-为什么要进行类型擦除？主要是为了保持向后兼容。Java 在 JDK 5 才引入泛型，为了让新代码能在旧的 JVM 上运行，同时让泛型代码和非泛型代码能够互相调用，就采用了类型擦除的方式。
-
-类型擦除带来的影响：
-
-运行时无法获取泛型的具体类型信息，比如无法通过 `instanceof` 判断泛型类型，也无法创建泛型数组。
-
-
-## **泛型中K T V E ？ Object等分别代表什么含义。**
-K 表示 key ；T 表示 Type ；V 表示Value；E 表示 Element ，一般在集合中使用；Object表示对象；
-
----
-
-这些都是泛型中常用的类型参数符号，它们本质上都是占位符，只是按照约定俗成的规范来命名，让代码更易读：
-
-**T (Type)**：表示任意类型，最常用的泛型参数。通常用在类、接口和方法中表示一个通用类型：
-
-```java
-class Box<T> {
-    private T value;
-}
-```
-
-**K (Key)** 和 **V (Value)**：表示键值对，通常在 Map 中使用：
-
-```java
-Map<K, V> map = new HashMap<>();
-Map<String, Integer> map = new HashMap<>();  // K=String, V=Integer
-```
-
-**E (Element)**：表示元素，通常在集合类中使用：
-
-```java
-List<E> list = new ArrayList<>();
-Set<E> set = new HashSet<>();
-```
-
-**? (通配符)**：表示不确定的类型，用于泛型的上下界限定：
-
-```java
-List<?> list;  // 可以接收任意类型的 List
-List<? extends Number> list;  // 只能接收 Number 及其子类
-List<? super Integer> list;  // 只能接收 Integer 及其父类
-```
-
-**Object**：这不是泛型参数，而是 Java 中所有类的父类。在泛型出现之前，我们用 Object 来实现通用性，但需要手动类型转换：
-
-```java
-// 使用 Object，需要强制转换
-List list = new ArrayList();
-list.add("hello");
-String s = (String) list.get(0);
-
-// 使用泛型，不需要转换
-List<String> list = new ArrayList<>();
-list.add("hello");
-String s = list.get(0);
-```
-
-## **泛型中上下界限定符extends 和 super有什么区别？**
-
-？ extends T 表示泛型的上界，？ 类型需要是T类型的子类
-？ super     T 表示泛型的下界，？ 类型需要是T类型的父类
-
----
-
-extends 和 super 是泛型中用来限定类型范围的关键字，它们的区别主要体现在限定的方向和使用场景上。
-
-**? extends T（上界通配符）**
-
-表示泛型类型的上界，? 必须是 T 类型或 T 的子类。这种方式适合读取数据的场景：
-
-```java
-List<? extends Number> list = new ArrayList<Integer>();  // Integer 是 Number 的子类
-Number num = list.get(0);  // 可以读取，因为肯定是 Number 或其子类
-// list.add(new Integer(1));  // 编译错误！不能写入
-```
-
-为什么不能写入？因为编译器不知道 list 里具体是什么类型，可能是 `List<Integer>`，也可能是 `List<Double>`，为了类型安全，干脆禁止写入。
-
-**? super T（下界通配符）**
-
-表示泛型类型的下界，? 必须是 T 类型或 T 的父类。这种方式适合写入数据的场景：
-
-```java
-List<? super Integer> list = new ArrayList<Number>();  // Number 是 Integer 的父类
-list.add(new Integer(1));  // 可以写入 Integer 或其子类
-// Integer num = list.get(0);  // 编译错误！只能用 Object 接收
-Object obj = list.get(0);  // 只能用 Object 接收
-```
-
-为什么读取时只能用 Object？因为编译器不知道 list 里具体是什么类型，可能是 `List<Integer>`，也可能是 `List<Number>`，甚至是 `List<Object>`，所以只能用它们的共同父类 Object 来接收。
-
-**使用场景总结**
-
-记住一个口诀：**PECS 原则**（Producer Extends, Consumer Super）
-
-- 如果你需要从集合中读取数据（生产者），用 `? extends T`
-- 如果你需要往集合中写入数据（消费者），用 `? super T`
-
-举个实际例子：
-
-```java
-// 从 src 读取数据，复制到 dest
-public static <T> void copy(List<? super T> dest, List<? extends T> src) {
-    for (T item : src) {
-        dest.add(item);  // src 用 extends 读取，dest 用 super 写入
-    }
-}
-```
-
-这样设计既保证了类型安全，又提供了足够的灵活性。
-
-## ## 什么是 SPI，和 API 有什么区别？
-
----
+### 11.1 什么是 SPI，和 API 有什么区别？
 
 SPI（Service Provider Interface）是服务提供者接口，API（Application Programming Interface）是应用程序编程接口。它们最大的区别在于调用方向和使用场景不同。
 
@@ -610,127 +835,11 @@ for (Driver driver : loader) {
 
 总结：API 是给别人用的，SPI 是让别人扩展的。API 关注功能实现，SPI 关注扩展性和插件化。
 
-## 什么是反射机制？为什么反射慢？
-
-反射（Reflection）是 Java 提供的一种机制，允许程序在运行时动态地获取类的信息并操作类的成员。通过反射可以在运行时获取类的构造方法、字段、方法等信息，还可以动态创建对象、调用方法、访问和修改字段。
-
-**反射的主要功能**
-
-- 获取类的信息：包名、类名、父类、实现的接口等
-- 获取类的成员：构造方法、字段、方法
-- 动态操作：创建对象、调用方法、访问和修改字段（包括私有成员）
-
-**为什么反射慢？**
-
-反射的性能开销主要来自以下几个方面：
-
-第一，无法进行编译器优化。正常的方法调用在编译期就确定了，编译器和 JIT（即时编译器）可以进行内联、逃逸分析等优化。而反射调用在编译期无法确定，这些优化都无法应用，只能在运行时动态解析。
-
-第二，类型检查和参数装箱。使用反射调用方法时，参数需要被包装成 Object 数组传递，基本类型会发生自动装箱。方法执行时又要将 Object 数组转换回真正的参数类型，这个过程会产生大量临时对象。对象多了就容易触发 GC，而 GC 会导致程序停顿，影响性能。
-
-第三，安全检查开销。反射可以访问私有成员，每次反射操作都需要进行安全性检查和访问权限验证，这些检查都需要时间。
-
-第四，方法查找开销。反射需要从类的方法数组中查找目标方法，这是一个线性查找过程，比直接调用慢得多。
-
----
-## **Java中创建对象有哪些种方式**
-
-new 关键字、反射、Unsafe（字段的偏移值、直接操作内存、不安全）、clone()方法、序列化
-
----
-## **Java注解的作用是啥**
-
-注解的作用是为类提供元数据，一般不会直接影响代码的运行，实际上注解也可以影响程序的运行，比如使用注解进行元数据的标记，在某种条件被满足时使用反射执行某些操作。
-
-元注解：
-
-- Target注解的作用范围，可以作用于类、方法、字段
-
-- Retention 注解的生命周期，可以是源码期、编译期、运行期
-
-- Documented 是否出现在java 文档中
-
-- Inherited 注解能否被继承
-
----
-注解（Annotation）是 Java 提供的一种为代码添加元数据的机制。注解本身不会直接影响代码的执行逻辑，但可以被编译器、开发工具或运行时通过反射读取，从而影响程序的行为。比如，我们可以使用注解标记某些类或方法，然后在运行时通过反射检查这些注解，当满足特定条件时执行相应的操作。
-
-常见的应用场景包括：配置信息（如 Spring 的 @Component、@Autowired）、代码生成（如 Lombok 的 @Data）、编译检查（如 @Override）、运行时处理（如 JUnit 的 @Test）。
-
-Java 还提供了四个重要的元注解用于定义注解本身：@Target 指定注解的作用范围（类、方法、字段等），@Retention 指定注解的生命周期（源码期、编译期、运行期），@Documented 表示注解是否出现在 JavaDoc 中，@Inherited 表示注解是否可以被子类继承。通过这些元注解的组合，我们可以创建出功能强大且灵活的自定义注解。
-
-## **Java中异常分哪两类，有什么区别？**
-
-Java的异常可以分为受检异常和非受检异常，受检异常在代码中可以直观的体现出来，我们可以对其进行捕获或者直接抛出。非受检异常- RuntimeException 发生在运行时如果没有进行捕获处理，会直接导致代码中断执行。
-
----
-Java 的异常分为受检异常（Checked Exception）和非受检异常（Unchecked Exception）两大类。
-
-**受检异常**是指在编译期就必须处理的异常，比如 IOException、SQLException 等。这类异常必须通过 try-catch 捕获或者在方法签名中用 throws 声明抛出，否则代码无法通过编译。受检异常通常表示外部环境导致的可预见问题，比如文件不存在、网络连接失败等，程序应该对这些情况做出合理的处理。
-
-**非受检异常**主要指 RuntimeException 及其子类，以及 Error 类。这类异常在编译期不强制要求处理，可以选择捕获也可以不捕获。RuntimeException 通常是由程序逻辑错误引起的，比如 NullPointerException（空指针）、ArrayIndexOutOfBoundsException（数组越界）、IllegalArgumentException（非法参数）等。如果这类异常没有被捕获，会导致程序中断执行。Error 则表示严重的系统级错误，比如 OutOfMemoryError、StackOverflowError，这类错误通常无法恢复，程序也不应该去捕获。
-
-两者的核心区别在于：受检异常强制要求处理，代表可预见的外部问题；非受检异常不强制处理，通常代表程序 bug，应该通过修复代码来避免。
-
-
-## **finally中代码一定会执行吗？**
-
-正常情况下只要try语句执行了，那么finally中的代码总是会执行。
-
-但是由于异常情况下代码没有执行到finally，虚拟机就异常结束了就不会执行finally中的代码。
-
-比如进程被kill -9 掉了、在finally执行之前手动System.exit退出虚拟机、计算机断电等。
-
----
-在正常情况下，只要 try 语句块开始执行了，finally 中的代码就一定会执行。这是 finally 的设计初衷，用来保证资源释放等清理工作一定能够完成。
-
-但在一些极端情况下，finally 中的代码可能不会执行：
-
-第一，JVM 在 finally 执行前就终止了。比如在 try 或 catch 中调用了 `System.exit(0)` 强制退出虚拟机，或者进程被 `kill -9` 强制杀死，这时 JVM 直接终止，finally 来不及执行。
-
-第二，程序所在线程死亡。如果执行 try 的线程被中断或死亡，finally 也无法执行。
-
-第三，计算机断电或系统崩溃等不可抗力因素。
-
-第四，try 语句块中出现了死循环或长时间阻塞，导致程序一直无法执行到 finally。
-
 ---
 
-## **Java中的枚举有什么特点和好处**
+## 十二、其他常见问题
 
-枚举类天然支持类型安全检查，校验传入参数。枚举类型可以有属性和方法扩展。枚举天然是一个单利
-
----
-Java 枚举（Enum）是一种特殊的类，用于定义一组固定的常量。
-
-第一，类型安全。枚举提供了编译期的类型检查，只能使用预定义的枚举值，不能传入其他值。
-
-第二，可扩展性强。枚举不仅可以定义常量，还可以有自己的属性、构造方法和普通方法。比如可以给每个枚举值关联一个描述信息或编码，还可以定义业务方法。
-
-第三，天然的单例模式。每个枚举值在 JVM 中只会存在一个实例，由 JVM 保证线程安全和单例特性。
-
-第四，可以用于 switch 语句。枚举可以直接在 switch 中使用，代码更清晰易读。
-
-## **Java是值传递还是引用传递？**
-
-Java是指传递。如果是基本数据类型，参数在传递时，会将基本数据类型的数值，拷贝到形参的局部变量所在地址。如果是引用数据类型，会将实参指向的对象的引用地址复制到形参的地址。本质上是复制出了一个副本。
-
----
-
-Java 只有值传递，没有引用传递。
-
-**对于基本数据类型**：传递的是数值的副本。方法内对参数的修改不会影响原变量。
-
-**对于引用数据类型**：传递的是引用地址的副本。方法内对引用对象的修改会影响原对象。
-
-
-## **SimpleDateFormat是线程安全的吗？使用时应该注意什么？**
-
-SimpleDateFormat 不是线程安全的，在使用时不要使用static修饰，也就是不要SimpleDateFormat
-对象作为共享资源，如果非要使用需要进行加锁，或者使用DateUtils工具类来替代
-SimpleDateFormat。
-
----
+### 12.1 SimpleDateFormat 是线程安全的吗？使用时应该注意什么？
 
 SimpleDateFormat 不是线程安全的。这是因为它内部使用了 Calendar 对象来存储中间状态，多个线程同时使用同一个 SimpleDateFormat 实例时，会相互干扰，导致解析或格式化结果错误，甚至抛出异常。
 
@@ -738,99 +847,126 @@ SimpleDateFormat 不是线程安全的。这是因为它内部使用了 Calendar
 
 第一，避免共享实例。不要用 static 修饰 SimpleDateFormat，也不要将其作为类的成员变量在多线程间共享。最简单的做法是每次使用时都创建新的实例，用完即丢弃。虽然会有一些性能开销，但保证了线程安全。
 
-第二，使用替代方案。推荐使用 Java 8 引入的 DateTimeFormatter，它是线程安全的，性能也更好：
+第二，使用 ThreadLocal。如果频繁创建 SimpleDateFormat 对象影响性能，可以使用 ThreadLocal 为每个线程维护一个独立的实例：
 
-## char能存储中文吗？
+```java
+private static ThreadLocal<SimpleDateFormat> threadLocal = 
+    ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
+```
 
-char能存储中文，java使用两个字节来存储一个字符，可以存储unicode中的字符，当然也包括大部分中文字符。
+第三，加锁同步。如果必须共享同一个实例，可以使用 synchronized 加锁，但这会降低并发性能，不推荐。
 
----
-char 可以存储中文，但只能存储大部分常用中文字符。
+第四，使用替代方案。推荐使用 Java 8 引入的 DateTimeFormatter，它是线程安全的，性能也更好：
 
-Java 中的 char 类型使用 2 个字节（16 位）来存储一个字符，采用 UTF-16 编码。
+```java
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+String date = LocalDate.now().format(formatter);
+```
 
-## **while(true)和for(;;)哪个性能好？**
+或者使用 Apache Commons Lang 的 FastDateFormat，它也是线程安全的。
 
-emm 他们的性能一样好，因为底层是相通的都是使用 goto 实现的，反编译的字节码完全相同。
-
-## **ClassNotFoundException和NoClassDefFoundError的区别是什么？**
-
-他们有本质区别，一个是ClassNotFoundException异常，可以进行捕获和抛出，显式进行处理，而
-
-NoClassDefFoundError是一个错误，表示系统本身出现了严重错误。ClassNotFoundException 一般是写类的全类名时写错了导致的，比如加载JDBC驱动时 使用Class.forName("class name");
-
-ClassNotFoundException一般是缺少依赖或者类文件被破坏导致的。
+总结：SimpleDateFormat 不是线程安全的，在多线程环境下应该避免共享实例，优先使用 DateTimeFormatter 等线程安全的替代方案。
 
 ---
+
+### 12.2 ClassNotFoundException 和 NoClassDefFoundError 的区别是什么？
 
 这两者有本质区别，一个是异常（Exception），一个是错误（Error）。
 
 **ClassNotFoundException**
 
-这是一个受检异常，继承自 Exception。它发生在程序运行时尝试通过反射动态加载类，但找不到对应的类文件时。
+这是一个受检异常，继承自 Exception。它发生在程序运行时尝试通过反射动态加载类，但找不到对应的类文件时。比如：
+
+- 使用 `Class.forName("com.example.MyClass")` 加载类时，类名写错或类不存在
+- 使用 `ClassLoader.loadClass()` 加载类时找不到类文件
+- 加载 JDBC 驱动时类路径配置错误
+
+因为是受检异常，所以必须显式捕获或声明抛出，可以通过 try-catch 处理：
+
+```java
+try {
+    Class.forName("com.mysql.jdbc.Driver");
+} catch (ClassNotFoundException e) {
+    // 处理异常
+}
+```
 
 **NoClassDefFoundError**
 
 这是一个错误，继承自 Error。它发生在编译时类存在，但运行时 JVM 在类路径中找不到类定义时。常见原因包括：
 
-- 缺少依赖
-- 类文件缺失或者被破坏
+- 类文件在编译后被删除或移动
+- JAR 包缺失或版本不匹配
+- 类的静态初始化块抛出异常导致类加载失败
+- 类路径配置错误
 
-## **为什么JDK 9中把String的char\[]改成了byte\[]？**
+因为是 Error，通常不应该捕获，它表示严重的系统级问题。
 
-主要是为了节省内存空间。JDK 9 引入了紧凑字符串的概念，在String类中新增了coder字段，这个字段为true表示该字符串中的所有字符都可以使用一个字节表示，这时字节数组中每个字节表示一个字符。如果coder为false，那么就是每两个字节表示一个字符。
+**核心区别总结**
 
----
-主要是为了节省内存空间，提升性能。
+1. 类型不同：ClassNotFoundException 是异常，NoClassDefFoundError 是错误
+2. 发生时机不同：前者发生在动态加载类时，后者发生在类已经编译但运行时找不到
+3. 处理方式不同：前者可以捕获处理，后者通常不应该捕获
+4. 原因不同：前者通常是类名错误或类不存在，后者通常是类路径问题或依赖缺失
 
-在 JDK 9 之前，String 内部使用 char\[] 数组存储字符，每个 char 占用 2 个字节。但实际应用中，大部分字符串都是 Latin-1 字符（如英文、数字、常见符号），这些字符用 1 个字节就能表示。
-
-JDK 9 引入了紧凑字符串（Compact Strings）的概念，将 String 的内部存储从 char\[] 改为 byte\[]，并新增了一个 coder 字段来标识，是否所有字符都能使用一个字节表示，这个字段为true表示该字符串中的所有字符都可以使用一个字节表示，这时字节数组中每个字节表示一个字符。如果coder为false，那么就是每两个字节表示一个字符。‘
-
-## **String是如何实现不可变的？**
-
-final 修饰字符数组，防止数组引用指向发生改变，没有提供setter系列方法，防止数组内容发生改变，String类被final修饰，防止String类的方法被重写
-
----
-**第一，类被 final 修饰**。String 类被声明为 final，这意味着它不能被继承，防止子类重写方法来破坏不可变性。
-
-**第二，内部数组被  final 修饰**。在 JDK 9 之前，String 内部使用 `private final char[] value` 存储字符；JDK 9 之后改为 `private final byte[] value`。final 关键字保证了数组引用不能被修改，即不能指向其他数组。
-
-**第三，没有提供修改方法**。String 类没有提供任何可以修改内部数组内容的 public 方法，所有看起来"修改"字符串的方法（如 substring、concat、replace）实际上都是创建并返回新的 String 对象，原字符串保持不变。
-
-**第四，内部数组私有且不暴露**。value 数组被声明为 private，外部无法直接访问。即使有返回字符数组的方法（如 toCharArray），也是返回数组的副本，而不是原数组的引用。
-
-
-
-## **Java的动态代理如何实现？**
+简单记忆：ClassNotFoundException 是"找不到类"，NoClassDefFoundError 是"类定义找不到"。
 
 ---
 
-## **Java序列化的原理是啥**
+### 12.3 Java 中创建对象有哪些种方式？
+
+Java 中创建对象主要有以下几种方式：
+
+1. **new 关键字**：最常用的方式，直接调用类的构造方法创建对象
+2. **反射**：通过 Class.newInstance() 或 Constructor.newInstance() 动态创建对象
+3. **clone() 方法**：通过复制现有对象创建新对象，需要实现 Cloneable 接口
+4. **序列化**：通过反序列化从字节流中恢复对象
+5. **Unsafe**：通过 Unsafe 类的 allocateInstance() 方法直接分配内存创建对象，不调用构造方法，这种方式不安全，一般不推荐使用
 
 ---
 
-## **serialVersionUID 有何用途? 如果没定义会有什么问题？**
+## 十三、待补充问题
+
+以下问题待补充详细答案：
+
+### 13.1 Java 的动态代理如何实现？
+
+（待补充）
 
 ---
 
-## **你知道fastjson的反序列化漏洞吗**
+### 13.2 Java 序列化的原理是什么？
 
-
----
-
-## **什么是AIO、BIO和NIO？**
-
-
----
-## **什么是深拷贝和浅拷贝？**
-
+（待补充）
 
 ---
 
-## **什么是UUID，能保证唯一吗？**
+### 13.3 serialVersionUID 有何用途？如果没定义会有什么问题？
+
+（待补充）
 
 ---
 
+### 13.4 你知道 fastjson 的反序列化漏洞吗？
 
+（待补充）
 
+---
+
+### 13.5 什么是 AIO、BIO 和 NIO？
+
+（待补充）
+
+---
+
+### 13.6 什么是深拷贝和浅拷贝？
+
+（待补充）
+
+---
+
+### 13.7 什么是 UUID，能保证唯一吗？
+
+（待补充）
+
+---
