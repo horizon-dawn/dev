@@ -215,6 +215,9 @@
   },
   "active": "6efe996c629867a8",
   "lastOpenFiles": [
+    "tools/qid.jar",
+    "tools/qid-generator.jar",
+    "tools",
     "README_BUILD.md",
     "build.bat",
     "build.sh",
