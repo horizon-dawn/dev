@@ -215,6 +215,10 @@
   },
   "active": "6efe996c629867a8",
   "lastOpenFiles": [
+    "README_BUILD.md",
+    "build.bat",
+    "build.sh",
+    "pom.xml",
     "Java面试题/题目ID映射表.md",
     "QuestionIdGenerator.java",
     "Java面试题/Java知识点分类体系.md",
