@@ -4,19 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "46c762f47c9b4997",
+        "id": "653ecff8a9732f5f",
         "type": "tabs",
         "children": [
           {
-            "id": "77452235ad3169ad",
+            "id": "a187cea180832a54",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "Pasted image 20251208183543.png"
+                "file": "Java面试题/计算机网络.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20251208183543"
+              "icon": "lucide-file",
+              "title": "计算机网络"
             }
           }
         ]
@@ -153,13 +155,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Pasted image 20251208183543.png",
+                "file": "Java面试题/计算机网络.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Pasted image 20251208183543 的大纲"
+              "title": "计算机网络 的大纲"
             }
           }
         ],
@@ -182,9 +184,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "77452235ad3169ad",
+  "active": "a187cea180832a54",
   "lastOpenFiles": [
+    "Java面试题/images/Pasted image 20251208183850.png",
+    "Java面试题/images/Pasted image 20251208183715.png",
     "Java面试题/计算机网络.md",
+    "Java面试题/images",
     "Pasted image 20251208183543.png",
     "Java面试题/Java 基础.md",
     "day14-网络编程-作业.md",
@@ -207,7 +212,6 @@
     "Java 基础 1.md",
     "Java面试题/Java 基础_新版.md",
     "Java面试题/Java 基础_分类版.md",
-    "README.md",
-    "未命名"
+    "README.md"
   ]
 }
