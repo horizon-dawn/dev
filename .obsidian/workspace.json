@@ -4,21 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "697380b5c7c0910c",
+        "id": "46c762f47c9b4997",
         "type": "tabs",
         "children": [
           {
-            "id": "bac8017ae6d63c80",
+            "id": "77452235ad3169ad",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "Java面试题/Java 基础.md",
-                "mode": "source",
-                "source": false
+                "file": "Pasted image 20251208183543.png"
               },
-              "icon": "lucide-file",
-              "title": "Java 基础"
+              "icon": "lucide-image",
+              "title": "Pasted image 20251208183543"
             }
           }
         ]
@@ -155,13 +153,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Java面试题/Java 基础.md",
+                "file": "Pasted image 20251208183543.png",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Java 基础 的大纲"
+              "title": "Pasted image 20251208183543 的大纲"
             }
           }
         ],
@@ -169,7 +167,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 406.5
+    "width": 406.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -183,11 +182,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "bac8017ae6d63c80",
+  "active": "77452235ad3169ad",
   "lastOpenFiles": [
+    "Java面试题/计算机网络.md",
+    "Pasted image 20251208183543.png",
+    "Java面试题/Java 基础.md",
     "day14-网络编程-作业.md",
     "未命名.md",
-    "Java面试题/Java 基础.md",
     "tools/qid.jar",
     "tools/qid-generator.jar",
     "tools",
@@ -202,7 +203,6 @@
     "开题报告答辩PPT.md",
     "Java面试题/面向对象与面向过程卡片.html",
     "Java面试题/Java与C++对比卡片.html",
-    "Java面试题/计算机网络.md",
     "Java面试题/Java IO流继承体系.md",
     "Java 基础 1.md",
     "Java面试题/Java 基础_新版.md",
