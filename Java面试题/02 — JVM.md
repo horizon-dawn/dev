@@ -91,11 +91,5 @@ JVM 实时解释字节码，如果不做任何优化，性能不如 C++ 等语�
 |**Dragonwell 龙井**|Alibaba|标准版 8, 11, 17；扩展版 11, 17|低 (3.9k)|基于 OpenJDK 的增强，高性能，Bug 修复，安全性提升，支持 JWarmup, ElasticHeap, Wisp 特性|电商、物流、金融领域，对性能要求比较高|
 |**Eclipse OpenJ9 (原 IBM J9)**|IBM|8, 11, 17, 19, 20|低 (3.1k)|高性能、可扩展，支持 JIT 和 AOT 特性|微服务、云原生架构|
 
-## JVM的组成
-![[Pasted image 20251208200327.png]]
-## 字节码详解
-
-
-
 
 
