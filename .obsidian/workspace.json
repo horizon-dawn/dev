@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "477b2ab612aa52ac",
@@ -169,8 +170,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 406.5,
-    "collapsed": true
+    "width": 406.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -186,6 +186,7 @@
   },
   "active": "0e7e2ce9bda1d16f",
   "lastOpenFiles": [
+    "Java面试题/images/Pasted image 20251208200327.png",
     "Java面试题/images/Pasted image 20251208195450.png",
     "Java面试题/images/Pasted image 20251208195308.png",
     "Java面试题/images/Pasted image 20251208195228.png",
@@ -201,7 +202,6 @@
     "Java面试题/02 — JVM.md",
     "Java面试题/Java IO流继承体系.md",
     "Java面试题/images/Pasted image 20251208192045.png",
-    "Java面试题/images/Pasted image 20251208192026.png",
     "day14-网络编程-作业.md",
     "未命名.md",
     "tools/qid.jar",
