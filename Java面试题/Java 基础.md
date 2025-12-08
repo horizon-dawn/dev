@@ -2917,43 +2917,12 @@ Java 的动态代理主要有两种实现方式：**JDK 动态代理**和 **CGLI
 - **实现机制：** 要使一个对象可序列化，其类必须实现 **`java.io.Serializable`** 接口。
   
 - **核心原理：**
-```mermaid
-flowchart TD
-    A[调用 writeObject 方法] --> B{检查对象是否<br>实现 Serializable 接口}
-    
-    B -->|否| C[抛出 NotSerializableException]
-    B -->|是| D[获取类元数据]
-    
-    D --> E[遍历对象的所有字段]
-    E --> F{字段类型检查}
-    
-    F -->|transient/static| G[跳过该字段]
-    G --> H[继续下一个字段]
-    
-    F -->|非 transient/static| I[获取字段值]
-    I --> J{字段是否为引用类型}
-    
-    J -->|是| K[递归序列化引用对象]
-    K --> H
-    
-    J -->|否| L[写入字段值到字节流]
-    L --> H
-    
-    H --> M{还有未处理字段吗}
-    M -->|是| F
-    M -->|否| N[写入类元数据到字节流]
-    N --> O[序列化完成]
-```
-
     1. 当调用 `ObjectOutputStream.writeObject(Object obj)` 方法时，Java 运行时环境会检查对象是否实现了 `Serializable` 接口。
        
     2. 如果实现了，它会使用 **Java 反射机制**遍历对象的所有**非 `transient`** 和**非 `static`** 字段。
        
     3. 它将这些字段的数据及其所属类的元数据（如类名、`serialVersionUID` 等）写入字节流中。如果字段是引用类型，则会递归地对引用对象进行序列化。
-       
-    4. **反序列化**时，`ObjectInputStream.readObject()` 方法会从字节流中读取类元数据和字段值，然后**不调用构造函数**，而是直接通过底层机制（如反射）创建一个空对象，并将字段值填充进去，恢复对象状态。
-       
-
+    
 **注意：**
 
 - `static` 字段属于类，不属于对象状态，因此不会被序列化。
