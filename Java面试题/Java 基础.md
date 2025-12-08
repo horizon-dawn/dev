@@ -2430,6 +2430,48 @@ list.forEach(item -> System.out.println(item));
 
 ### 10.2 Lambda 表达式是如何实现的？
 
+
+```mermaid
+flowchart TD
+    A[源代码: s -> System.out.println] --> B{编译阶段}
+    
+    B --> C[步骤1: 生成私有静态方法]
+    C --> C1[lambda$main$0String s]
+    
+    B --> D[步骤2: 生成 invokedynamic 指令]
+    D --> D1[指向 LambdaMetafactory]
+    
+    C1 --> E[字节码文件 .class]
+    D1 --> E
+    
+    E --> F{运行时阶段}
+    
+    F --> G[首次执行 invokedynamic?]
+    G -->|是| H[调用 LambdaMetafactory.metafactory]
+    G -->|否| M[使用缓存的 CallSite]
+    
+    H --> I[传入参数]
+    I --> I1[函数式接口: Consumer]
+    I --> I2[方法签名: acceptObject]
+    I --> I3[方法句柄: lambda$main$0]
+    
+    I1 --> J[动态生成内部类]
+    I2 --> J
+    I3 --> J
+    
+    J --> K[实现 Consumer 接口]
+    K --> L[accept 方法调用 lambda$main$0]
+    
+    L --> M
+    M --> N[执行 Lambda 逻辑]
+    
+    style B fill:#e1f5ff
+    style F fill:#fff4e1
+    style J fill:#ffe1f5
+
+
+```
+
 Lambda 表达式的实现比较复杂，它并不是简单的语法糖，而是通过 invokedynamic 指令和方法句柄来实现的。
 
 实现机制：
