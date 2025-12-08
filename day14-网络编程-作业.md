@@ -89,12 +89,77 @@ C
 - 服务端接收字符串后，向客户端回写 “已收到：Hello TCP!”
 - 通信结束后关闭所有资源
 
+**服务器：**
 
+```java
+package com.zhc;  
+  
+import java.io.BufferedInputStream;  
+import java.io.IOException;  
+import java.io.InputStream;  
+import java.io.OutputStream;  
+import java.net.ServerSocket;  
+import java.net.Socket;  
+import java.nio.charset.StandardCharsets;  
+  
+public class TcpServer {  
+  
+    public static void main(String[] args) throws IOException {  
+        ServerSocket ss = new ServerSocket(1290);  
+  
+        Socket accept = ss.accept();  
+        InputStream in = accept.getInputStream();  
+        OutputStream out = accept.getOutputStream();  
+        byte[] content = new byte[8192];  
+        int count;  
+        while ((count = in.read(content)) != -1) {  
+            out.write("已收到：".getBytes(StandardCharsets.UTF_8));  
+            out.write(content, 0, count);  
+            accept.shutdownOutput();  
+        }  
+        // release resource  
+        out.close();  
+        in.close();  
+        ss.close();  
+    }  
+}
+```
+
+**客户端：**
+
+```java
+package com.zhc;  
+  
+import java.io.IOException;  
+import java.io.InputStream;  
+import java.io.OutputStream;  
+import java.net.Socket;  
+import java.nio.charset.StandardCharsets;  
+  
+/*  
+    1、使用 TCP 协议实现字符串数据传输：  
+    要求：  
+    - 客户端向服务端发送字符串 “Hello TCP!”    - 服务端接收字符串后，向客户端回写 “已收到：Hello TCP!”  
+    - 通信结束后关闭所有资源  
+ */public class TcpClient {  
+    public static void main(String[] args) throws IOException {  
+        Socket socket = new Socket("127.0.0.1", 1290);  
+        OutputStream out = socket.getOutputStream();  
+        out.write("Hello TCP!".getBytes(StandardCharsets.UTF_8));  
+        socket.shutdownOutput();  
+        InputStream in = socket.getInputStream();  
+        System.out.println("服务器处理后的数据:" + new String(in.readAllBytes()));  
+  
+        // release resource  
+        in.close();  
+        out.close();  
+        socket.close();  
+    }  
+}
+```
 
 2、使用 TCP 协议实现简单文件下载功能：
 要求：
-
-
 
 - 服务端存在文件 “serverFile.txt”（假设文件存在），客户端请求下载该文件
 - 服务端读取文件内容并发送给客户端
