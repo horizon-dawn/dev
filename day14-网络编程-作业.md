@@ -166,3 +166,103 @@ import java.nio.charset.StandardCharsets;
 - 客户端接收文件内容后，保存为 “clientFile.txt”
 - 客户端接收完成后，直接提示 “文件下载成功”
 - 通信结束后关闭所有资源
+
+**客户端：**
+```java
+package com.zhc.installfile;  
+  
+import cn.hutool.core.io.FileUtil;  
+  
+import java.io.IOException;  
+import java.io.InputStream;  
+import java.io.OutputStream;  
+import java.net.Socket;  
+import java.nio.charset.StandardCharsets;  
+import java.util.ArrayList;  
+import java.util.List;  
+  
+public class FileClient {  
+  
+  
+    public static void main(String[] args) throws IOException {  
+        String path = "/Users/zhc/project/hutool/serverFile.txt";  
+  
+        Socket socket = new Socket("127.0.0.1", 1290);  
+        OutputStream out = socket.getOutputStream();  
+        InputStream in = socket.getInputStream();  
+        out.write(path.getBytes(StandardCharsets.UTF_8));  
+        socket.shutdownOutput();  
+  
+        int count;  
+        byte[] content = new byte[8192];  
+        List<Byte> list = new ArrayList<>();  
+        while ((count = in.read(content)) != -1) {  
+            for(int i = 0; i< count;++i) {  
+                list.add(content[i]);  
+            }  
+        }  
+  
+        byte[] bytes = new byte[list.size()];  
+        for(int i = 0; i< list.size();++i) {  
+            bytes[i] = list.get(i);  
+        }  
+  
+        FileUtil.writeBytes(bytes,"/Users/zhc/project/hutool/src/main/resources/serverFile.txt");  
+        out.close();  
+        in.close();  
+        socket.close();  
+    }  
+}
+```
+
+**服务器：**
+
+```java
+package com.zhc.installfile;  
+  
+import cn.hutool.core.io.FileUtil;  
+import com.zhc.communication.Server;  
+  
+import java.io.*;  
+import java.net.ServerSocket;  
+import java.net.Socket;  
+import java.nio.charset.StandardCharsets;  
+import java.util.ArrayList;  
+import java.util.List;  
+  
+public class FileServer {  
+    public static void main(String[] args) throws IOException {  
+        ServerSocket ss = new ServerSocket(1290);  
+        Socket clientSocket = ss.accept();  
+        InputStream in = clientSocket.getInputStream();  
+        OutputStream out = clientSocket.getOutputStream();  
+  
+  
+        int count;  
+        byte[] content = new byte[8192];  
+        List<Byte> list = new ArrayList<>();  
+        while ((count = in.read(content)) != -1) {  
+            for(int i = 0; i< count;++i) {  
+                list.add(content[i]);  
+            }  
+        }  
+  
+        byte[] bytes = new byte[list.size()];  
+        for(int i = 0; i< list.size();++i) {  
+            bytes[i] = list.get(i);  
+        }  
+  
+        String path = new String(bytes, StandardCharsets.UTF_8);  
+        // 将文件发送给客户端  
+        byte[] fileContent = FileUtil.readBytes(path);  
+        out.write(fileContent);  
+        clientSocket.shutdownOutput();  
+  
+        out.close();  
+        in.close();  
+        clientSocket.close();  
+        ss.close();  
+    }  
+}
+```
+
