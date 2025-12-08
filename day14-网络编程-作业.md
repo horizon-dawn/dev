@@ -8,22 +8,22 @@ B. QQ 聊天软件
 C. 用火狐浏览器查看在线视频
 D. 通过浏览器登录在线邮箱
 
-
+A
 
 2、关于 TCP 和 UDP 协议的特点，下列说法正确的是？
 A. TCP 是面向无连接的协议，传输速度快
 B. UDP 是面向连接的协议，数据传输可靠
 C. TCP 需要三次握手建立连接，数据传输可靠
-D. UDP 每次发送的数据大小没有限制
+D. UDP 每次发送的数据大小没有限制 (64K)
 
-
+C
 
 3、网络编程三要素不包括以下哪项？
 A. 协议
 B. IP 地址
 C. 端口号
 D. 硬件设备型号
-
+D
 
 
 4、Java 中，创建客户端套接字并连接到指定服务端的正确构造方法是？
@@ -32,7 +32,7 @@ B. new Socket(String host, int port)
 C. new Socket(InputStream in)
 D. new ServerSocket(String host, int port)
 
-
+B
 
 5、ServerSocket 类的 accept () 方法的特点是？
 A. 立即返回一个 Socket 对象，无需等待
@@ -40,7 +40,7 @@ B. 用于向客户端发送数据
 C. 会阻塞当前线程，直到有客户端连接
 D. 可以同时处理多个客户端连接
 
-
+C
 
 #### 二、问答题
 
