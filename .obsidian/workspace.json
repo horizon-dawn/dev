@@ -129,7 +129,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 406.5
+    "width": 406.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -143,7 +144,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8423e07295c2c684",
+  "active": "c5491469870429ec",
   "lastOpenFiles": [
     "Java面试题/02 — JVM.md",
     "Java面试题/images/Pasted image 20251208200327.png",
