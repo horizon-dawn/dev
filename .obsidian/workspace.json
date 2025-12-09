@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "5414d4b2dd750115",
+        "id": "c38c4de78f9319ce",
         "type": "tabs",
         "children": [
           {
-            "id": "0e7e2ce9bda1d16f",
+            "id": "c5491469870429ec",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Java面试题/02 — JVM.md",
+                "file": "Java面试题/03- 计算机网络.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "02 — JVM"
+              "title": "03- 计算机网络"
             }
           }
         ]
@@ -31,55 +31,29 @@
     "type": "split",
     "children": [
       {
-        "id": "547e1d9ec2267bdf",
+        "id": "5f13a490e86ae73b",
         "type": "tabs",
         "children": [
           {
-            "id": "4fd53e7e5022ce41",
+            "id": "8423e07295c2c684",
             "type": "leaf",
             "state": {
-              "type": "file-explorer",
+              "type": "outline",
               "state": {
-                "sortOrder": "alphabetical",
-                "autoReveal": false
+                "file": "Java面试题/03- 计算机网络.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
-              "icon": "lucide-folder-closed",
-              "title": "文件列表"
-            }
-          },
-          {
-            "id": "ec2d1a153655f2b7",
-            "type": "leaf",
-            "state": {
-              "type": "search",
-              "state": {
-                "query": "[\"aliases\"]",
-                "matchingCase": false,
-                "explainSearch": false,
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical"
-              },
-              "icon": "lucide-search",
-              "title": "搜索"
-            }
-          },
-          {
-            "id": "c0e26f628a582402",
-            "type": "leaf",
-            "state": {
-              "type": "bookmarks",
-              "state": {},
-              "icon": "lucide-bookmark",
-              "title": "书签"
+              "icon": "lucide-list",
+              "title": "03- 计算机网络 的大纲"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "477b2ab612aa52ac",
@@ -95,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Java面试题/Java 基础.md",
+                "file": "Java面试题/03- 计算机网络.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +79,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Java 基础 的反向链接列表"
+              "title": "03- 计算机网络 的反向链接列表"
             }
           },
           {
@@ -149,24 +123,9 @@
               "icon": "lucide-archive",
               "title": "添加笔记属性"
             }
-          },
-          {
-            "id": "8423e07295c2c684",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "Java面试题/02 — JVM.md",
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "02 — JVM 的大纲"
-            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -174,18 +133,19 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "templates:插入模板": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
       "daily-notes:打开/创建今天的日记": false,
-      "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "bases:创建新数据库": false,
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0e7e2ce9bda1d16f",
+  "active": "8423e07295c2c684",
   "lastOpenFiles": [
+    "Java面试题/02 — JVM.md",
     "Java面试题/images/Pasted image 20251208200327.png",
     "Java面试题/images/Pasted image 20251208195450.png",
     "Java面试题/images/Pasted image 20251208195308.png",
@@ -197,11 +157,9 @@
     "Java面试题/images/Pasted image 20251208194907.png",
     "Java面试题/images/Pasted image 20251208194539.png",
     "Java面试题/images",
-    "Java面试题/0N- 计算机网络.md",
+    "Java面试题/03- 计算机网络.md",
     "Java面试题/01 - Java 基础.md",
-    "Java面试题/02 — JVM.md",
     "Java面试题/Java IO流继承体系.md",
-    "Java面试题/images/Pasted image 20251208192045.png",
     "day14-网络编程-作业.md",
     "未命名.md",
     "tools/qid.jar",
